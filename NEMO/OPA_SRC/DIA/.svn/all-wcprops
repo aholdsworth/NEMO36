@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/nemo/svn/!svn/ver/7515/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA
+END
+diaprod.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaprod.F90
+END
+diaptr.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaptr.F90
+END
+diaar5.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7515/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaar5.F90
+END
+diaharm.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5585/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaharm.F90
+END
+diadct.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diadct.F90
+END
+dianam.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/dianam.F90
+END
+diahsb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6963/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diahsb.F90
+END
+diafwb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diafwb.F90
+END
+diadimg.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diadimg.F90
+END
+diawri.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diawri.F90
+END
+diahth.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diahth.F90
+END
+diawri_dimg.h90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diawri_dimg.h90
+END

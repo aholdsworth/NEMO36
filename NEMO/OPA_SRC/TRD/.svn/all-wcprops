@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/nemo/svn/!svn/ver/7564/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD
+END
+trdmxl_rst.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdmxl_rst.F90
+END
+trdtrc.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdtrc.F90
+END
+trddyn.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trddyn.F90
+END
+trdvor_oce.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdvor_oce.F90
+END
+trdken.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7564/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdken.F90
+END
+trdini.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdini.F90
+END
+trdmxl.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdmxl.F90
+END
+trdglo.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdglo.F90
+END
+trdpen.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdpen.F90
+END
+trd_oce.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trd_oce.F90
+END
+trdmxl_oce.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/6208/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdmxl_oce.F90
+END
+trdtra.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7555/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdtra.F90
+END
+trdvor.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/TRD/trdvor.F90
+END

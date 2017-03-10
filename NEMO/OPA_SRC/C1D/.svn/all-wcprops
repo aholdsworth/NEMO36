@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/nemo/svn/!svn/ver/7080/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D
+END
+step_c1d.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/7080/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D/step_c1d.F90
+END
+dyncor_c1d.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D/dyncor_c1d.F90
+END
+c1d.F90
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D/c1d.F90
+END
+domc1d.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D/domc1d.F90
+END
+dtauvd.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D/dtauvd.F90
+END
+dyndmp.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D/dyndmp.F90
+END
+dynnxt_c1d.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/C1D/dynnxt_c1d.F90
+END

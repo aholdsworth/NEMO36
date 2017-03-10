@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM
+END
+dtatsd.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/dtatsd.F90
+END
+istate.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/istate.F90
+END
+dommsk.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5551/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/dommsk.F90
+END
+domzgr_substitute.h90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domzgr_substitute.h90
+END
+domcfg.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domcfg.F90
+END
+domwri.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5604/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domwri.F90
+END
+domzgr.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7524/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domzgr.F90
+END
+dom_oce.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/dom_oce.F90
+END
+domstp.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domstp.F90
+END
+domngb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domngb.F90
+END
+closea.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7213/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/closea.F90
+END
+domvvl.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6348/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domvvl.F90
+END
+domain.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7522/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domain.F90
+END
+phycst.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/phycst.F90
+END
+daymod.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5564/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/daymod.F90
+END
+domhgr.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DOM/domhgr.F90
+END

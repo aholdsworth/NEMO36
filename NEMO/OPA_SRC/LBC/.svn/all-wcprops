@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/nemo/svn/!svn/ver/7531/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/LBC
+END
+lib_mpp.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/7531/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/LBC/lib_mpp.F90
+END
+lbclnk.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6476/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/LBC/lbclnk.F90
+END
+lbcnfd.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7474/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/LBC/lbcnfd.F90
+END
+mppini.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6413/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/LBC/mppini.F90
+END
+cla.F90
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/LBC/cla.F90
+END
+mppini_2.h90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/6413/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/LBC/mppini_2.h90
+END
