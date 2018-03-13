@@ -22,7 +22,7 @@ MODULE trc_oce
    PUBLIC   trc_oce_ext_lev    ! function called by traqsr.F90 at least
    PUBLIC   trc_oce_alloc      ! function called by nemogcm.F90
 
-   INTEGER , PUBLIC                                      ::   nn_dttrc      !: frequency of step on passive tracers
+   INTEGER , PUBLIC                                      ::   nn_dttrc = 1  !: frequency of step on passive tracers
    REAL(wp), PUBLIC                                      ::   r_si2         !: largest depth of extinction (blue & 0.01 mg.m-3)  (RGB)
    REAL(wp), PUBLIC, SAVE, ALLOCATABLE, DIMENSION(:,:,:) ::   etot3         !: light absortion coefficient
    REAL(wp), PUBLIC, SAVE, ALLOCATABLE, DIMENSION(:,:,:) ::   facvol        !: volume for degraded regions
@@ -68,7 +68,7 @@ MODULE trc_oce
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: trc_oce.F90 5385 2015-06-09 13:50:42Z cetlod $ 
+   !! $Id: trc_oce.F90 8026 2017-05-15 15:54:57Z lovato $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS

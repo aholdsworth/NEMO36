@@ -1,0 +1,4 @@
+&nam_rebuild
+filebase='mesh_mask'
+ndomain=8
+/

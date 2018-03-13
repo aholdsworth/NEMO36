@@ -1,0 +1,1 @@
+/home/amber/NEMOGCM/TOOLS/WEIGHTS/BLD/fcm_env.sh

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil
+END
+scripinterp.F90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/scripinterp.F90
+END
+scripgrid_mod.F90
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/scripgrid_mod.F90
+END
+scripgrid.F90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/scripgrid.F90
+END
+namelist_example_bilin
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/namelist_example_bilin
+END
+CHANGES
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/CHANGES
+END
+scrip.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/scrip.F90
+END
+scripinterp_mod.F90
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/scripinterp_mod.F90
+END
+scripshape.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/nocsutil/scripshape.F90
+END

@@ -68,7 +68,7 @@ CONTAINS
       INTEGER, INTENT(in) ::   kt, knt ! ocean time step
       !
       INTEGER  ::   ji, jj, jk
-      REAL(wp) ::   zremip, zremik, zsiremin 
+      REAL(wp) ::   zremip, zremik, zsiremin, zammonic 
       REAL(wp) ::   zsatur, zsatur2, znusil, znusil2, zdep, zdepmin, zfactdep
       REAL(wp) ::   zbactfer, zorem, zorem2, zofer, zolimit
       REAL(wp) ::   zosil, ztem
@@ -79,13 +79,14 @@ CONTAINS
       CHARACTER (len=25) :: charout
       REAL(wp), POINTER, DIMENSION(:,:  ) :: ztempbac
       REAL(wp), POINTER, DIMENSION(:,:,:) :: zdepbac, zolimi, zdepprod, zw3d
+      REAL(wp), POINTER, DIMENSION(:,:,:) :: zoxyrem
       !!---------------------------------------------------------------------
       !
       IF( nn_timing == 1 )  CALL timing_start('p4z_rem')
       !
       ! Allocate temporary workspace
       CALL wrk_alloc( jpi, jpj,      ztempbac                  )
-      CALL wrk_alloc( jpi, jpj, jpk, zdepbac, zdepprod, zolimi )
+      CALL wrk_alloc( jpi, jpj, jpk, zdepbac, zdepprod, zolimi, zoxyrem )
 
       ! Initialisation of temprary arrys
       zdepprod(:,:,:) = 1._wp
@@ -130,11 +131,13 @@ CONTAINS
                zolimi(ji,jj,jk) = MIN( ( trb(ji,jj,jk,jpoxy) - rtrn ) / o2ut, zolimit ) 
                ! Ammonification in suboxic waters with denitrification
                ! -------------------------------------------------------
-               denitr(ji,jj,jk)  = MIN(  ( trb(ji,jj,jk,jpno3) - rtrn ) / rdenit,   &
-                  &                     zremik * nitrfac(ji,jj,jk) * trb(ji,jj,jk,jpdoc)  )
+               zammonic = zremik * nitrfac(ji,jj,jk) * trb(ji,jj,jk,jpdoc)
+               denitr(ji,jj,jk)  = zammonic * ( 1. - nitrfac2(ji,jj,jk) )
+               zoxyrem(ji,jj,jk) = zammonic *        nitrfac2(ji,jj,jk)
                !
                zolimi (ji,jj,jk) = MAX( 0.e0, zolimi (ji,jj,jk) )
                denitr (ji,jj,jk) = MAX( 0.e0, denitr (ji,jj,jk) )
+               zoxyrem(ji,jj,jk) = MAX( 0.e0, zoxyrem(ji,jj,jk) )
                !
             END DO
          END DO
@@ -158,7 +161,8 @@ CONTAINS
                tra(ji,jj,jk,jpnh4) = tra(ji,jj,jk,jpnh4) - zonitr - denitnh4(ji,jj,jk)
                tra(ji,jj,jk,jpno3) = tra(ji,jj,jk,jpno3) + zonitr - rdenita * denitnh4(ji,jj,jk)
                tra(ji,jj,jk,jpoxy) = tra(ji,jj,jk,jpoxy) - o2nit * zonitr
-               tra(ji,jj,jk,jptal) = tra(ji,jj,jk,jptal) - 2 * rno3 * zonitr + rno3 * ( rdenita - 1. ) * denitnh4(ji,jj,jk)
+               tra(ji,jj,jk,jptal) = tra(ji,jj,jk,jptal) - 2 * rno3 * zonitr &
+                  &                + rno3 * ( rdenita - 1. ) * denitnh4(ji,jj,jk)
             END DO
          END DO
       END DO
@@ -292,13 +296,14 @@ CONTAINS
       ! --------------------------------------------------------------------
 
       DO jk = 1, jpkm1
-         tra(:,:,jk,jppo4) = tra(:,:,jk,jppo4) + zolimi (:,:,jk) + denitr(:,:,jk)
-         tra(:,:,jk,jpnh4) = tra(:,:,jk,jpnh4) + zolimi (:,:,jk) + denitr(:,:,jk)
+         tra(:,:,jk,jppo4) = tra(:,:,jk,jppo4) + zolimi (:,:,jk) + denitr(:,:,jk) + zoxyrem(:,:,jk)
+         tra(:,:,jk,jpnh4) = tra(:,:,jk,jpnh4) + zolimi (:,:,jk) + denitr(:,:,jk) + zoxyrem(:,:,jk)
          tra(:,:,jk,jpno3) = tra(:,:,jk,jpno3) - denitr (:,:,jk) * rdenit
-         tra(:,:,jk,jpdoc) = tra(:,:,jk,jpdoc) - zolimi (:,:,jk) - denitr(:,:,jk)
+         tra(:,:,jk,jpdoc) = tra(:,:,jk,jpdoc) - zolimi (:,:,jk) - denitr(:,:,jk) - zoxyrem(:,:,jk)
          tra(:,:,jk,jpoxy) = tra(:,:,jk,jpoxy) - zolimi (:,:,jk) * o2ut
-         tra(:,:,jk,jpdic) = tra(:,:,jk,jpdic) + zolimi (:,:,jk) + denitr(:,:,jk)
-         tra(:,:,jk,jptal) = tra(:,:,jk,jptal) + rno3 * ( zolimi(:,:,jk) + ( rdenit + 1.) * denitr(:,:,jk) )
+         tra(:,:,jk,jpdic) = tra(:,:,jk,jpdic) + zolimi (:,:,jk) + denitr(:,:,jk) + zoxyrem(:,:,jk)
+         tra(:,:,jk,jptal) = tra(:,:,jk,jptal) + rno3 * ( zolimi(:,:,jk) + zoxyrem(:,:,jk) &
+              &                                        + ( rdenit + 1.) * denitr(:,:,jk) )
       END DO
 
       IF( knt == nrdttrc ) THEN
@@ -324,7 +329,7 @@ CONTAINS
       ENDIF
       !
       CALL wrk_dealloc( jpi, jpj,      ztempbac                  )
-      CALL wrk_dealloc( jpi, jpj, jpk, zdepbac, zdepprod, zolimi )
+      CALL wrk_dealloc( jpi, jpj, jpk, zdepbac, zdepprod, zolimi, zoxyrem )
       !
       IF( nn_timing == 1 )  CALL timing_stop('p4z_rem')
       !

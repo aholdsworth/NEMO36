@@ -3,7 +3,7 @@ MODULE bdylib
    !!                       ***  MODULE  bdylib  ***
    !! Unstructured Open Boundary Cond. :  Library module of generic boundary algorithms.
    !!======================================================================
-   !! History :  3.6  !  2013     (D. Storkey) new module
+   !! History :  3.6  !  2013     (D. Storkey) original code
    !!----------------------------------------------------------------------
 #if defined key_bdy 
    !!----------------------------------------------------------------------
@@ -12,23 +12,25 @@ MODULE bdylib
    !!   bdy_orlanski_2d
    !!   bdy_orlanski_3d
    !!----------------------------------------------------------------------
-   USE timing          ! Timing
-   USE oce             ! ocean dynamics and tracers 
-   USE dom_oce         ! ocean space and time domain
-   USE bdy_oce         ! ocean open boundary conditions
-   USE phycst          ! physical constants
-   USE lbclnk          ! ocean lateral boundary conditions (or mpp link)
-   USE in_out_manager  !
+   USE oce            ! ocean dynamics and tracers 
+   USE dom_oce        ! ocean space and time domain
+   USE bdy_oce        ! ocean open boundary conditions
+   USE phycst         ! physical constants
+   !
+   USE in_out_manager !
+   USE lbclnk         ! ocean lateral boundary conditions (or mpp link)
+   USE timing         ! Timing
 
    IMPLICIT NONE
    PRIVATE
 
    PUBLIC   bdy_orlanski_2d     ! routine called where?
    PUBLIC   bdy_orlanski_3d     ! routine called where?
+   PUBLIC   bdy_nmn     ! routine called where?
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: bdylib.F90 5215 2015-04-15 16:11:56Z nicolasmartin $ 
+   !! $Id: bdylib.F90 6808 2016-07-19 08:38:35Z jamesharle $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -44,13 +46,13 @@ CONTAINS
       !!
       !! References:  Marchesiello, McWilliams and Shchepetkin, Ocean Modelling vol. 3 (2001)    
       !!----------------------------------------------------------------------
-      TYPE(OBC_INDEX),            INTENT(in)     ::   idx      ! BDY indices
-      INTEGER,                    INTENT(in)     ::   igrd     ! grid index
-      REAL(wp), DIMENSION(:,:),   INTENT(in)     ::   phib     ! model before 2D field
-      REAL(wp), DIMENSION(:,:),   INTENT(inout)  ::   phia     ! model after 2D field (to be updated)
-      REAL(wp), DIMENSION(:),     INTENT(in)     ::   phi_ext  ! external forcing data
-      LOGICAL,                    INTENT(in)     ::   ll_npo   ! switch for NPO version
-
+      TYPE(OBC_INDEX),          INTENT(in   ) ::   idx      ! BDY indices
+      INTEGER ,                 INTENT(in   ) ::   igrd     ! grid index
+      REAL(wp), DIMENSION(:,:), INTENT(in   ) ::   phib     ! model before 2D field
+      REAL(wp), DIMENSION(:,:), INTENT(inout) ::   phia     ! model after 2D field (to be updated)
+      REAL(wp), DIMENSION(:)  , INTENT(in   ) ::   phi_ext  ! external forcing data
+      LOGICAL ,                 INTENT(in   ) ::   ll_npo   ! switch for NPO version
+      !
       INTEGER  ::   jb                                     ! dummy loop indices
       INTEGER  ::   ii, ij, iibm1, iibm2, ijbm1, ijbm2     ! 2D addresses
       INTEGER  ::   iijm1, iijp1, ijjm1, ijjp1             ! 2D addresses
@@ -69,36 +71,36 @@ CONTAINS
       REAL(wp), POINTER, DIMENSION(:,:)          :: pe_xdif    ! scale factors for x-derivatives
       REAL(wp), POINTER, DIMENSION(:,:)          :: pe_ydif    ! scale factors for y-derivatives
       !!----------------------------------------------------------------------
-
-      IF( nn_timing == 1 ) CALL timing_start('bdy_orlanski_2d')
-
+      !
+      IF( nn_timing == 1 )   CALL timing_start('bdy_orlanski_2d')
+      !
       ! ----------------------------------!
       ! Orlanski boundary conditions     :!
       ! ----------------------------------! 
      
       SELECT CASE(igrd)
          CASE(1)
-            pmask => tmask(:,:,1)
+            pmask      => tmask(:,:,1)
             pmask_xdif => umask(:,:,1)
             pmask_ydif => vmask(:,:,1)
-            pe_xdif => e1u(:,:)
-            pe_ydif => e2v(:,:)
+            pe_xdif    => e1u(:,:)
+            pe_ydif    => e2v(:,:)
             ii_offset = 0
             ij_offset = 0
          CASE(2)
-            pmask => umask(:,:,1)
+            pmask      => umask(:,:,1)
             pmask_xdif => tmask(:,:,1)
             pmask_ydif => fmask(:,:,1)
-            pe_xdif => e1t(:,:)
-            pe_ydif => e2f(:,:)
+            pe_xdif    => e1t(:,:)
+            pe_ydif    => e2f(:,:)
             ii_offset = 1
             ij_offset = 0
          CASE(3)
-            pmask => vmask(:,:,1)
+            pmask      => vmask(:,:,1)
             pmask_xdif => fmask(:,:,1)
             pmask_ydif => tmask(:,:,1)
-            pe_xdif => e1f(:,:)
-            pe_ydif => e2t(:,:)
+            pe_xdif    => e1f(:,:)
+            pe_ydif    => e2t(:,:)
             ii_offset = 0
             ij_offset = 1
          CASE DEFAULT ;   CALL ctl_stop( 'unrecognised value for igrd in bdy_orlanksi_2d' )
@@ -187,8 +189,8 @@ CONTAINS
          phia(ii,ij) = phia(ii,ij) * pmask(ii,ij)
       END DO
       !
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_orlanski_2d')
-
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_orlanski_2d')
+      !
    END SUBROUTINE bdy_orlanski_2d
 
 
@@ -203,13 +205,13 @@ CONTAINS
       !!
       !! References:  Marchesiello, McWilliams and Shchepetkin, Ocean Modelling vol. 3 (2001)    
       !!----------------------------------------------------------------------
-      TYPE(OBC_INDEX),            INTENT(in)     ::   idx      ! BDY indices
-      INTEGER,                    INTENT(in)     ::   igrd     ! grid index
-      REAL(wp), DIMENSION(:,:,:), INTENT(in)     ::   phib     ! model before 3D field
-      REAL(wp), DIMENSION(:,:,:), INTENT(inout)  ::   phia     ! model after 3D field (to be updated)
-      REAL(wp), DIMENSION(:,:),   INTENT(in)     ::   phi_ext  ! external forcing data
-      LOGICAL,                    INTENT(in)     ::   ll_npo   ! switch for NPO version
-
+      TYPE(OBC_INDEX),            INTENT(in   ) ::   idx      ! BDY indices
+      INTEGER ,                   INTENT(in   ) ::   igrd     ! grid index
+      REAL(wp), DIMENSION(:,:,:), INTENT(in   ) ::   phib     ! model before 3D field
+      REAL(wp), DIMENSION(:,:,:), INTENT(inout) ::   phia     ! model after 3D field (to be updated)
+      REAL(wp), DIMENSION(:,:)  , INTENT(in   ) ::   phi_ext  ! external forcing data
+      LOGICAL ,                   INTENT(in   ) ::   ll_npo   ! switch for NPO version
+      !
       INTEGER  ::   jb, jk                                 ! dummy loop indices
       INTEGER  ::   ii, ij, iibm1, iibm2, ijbm1, ijbm2     ! 2D addresses
       INTEGER  ::   iijm1, iijp1, ijjm1, ijjp1             ! 2D addresses
@@ -228,36 +230,36 @@ CONTAINS
       REAL(wp), POINTER, DIMENSION(:,:)          :: pe_xdif    ! scale factors for x-derivatives
       REAL(wp), POINTER, DIMENSION(:,:)          :: pe_ydif    ! scale factors for y-derivatives
       !!----------------------------------------------------------------------
-
-      IF( nn_timing == 1 ) CALL timing_start('bdy_orlanski_3d')
-
+      !
+      IF( nn_timing == 1 )   CALL timing_start('bdy_orlanski_3d')
+      !
       ! ----------------------------------!
       ! Orlanski boundary conditions     :!
       ! ----------------------------------! 
-     
+      !
       SELECT CASE(igrd)
          CASE(1)
-            pmask => tmask(:,:,:)
+            pmask      => tmask(:,:,:)
             pmask_xdif => umask(:,:,:)
             pmask_ydif => vmask(:,:,:)
-            pe_xdif => e1u(:,:)
-            pe_ydif => e2v(:,:)
+            pe_xdif    => e1u(:,:)
+            pe_ydif    => e2v(:,:)
             ii_offset = 0
             ij_offset = 0
          CASE(2)
-            pmask => umask(:,:,:)
+            pmask      => umask(:,:,:)
             pmask_xdif => tmask(:,:,:)
             pmask_ydif => fmask(:,:,:)
-            pe_xdif => e1t(:,:)
-            pe_ydif => e2f(:,:)
+            pe_xdif    => e1t(:,:)
+            pe_ydif    => e2f(:,:)
             ii_offset = 1
             ij_offset = 0
          CASE(3)
-            pmask => vmask(:,:,:)
+            pmask      => vmask(:,:,:)
             pmask_xdif => fmask(:,:,:)
             pmask_ydif => tmask(:,:,:)
-            pe_xdif => e1f(:,:)
-            pe_ydif => e2t(:,:)
+            pe_xdif    => e1f(:,:)
+            pe_ydif    => e2t(:,:)
             ii_offset = 0
             ij_offset = 1
          CASE DEFAULT ;   CALL ctl_stop( 'unrecognised value for igrd in bdy_orlanksi_2d' )
@@ -276,8 +278,9 @@ CONTAINS
             iibm1 = ii + flagu ; iibm2 = ii + 2*flagu 
             ijbm1 = ij + flagv ; ijbm2 = ij + 2*flagv
             !
-            iijm1 = ii - abs(flagv) ; iijp1 = ii + abs(flagv) 
-            ijjm1 = ij - abs(flagu) ; ijjp1 = ij + abs(flagu)
+! check boundaries
+            iijm1 = max(1,ii - abs(flagv))  ; iijp1 = min(ii + abs(flagv),jpi) 
+            ijjm1 = max(ij - abs(flagu),1)  ; ijjp1 = min(ij + abs(flagu),jpj)
             !
             iibm1jm1 = ii + flagu - abs(flagv) ; iibm1jp1 = ii + flagu + abs(flagv) 
             ijbm1jm1 = ij + flagv - abs(flagu) ; ijbm1jp1 = ij + flagv + abs(flagu) 
@@ -324,15 +327,23 @@ CONTAINS
             !
             ! update boundary value:
             zrx = zdt * zdx / ( zex1 * znor2 )
-!!$            zrx = min(zrx,2.0_wp)
             zout = sign( 1., zrx )
             zout = 0.5*( zout + abs(zout) )
+ ! ML: Courant criteria increase zrx is less 1 by definition....
+            zrx=min(zrx, 0.5)
             zwgt = 2.*rdt*( (1.-zout) * idx%nbd(jb,igrd) + zout * idx%nbdout(jb,igrd) )
             ! only apply radiation on outflow points 
             if( ll_npo ) then     !! NPO version !!
                phia(ii,ij,jk) = (1.-zout) * ( phib(ii,ij,jk) + zwgt * ( phi_ext(jb,jk) - phib(ii,ij,jk) ) ) &
               &               + zout      * ( phib(ii,ij,jk) + zrx*phia(iibm1,ijbm1,jk)                     &
               &                            + zwgt * ( phi_ext(jb,jk) - phib(ii,ij,jk) ) ) / ( 1. + zrx ) 
+
+! Implicit case, doesn't work
+        !        phia(ii,ij,jk) = (1.-zout)/(1+zwgt)*( phib(ii,ij,jk) + zwgt *  phi_ext(jb,jk)  ) &
+        !      &               + zout      * ( phib(ii,ij,jk) + zrx*phia(iibm1,ijbm1,jk)                     &
+        !      &                            + zwgt * ( phi_ext(jb,jk) ) ) / ( 1. + zrx +zwgt)
+
+
             else                  !! full oblique radiation !!
                zsign_ups = sign( 1., zdt * zdy )
                zsign_ups = 0.5*( zsign_ups + abs(zsign_ups) )
@@ -348,11 +359,83 @@ CONTAINS
          END DO
          !
       END DO
-
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_orlanski_3d')
-
+      !
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_orlanski_3d')
+      !
    END SUBROUTINE bdy_orlanski_3d
 
+   SUBROUTINE bdy_nmn( idx, igrd, phia )
+      !!----------------------------------------------------------------------
+      !!                 ***  SUBROUTINE bdy_nmn  ***
+      !!                    
+      !! ** Purpose : Duplicate the value at open boundaries, zero gradient.
+      !! 
+      !!----------------------------------------------------------------------
+      INTEGER,                    INTENT(in)     ::   igrd     ! grid index
+      REAL(wp), DIMENSION(:,:,:), INTENT(inout)  ::   phia     ! model after 3D field (to be updated)
+      TYPE(OBC_INDEX), INTENT(in) ::   idx  ! OBC indices
+      !! 
+      REAL(wp) ::   zcoef, zcoef1, zcoef2
+      REAL(wp), POINTER, DIMENSION(:,:,:)        :: pmask      ! land/sea mask for field
+      REAL(wp), POINTER, DIMENSION(:,:)        :: bdypmask      ! land/sea mask for field
+      INTEGER  ::   ib, ik   ! dummy loop indices
+      INTEGER  ::   ii, ij, ip, jp   ! 2D addresses
+      !!----------------------------------------------------------------------
+      !
+      IF( nn_timing == 1 ) CALL timing_start('bdy_nmn')
+      !
+      SELECT CASE(igrd)
+         CASE(1)
+            pmask => tmask(:,:,:)
+            bdypmask => bdytmask(:,:)
+         CASE(2)
+            pmask => umask(:,:,:)
+            bdypmask => bdyumask(:,:)
+         CASE(3)
+            pmask => vmask(:,:,:)
+            bdypmask => bdyvmask(:,:)
+         CASE DEFAULT ;   CALL ctl_stop( 'unrecognised value for igrd in bdy_nmn' )
+      END SELECT
+      DO ib = 1, idx%nblenrim(igrd)
+         ii = idx%nbi(ib,igrd)
+         ij = idx%nbj(ib,igrd)
+         DO ik = 1, jpkm1
+            ! search the sense of the gradient
+            zcoef1 = bdypmask(ii-1,ij  )*pmask(ii-1,ij,ik) +  bdypmask(ii+1,ij  )*pmask(ii+1,ij,ik)
+            zcoef2 = bdypmask(ii  ,ij-1)*pmask(ii,ij-1,ik) +  bdypmask(ii  ,ij+1)*pmask(ii,ij+1,ik)
+            IF ( nint(zcoef1+zcoef2) == 0) THEN
+               ! corner **** we probably only want to set the tangentail component for the dynamics here
+               zcoef = pmask(ii-1,ij,ik) + pmask(ii+1,ij,ik) +  pmask(ii,ij-1,ik) +  pmask(ii,ij+1,ik)
+               IF (zcoef > .5_wp) THEN ! Only set none isolated points.
+                 phia(ii,ij,ik) = phia(ii-1,ij  ,ik) * pmask(ii-1,ij  ,ik) + &
+                   &              phia(ii+1,ij  ,ik) * pmask(ii+1,ij  ,ik) + &
+                   &              phia(ii  ,ij-1,ik) * pmask(ii  ,ij-1,ik) + &
+                   &              phia(ii  ,ij+1,ik) * pmask(ii  ,ij+1,ik)
+                 phia(ii,ij,ik) = ( phia(ii,ij,ik) / zcoef ) * pmask(ii,ij,ik)
+               ELSE
+                 phia(ii,ij,ik) = phia(ii,ij  ,ik) * pmask(ii,ij  ,ik)
+               ENDIF
+            ELSEIF ( nint(zcoef1+zcoef2) == 2) THEN
+               ! oblique corner **** we probably only want to set the normal component for the dynamics here
+               zcoef = pmask(ii-1,ij,ik)*bdypmask(ii-1,ij  ) + pmask(ii+1,ij,ik)*bdypmask(ii+1,ij  ) + &
+                   &   pmask(ii,ij-1,ik)*bdypmask(ii,ij -1 ) +  pmask(ii,ij+1,ik)*bdypmask(ii,ij+1  )
+               phia(ii,ij,ik) = phia(ii-1,ij  ,ik) * pmask(ii-1,ij  ,ik)*bdypmask(ii-1,ij  ) + &
+                   &            phia(ii+1,ij  ,ik) * pmask(ii+1,ij  ,ik)*bdypmask(ii+1,ij  )  + &
+                   &            phia(ii  ,ij-1,ik) * pmask(ii  ,ij-1,ik)*bdypmask(ii,ij -1 ) + &
+                   &            phia(ii  ,ij+1,ik) * pmask(ii  ,ij+1,ik)*bdypmask(ii,ij+1  )
+ 
+               phia(ii,ij,ik) = ( phia(ii,ij,ik) / MAX(1._wp, zcoef) ) * pmask(ii,ij,ik)
+            ELSE
+               ip = nint(bdypmask(ii+1,ij  )*pmask(ii+1,ij,ik) - bdypmask(ii-1,ij  )*pmask(ii-1,ij,ik))
+               jp = nint(bdypmask(ii  ,ij+1)*pmask(ii,ij+1,ik) - bdypmask(ii  ,ij-1)*pmask(ii,ij-1,ik))
+               phia(ii,ij,ik) = phia(ii+ip,ij+jp,ik) * pmask(ii+ip,ij+jp,ik)
+            ENDIF
+         END DO
+      END DO
+      !
+      IF( nn_timing == 1 ) CALL timing_stop('bdy_nmn')
+      !
+   END SUBROUTINE bdy_nmn
 
 #else
    !!----------------------------------------------------------------------
@@ -365,6 +448,9 @@ CONTAINS
    SUBROUTINE bdy_orlanski_3d( idx, igrd, phib, phia, phi_ext  )      ! Empty routine
       WRITE(*,*) 'bdy_orlanski_3d: You should not have seen this print! error?', kt
    END SUBROUTINE bdy_orlanski_3d
+   SUBROUTINE bdy_nmn( idx, igrd, phia )      ! Empty routine
+      WRITE(*,*) 'bdy_nmn: You should not have seen this print! error?', kt
+   END SUBROUTINE bdy_nmn
 #endif
 
    !!======================================================================

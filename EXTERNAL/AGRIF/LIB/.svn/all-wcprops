@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB
+END
+dependfile.c
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/dependfile.c
+END
+WorkWithlistmoduleinfile.c
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithlistmoduleinfile.c
+END
+SubLoopCreation.c
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/SubLoopCreation.c
+END
+UtilFortran.c
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/UtilFortran.c
+END
+WorkWithlistdatavariable.c
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithlistdatavariable.c
+END
+fortran.c
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/fortran.c
+END
+WorkWithParameterlist.c
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithParameterlist.c
+END
+WorkWithlistofcoupled.c
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithlistofcoupled.c
+END
+decl.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/decl.h
+END
+UtilFile.c
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/UtilFile.c
+END
+UtilListe.c
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/UtilListe.c
+END
+WorkWithAllocatelist.c
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithAllocatelist.c
+END
+WorkWithlistofmodulebysubroutine.c
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithlistofmodulebysubroutine.c
+END
+WriteInFile.c
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WriteInFile.c
+END
+toamr.c
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/toamr.c
+END
+WorkWithglobliste.c
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithglobliste.c
+END
+Writedeclarations.c
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/Writedeclarations.c
+END
+run
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/run
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/main.c
+END
+UtilAgrif.c
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/UtilAgrif.c
+END
+WorkWithlistvarindoloop.c
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithlistvarindoloop.c
+END
+UtilCharacter.c
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/UtilCharacter.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/Makefile
+END
+WorkWithvarofsubroutineliste.c
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/WorkWithvarofsubroutineliste.c
+END
+DiversListe.c
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/DiversListe.c
+END
+UtilNotGridDep.c
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LIB/UtilNotGridDep.c
+END

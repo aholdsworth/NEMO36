@@ -17,6 +17,7 @@ MODULE icbtrj
    USE phycst         ! NEMO physical constants
    USE lib_mpp        ! NEMO MPI library, lk_mpp in particular
    USE in_out_manager ! NEMO IO, numout in particular
+   USE ioipsl, ONLY : ju2ymds    ! for calendar
    USE netcdf
    !
    USE icb_oce        ! define iceberg arrays
@@ -59,13 +60,27 @@ CONTAINS
       INTEGER, INTENT( in )                 :: ktend
       !
       INTEGER                               :: iret
+      INTEGER                               :: iyear, imonth, iday
+      REAL(wp)                              :: zfjulday, zsec
       CHARACTER(len=80)                     :: cl_filename
       TYPE(iceberg), POINTER                :: this
       TYPE(point)  , POINTER                :: pt
+      CHARACTER(LEN=20)                     :: cldate_ini, cldate_end
       !!----------------------------------------------------------------------
 
-      IF( lk_mpp ) THEN   ;   WRITE(cl_filename,'("trajectory_icebergs_",I6.6,"_",I4.4,".nc")') ktend, narea-1
-      ELSE                ;   WRITE(cl_filename,'("trajectory_icebergs_",I6.6         ,".nc")') ktend
+      ! compute initial time step date
+      CALL ju2ymds( fjulday, iyear, imonth, iday, zsec )
+      WRITE(cldate_ini, '(i4.4,2i2.2)') iyear, imonth, iday
+
+      ! compute end time step date
+      zfjulday = fjulday + rdttra(1) / rday * REAL( nitend - nit000 + 1 , wp)
+      IF( ABS(zfjulday - REAL(NINT(zfjulday),wp)) < 0.1 / rday )   zfjulday = REAL(NINT(zfjulday),wp)   ! avoid truncation error
+      CALL ju2ymds( zfjulday, iyear, imonth, iday, zsec )
+      WRITE(cldate_end, '(i4.4,2i2.2)') iyear, imonth, iday
+
+      ! define trajectory output name
+      IF( lk_mpp ) THEN   ;   WRITE(cl_filename,'("trajectory_icebergs_",A,"-",A,"_",I4.4,".nc")') TRIM(ADJUSTL(cldate_ini)), TRIM(ADJUSTL(cldate_end)), narea-1
+      ELSE                ;   WRITE(cl_filename,'("trajectory_icebergs_",A,"-",A         ,".nc")') TRIM(ADJUSTL(cldate_ini)), TRIM(ADJUSTL(cldate_end))
       ENDIF
       IF ( lwp .AND. nn_verbose_level >= 0) WRITE(numout,'(2a)') 'icebergs, icb_trj_init: creating ',TRIM(cl_filename)
 

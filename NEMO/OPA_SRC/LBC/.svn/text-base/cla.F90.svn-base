@@ -77,8 +77,6 @@ CONTAINS
       !     
       IF( kt == nit000 ) THEN
          !
-         CALL cla_init                                        ! control check 
-         !
          IF(lwp) WRITE(numout,*)
          IF(lwp) WRITE(numout,*) 'div_cla : cross land advection on hdiv '
          IF(lwp) WRITE(numout,*) '~~~~~~~~'

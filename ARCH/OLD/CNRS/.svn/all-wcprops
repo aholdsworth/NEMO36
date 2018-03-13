@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS
+END
+arch-TX7_ULAM.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-TX7_ULAM.fcm
+END
+arch-ifort_CICLAD.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-ifort_CICLAD.fcm
+END
+arch-ALTIX_JADE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-ALTIX_JADE.fcm
+END
+arch-SX8_MERCURE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-SX8_MERCURE.fcm
+END
+arch-SX9_MERCURE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-SX9_MERCURE.fcm
+END
+arch-X64_TITANE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-X64_TITANE.fcm
+END
+arch-SX8_BRODIE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-SX8_BRODIE.fcm
+END
+arch-PW6MONO_VARGAS.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-PW6MONO_VARGAS.fcm
+END
+arch-X86_CESIUM.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-X86_CESIUM.fcm
+END
+arch-SX9_ES2.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-SX9_ES2.fcm
+END
+arch-BG_BABEL.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-BG_BABEL.fcm
+END
+arch-IA64_PLATINE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-IA64_PLATINE.fcm
+END
+arch-PW6_VARGAS.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/CNRS/arch-PW6_VARGAS.fcm
+END

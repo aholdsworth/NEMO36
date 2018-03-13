@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/nemo/svn/!svn/ver/6224/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE
+END
+bld_tools.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/bld_tools.cfg
+END
+Fcheck_script.sh
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fcheck_script.sh
+END
+bld_preproagr.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/bld_preproagr.cfg
+END
+Fmake_config.sh
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/6224/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fmake_config.sh
+END
+Fcheck_config.sh
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fcheck_config.sh
+END
+template.sh
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/template.sh
+END
+Fclean_config.sh
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fclean_config.sh
+END
+Flist_archfile.sh
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Flist_archfile.sh
+END
+Ffetch_extdir.sh
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Ffetch_extdir.sh
+END
+Fcopy_dir.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fcopy_dir.sh
+END
+Fread_dir.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fread_dir.sh
+END
+Fcheck_archfile.sh
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fcheck_archfile.sh
+END
+Fprep_agrif.sh
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fprep_agrif.sh
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/README
+END
+Fmake_WORK.sh
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fmake_WORK.sh
+END
+bld.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/bld.cfg
+END
+bldxag.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/bldxag.cfg
+END
+agrifpp.sh
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/agrifpp.sh
+END
+Fmake_extconfig.sh
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fmake_extconfig.sh
+END
+Fadd_keys.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fadd_keys.sh
+END
+conv.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/conv.cfg
+END
+Fgo_to_TOOLS.sh
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fgo_to_TOOLS.sh
+END
+bash-font-lock.el
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/bash-font-lock.el
+END
+Fcopy_extdir.sh
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fcopy_extdir.sh
+END
+Fclean_var.sh
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fclean_var.sh
+END
+Fmake_bld.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fmake_bld.sh
+END
+Fdel_keys.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/Fdel_keys.sh
+END
+tools.txt
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/nemo/svn/!svn/ver/5608/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/COMPILE/tools.txt
+END

@@ -73,7 +73,7 @@ MODULE trabbl
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: trabbl.F90 4990 2014-12-15 16:42:49Z timgraham $
+   !! $Id: trabbl.F90 8507 2017-09-07 14:24:27Z acc $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -547,12 +547,17 @@ CONTAINS
       zmbk(:,:) = REAL( mbku_d(:,:), wp )   ;   CALL lbc_lnk(zmbk,'U',1.)   ;   mbku_d(:,:) = MAX( INT( zmbk(:,:) ), 1 )
       zmbk(:,:) = REAL( mbkv_d(:,:), wp )   ;   CALL lbc_lnk(zmbk,'V',1.)   ;   mbkv_d(:,:) = MAX( INT( zmbk(:,:) ), 1 )
 
-                                        !* sign of grad(H) at u- and v-points
-      mgrhu(jpi,:) = 0   ;   mgrhu(:,jpj) = 0   ;   mgrhv(jpi,:) = 0   ;   mgrhv(:,jpj) = 0
+                                        !* sign of grad(H) at u- and v-points; zero if grad(H) = 0
+      mgrhu(:,:) = 0   ;   mgrhv(:,:) = 0
       DO jj = 1, jpjm1
          DO ji = 1, jpim1
-            mgrhu(ji,jj) = INT(  SIGN( 1.e0, gdept_0(ji+1,jj,mbkt(ji+1,jj)) - gdept_0(ji,jj,mbkt(ji,jj)) )  )
-            mgrhv(ji,jj) = INT(  SIGN( 1.e0, gdept_0(ji,jj+1,mbkt(ji,jj+1)) - gdept_0(ji,jj,mbkt(ji,jj)) )  )
+            IF( gdept_0(ji+1,jj,mbkt(ji+1,jj)) - gdept_0(ji,jj,mbkt(ji,jj)) /= 0._wp ) THEN
+               mgrhu(ji,jj) = INT(  SIGN( 1.e0, gdept_0(ji+1,jj,mbkt(ji+1,jj)) - gdept_0(ji,jj,mbkt(ji,jj)) )  )
+            ENDIF
+            !
+            IF( gdept_0(ji,jj+1,mbkt(ji,jj+1)) - gdept_0(ji,jj,mbkt(ji,jj)) /= 0._wp ) THEN
+               mgrhv(ji,jj) = INT(  SIGN( 1.e0, gdept_0(ji,jj+1,mbkt(ji,jj+1)) - gdept_0(ji,jj,mbkt(ji,jj)) )  )
+            ENDIF
          END DO
       END DO
 

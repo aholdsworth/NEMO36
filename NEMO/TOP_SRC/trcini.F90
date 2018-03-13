@@ -41,7 +41,7 @@ MODULE trcini
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 4.0 , NEMO Consortium (2011)
-   !! $Id: trcini.F90 7494 2016-12-14 09:02:43Z timgraham $
+   !! $Id: trcini.F90 8353 2017-07-19 14:41:00Z lovato $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -96,10 +96,10 @@ CONTAINS
       areatot = glob_sum( cvol(:,:,:) )
 
       IF( lk_pisces  )       CALL trc_ini_pisces       ! PISCES  bio-model
+      IF( lk_my_trc  )       CALL trc_ini_my_trc       ! MY_TRC    tracers
       IF( lk_cfc     )       CALL trc_ini_cfc          ! CFC       tracers
       IF( lk_c14b    )       CALL trc_ini_c14b         ! C14 bomb  tracer
       IF( lk_age     )       CALL trc_ini_age          ! AGE       tracer
-      IF( lk_my_trc  )       CALL trc_ini_my_trc       ! MY_TRC    tracers
 
       CALL trc_ice_ini                                 ! Tracers in sea ice
 

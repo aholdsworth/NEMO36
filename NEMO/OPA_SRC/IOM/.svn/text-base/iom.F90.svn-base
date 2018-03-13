@@ -1529,7 +1529,7 @@ CONTAINS
       ni=nlei-nldi+1 ; nj=nlej-nldj+1            ! define zonal mean domain (jpj*jpk)
       ALLOCATE( zlon(ni*nj) )       ;       zlon(:) = 0.
 
-      CALL dom_ngb( 180., 90., ix, iy, 'T' ) !  i-line that passes near the North Pole : Reference latitude (used in plots)
+      CALL dom_ngb( -168.53, 65.03, ix, iy, 'T' ) !  i-line that passes through Bering Strait: Reference latitude (used in plots)
 #if ! defined key_xios2
       CALL iom_set_domain_attr("gznl", ni_glo=jpiglo, nj_glo=jpjglo, ibegin=nimpp+nldi-1, jbegin=njmpp+nldj-1, ni=ni, nj=nj)
       CALL iom_set_domain_attr("gznl", data_dim=2, data_ibegin = 1-nldi, data_ni = jpi, data_jbegin = 1-nldj, data_nj = jpj)
@@ -1616,12 +1616,16 @@ CONTAINS
       ! frequency of the call of iom_put (attribut: freq_op)
 #if ! defined key_xios2
       WRITE(cl1,'(i1)')        1   ;   CALL iom_set_field_attr('field_definition', freq_op=cl1//'ts', freq_offset='0ts')
+      WRITE(cl1,'(i1)')        2   ;   CALL iom_set_field_attr('trendT_even'      , freq_op=cl1//'ts', freq_offset='0ts')
+      WRITE(cl1,'(i1)')        2   ;   CALL iom_set_field_attr('trendT_odd'       , freq_op=cl1//'ts', freq_offset='-1ts')
       WRITE(cl1,'(i1)')  nn_fsbc   ;   CALL iom_set_field_attr('SBC'             , freq_op=cl1//'ts', freq_offset='0ts')
       WRITE(cl1,'(i1)')  nn_fsbc   ;   CALL iom_set_field_attr('SBC_scalar'      , freq_op=cl1//'ts', freq_offset='0ts')
       WRITE(cl1,'(i1)') nn_dttrc   ;   CALL iom_set_field_attr('ptrc_T'          , freq_op=cl1//'ts', freq_offset='0ts')
       WRITE(cl1,'(i1)') nn_dttrc   ;   CALL iom_set_field_attr('diad_T'          , freq_op=cl1//'ts', freq_offset='0ts')
 #else
       f_op%timestep = 1        ;  f_of%timestep = 0  ; CALL iom_set_field_attr('field_definition', freq_op=f_op, freq_offset=f_of)
+      f_op%timestep = 2        ;  f_of%timestep = 0  ; CALL iom_set_field_attr('trendT_even'      , freq_op=f_op, freq_offset=f_of)
+      f_op%timestep = 2        ;  f_of%timestep = -1 ; CALL iom_set_field_attr('trendT_odd'       , freq_op=f_op, freq_offset=f_of)
       f_op%timestep = nn_fsbc  ;  f_of%timestep = 0  ; CALL iom_set_field_attr('SBC'             , freq_op=f_op, freq_offset=f_of)
       f_op%timestep = nn_fsbc  ;  f_of%timestep = 0  ; CALL iom_set_field_attr('SBC_scalar'      , freq_op=f_op, freq_offset=f_of)
       f_op%timestep = nn_dttrc ;  f_of%timestep = 0  ; CALL iom_set_field_attr('ptrc_T'          , freq_op=f_op, freq_offset=f_of)

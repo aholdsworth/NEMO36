@@ -86,6 +86,7 @@ MODULE sms_pisces
    !!*  SMS for the organic matter
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xfracal    !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   nitrfac    !: ??
+   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   nitrfac2   !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xlimbac    !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xlimbacl   !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xdiss      !: ??
@@ -116,7 +117,7 @@ MODULE sms_pisces
 #endif
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: sms_pisces.F90 7607 2017-01-25 15:37:31Z cetlod $ 
+   !! $Id: sms_pisces.F90 8532 2017-09-18 12:58:22Z cetlod $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -146,7 +147,8 @@ CONTAINS
       !*  SMS for the organic matter
       ALLOCATE( xfracal (jpi,jpj,jpk), nitrfac(jpi,jpj,jpk),       &
          &      xlimbac (jpi,jpj,jpk), xdiss  (jpi,jpj,jpk),       & 
-         &      xlimbacl(jpi,jpj,jpk), prodcal(jpi,jpj,jpk),     STAT=ierr(3) )
+         &      xlimbacl(jpi,jpj,jpk), prodcal(jpi,jpj,jpk),       &
+         &      nitrfac2(jpi,jpj,jpk),                           STAT=ierr(3) )
 
       !* Variable for chemistry of the CO2 cycle
       ALLOCATE( ak13  (jpi,jpj,jpk) ,                              &

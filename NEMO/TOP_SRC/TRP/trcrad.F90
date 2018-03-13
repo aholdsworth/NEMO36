@@ -21,13 +21,13 @@ MODULE trcrad
    IMPLICIT NONE
    PRIVATE
 
-   PUBLIC trc_rad         ! routine called by trcstp.F90
+   PUBLIC trc_rad, trc_rad_sms        ! routine called by trcstp.F90
 
    !! * Substitutions
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcrad.F90 7522 2017-01-02 10:06:49Z cetlod $
+   !! $Id: trcrad.F90 8398 2017-08-01 13:15:00Z lovato $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
    

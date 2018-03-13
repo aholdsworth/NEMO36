@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM3/IGCM00/COMP
+END
+lim3.card
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM3/IGCM00/COMP/lim3.card
+END
+lim3.driver
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM3/IGCM00/COMP/lim3.driver
+END
+opa9.card
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM3/IGCM00/COMP/opa9.card
+END
+opa9.driver
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM3/IGCM00/COMP/opa9.driver
+END

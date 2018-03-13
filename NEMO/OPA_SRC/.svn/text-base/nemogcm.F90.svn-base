@@ -190,12 +190,10 @@ CONTAINS
       ENDIF
       !
 #if defined key_agrif
-      IF( .NOT. Agrif_Root() ) THEN
-         CALL Agrif_ParentGrid_To_ChildGrid()
-         IF( lk_diaobs ) CALL dia_obs_wri
-         IF( nn_timing == 1 )   CALL timing_finalize
-         CALL Agrif_ChildGrid_To_ParentGrid()
-      ENDIF
+      CALL Agrif_ParentGrid_To_ChildGrid()
+      IF( lk_diaobs ) CALL dia_obs_wri
+      IF( nn_timing == 1 )   CALL timing_finalize
+      CALL Agrif_ChildGrid_To_ParentGrid()
 #endif
       IF( nn_timing == 1 )   CALL timing_finalize
       !
@@ -724,9 +722,6 @@ CONTAINS
       INTEGER, PARAMETER :: ntest = 14
       INTEGER, DIMENSION(ntest) :: ilfax
       !
-      ! ilfax contains the set of allowed factors.
-      ilfax(:) = (/(2**jl,jl=ntest,1,-1)/)
-      !!----------------------------------------------------------------------
       ! ilfax contains the set of allowed factors.
       ilfax(:) = (/(2**jl,jl=ntest,1,-1)/)
 

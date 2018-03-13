@@ -112,7 +112,7 @@ CONTAINS
                !  Zooplankton mortality. A square function has been selected with
                !  no real reason except that it seems to be more stable and may mimic predation
                !  ---------------------------------------------------------------
-               ztortz2   = mzrat2 * 1.e6 * zfact * trb(ji,jj,jk,jpmes)
+               ztortz2   = mzrat2 * 1.e6 * zfact * trb(ji,jj,jk,jpmes) * (1. - nitrfac(ji,jj,jk) )
                !
                zcompadi  = MAX( ( trb(ji,jj,jk,jpdia) - xthresh2dia ), 0.e0 )
                zcompaz   = MAX( ( trb(ji,jj,jk,jpzoo) - xthresh2zoo ), 0.e0 )
@@ -127,7 +127,8 @@ CONTAINS
                zfoodlim  = MAX( 0., zfood - MIN( 0.5 * zfood, xthresh2 ) )
                zdenom    = zfoodlim / ( xkgraz2 + zfoodlim )
                zdenom2   = zdenom / ( zfood + rtrn )
-               zgraze2   = grazrat2 * zstep * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jpmes) 
+               zgraze2   = grazrat2 * zstep * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jpmes) * (1. - nitrfac(ji,jj,jk) )  
+ 
 
                zgrazd    = zgraze2  * xprefc   * zcompadi  * zdenom2 
                zgrazz    = zgraze2  * xprefz   * zcompaz   * zdenom2 
@@ -143,11 +144,13 @@ CONTAINS
                !  ----------------------------------
 # if ! defined key_kriest
                zgrazffeg = grazflux  * zstep * wsbio4(ji,jj,jk)      &
-               &           * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jpgoc) * trb(ji,jj,jk,jpmes)
+               &           * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jpgoc) * trb(ji,jj,jk,jpmes) &
+               &           * (1. - nitrfac(ji,jj,jk))
                zgrazfffg = zgrazffeg * trb(ji,jj,jk,jpbfe) / (trb(ji,jj,jk,jpgoc) + rtrn)
 # endif
                zgrazffep = grazflux  * zstep *  wsbio3(ji,jj,jk)     &
-               &           * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jppoc) * trb(ji,jj,jk,jpmes)
+               &           * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jppoc) * trb(ji,jj,jk,jpmes) &
+               &           * (1. - nitrfac(ji,jj,jk))
                zgrazfffp = zgrazffep * trb(ji,jj,jk,jpsfe) / (trb(ji,jj,jk,jppoc) + rtrn)
               !
 # if ! defined key_kriest

@@ -19,13 +19,15 @@ MODULE dynzdf_imp
    USE sbc_oce         ! surface boundary condition: ocean
    USE zdf_oce         ! ocean vertical physics
    USE phycst          ! physical constants
-   USE in_out_manager  ! I/O manager
-   USE lib_mpp         ! MPP library
-   USE zdfbfr          ! Bottom friction setup
-   USE wrk_nemo        ! Memory Allocation
-   USE timing          ! Timing
    USE dynadv          ! dynamics: vector invariant versus flux form
    USE dynspg_oce, ONLY: lk_dynspg_ts
+   USE zdfbfr          ! Bottom friction setup
+   !
+   USE in_out_manager  ! I/O manager
+   USE iom             ! I/O library
+   USE lib_mpp         ! MPP library
+   USE wrk_nemo        ! Memory Allocation
+   USE timing          ! Timing
 
    IMPLICIT NONE
    PRIVATE
@@ -68,7 +70,8 @@ CONTAINS
       INTEGER  ::   ji, jj, jk   ! dummy loop indices
       INTEGER  ::   ikbu, ikbv   ! local integers
       REAL(wp) ::   z1_p2dt, zcoef, zzwi, zzws, zrhs   ! local scalars
-      REAL(wp) ::   ze3ua, ze3va
+      REAL(wp) ::   ze3ua, ze3va, zzz
+      REAL(wp), POINTER, DIMENSION(:,:)   ::  z2d
       REAL(wp), POINTER, DIMENSION(:,:,:) ::  zwi, zwd, zws
       !!----------------------------------------------------------------------
       !
@@ -256,17 +259,6 @@ CONTAINS
          END DO
       END DO
 
-#if ! defined key_dynspg_ts
-      ! Normalization to obtain the general momentum trend ua
-      DO jk = 1, jpkm1
-         DO jj = 2, jpjm1   
-            DO ji = fs_2, fs_jpim1   ! vector opt.
-               ua(ji,jj,jk) = ( ua(ji,jj,jk) - ub(ji,jj,jk) ) * z1_p2dt
-            END DO
-         END DO
-      END DO
-#endif
-
       ! 3. Vertical diffusion on v
       ! ---------------------------
       ! Matrix and second member construction
@@ -356,11 +348,40 @@ CONTAINS
          END DO
       END DO
 
-      ! Normalization to obtain the general momentum trend va
+      IF( iom_use( 'dispkevfo' ) ) THEN   ! ocean kinetic energy dissipation per unit area
+         !                                ! due to v friction (v=vertical) 
+         !                                ! see NEMO_book appendix C, §C.8 (N.B. here averaged at t-points)
+         !                                ! Note that formally, in a Leap-Frog environment, the shear**2 should be the product of 
+         !                                ! now by before shears, i.e. the source term of TKE (local positivity is not ensured).
+         CALL wrk_alloc(jpi,jpj,   z2d )
+         z2d(:,:) = 0._wp
+         DO jk = 1, jpkm1
+            DO jj = 2, jpjm1
+               DO ji = 2, jpim1
+                  z2d(ji,jj) = z2d(ji,jj)  +  (                                                                                  &
+                     &   avmu(ji  ,jj,jk) * ( ua(ji  ,jj,jk-1) - ua(ji  ,jj,jk) )**2 / fse3uw(ji  ,jj,jk) * wumask(ji  ,jj,jk)   &
+                     & + avmu(ji-1,jj,jk) * ( ua(ji-1,jj,jk-1) - ua(ji-1,jj,jk) )**2 / fse3uw(ji-1,jj,jk) * wumask(ji-1,jj,jk)   &
+                     & + avmv(ji,jj  ,jk) * ( va(ji,jj  ,jk-1) - va(ji,jj  ,jk) )**2 / fse3vw(ji,jj  ,jk) * wvmask(ji,jj  ,jk)   &
+                     & + avmv(ji,jj-1,jk) * ( va(ji,jj-1,jk-1) - va(ji,jj-1,jk) )**2 / fse3vw(ji,jj-1,jk) * wvmask(ji,jj-1,jk)   &
+                     &                        )
+               END DO
+            END DO
+         END DO
+         zzz= - 0.5_wp* rau0           ! caution sign minus here
+         z2d(:,:) = zzz * z2d(:,:) 
+         CALL lbc_lnk( z2d,'T', 1. )
+         CALL iom_put( 'dispkevfo', z2d )
+         CALL wrk_dealloc(jpi,jpj,   z2d )
+      ENDIF
+
 #if ! defined key_dynspg_ts
+!!gm this can be removed if tranxt is changed like in the trunk so that implicit outcome with 
+!!gm the after velocity, not a trend
+      ! Normalization to obtain the general momentum trend ua
       DO jk = 1, jpkm1
          DO jj = 2, jpjm1   
             DO ji = fs_2, fs_jpim1   ! vector opt.
+               ua(ji,jj,jk) = ( ua(ji,jj,jk) - ub(ji,jj,jk) ) * z1_p2dt
                va(ji,jj,jk) = ( va(ji,jj,jk) - vb(ji,jj,jk) ) * z1_p2dt
             END DO
          END DO
@@ -391,6 +412,7 @@ CONTAINS
       ENDIF
       !
       CALL wrk_dealloc( jpi,jpj,jpk, zwi, zwd, zws) 
+      !
       !
       IF( nn_timing == 1 )  CALL timing_stop('dyn_zdf_imp')
       !

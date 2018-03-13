@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/nemo/svn/!svn/ver/6459/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE
+END
+sette_rpt.sh
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/nemo/svn/!svn/ver/6224/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/sette_rpt.sh
+END
+input_GYRE.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_GYRE.cfg
+END
+input_ORCA2_OFF_PISCES.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_ORCA2_OFF_PISCES.cfg
+END
+input_ORCA2_LIM.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_ORCA2_LIM.cfg
+END
+input_ORCA2_LIM_OBS.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_ORCA2_LIM_OBS.cfg
+END
+iodef_sette.xml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/iodef_sette.xml
+END
+input_AMM12.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_AMM12.cfg
+END
+input_ORCA2_LIM_PISCES.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_ORCA2_LIM_PISCES.cfg
+END
+SETTE.pdf
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/SETTE.pdf
+END
+input_ORCA2_LIM_AGRIF.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_ORCA2_LIM_AGRIF.cfg
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/README
+END
+sette.sh
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/nemo/svn/!svn/ver/6459/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/sette.sh
+END
+param.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/param.cfg
+END
+sette_xios.sh
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/sette_xios.sh
+END
+prepare_job.sh
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/nemo/svn/!svn/ver/6224/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/prepare_job.sh
+END
+input_SAS.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_SAS.cfg
+END
+sette_beginner.sh
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/sette_beginner.sh
+END
+prepare_exe_dir.sh
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/nemo/svn/!svn/ver/6224/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/prepare_exe_dir.sh
+END
+input_ORCA2_LIM3.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_ORCA2_LIM3.cfg
+END
+fcm_job.sh
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/fcm_job.sh
+END
+sette_rpt
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/nemo/svn/!svn/ver/5588/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/sette_rpt
+END
+all_functions.sh
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/6224/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/all_functions.sh
+END
+input_ISOMIP.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/input_ISOMIP.cfg
+END

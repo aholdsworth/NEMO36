@@ -22,8 +22,8 @@ MODULE lib_mpp
    !!                          'mpp_lnk_bdy_2d' and 'mpp_lnk_obc_2d' routines and update
    !!                          the mppobc routine to optimize the BDY and OBC communications
    !!            3.5  !  2013  ( C. Ethe, G. Madec ) message passing arrays as local variables 
-   !!            3.5  !  2013 (S.Mocavero, I.Epicoco - CMCC) north fold optimizations
-   !!            3.6  !  2015 (O. Tintó and M. Castrillo - BSC) Added 'mpp_lnk_2d_multiple', 'mpp_lbc_north_2d_multiple', 'mpp_max_multiple' 
+   !!            3.5  !  2013  (S.Mocavero, I.Epicoco - CMCC) north fold optimizations
+   !!            3.6  !  2015  (O. Tintó and M. Castrillo - BSC) Added 'mpp_lnk_2d_multiple', 'mpp_lbc_north_2d_multiple', 'mpp_max_multiple' 
    !!----------------------------------------------------------------------
 
    !!----------------------------------------------------------------------
@@ -43,7 +43,7 @@ MODULE lib_mpp
    !!   mpp_lnk_3d_gather :  Message passing manadgement for two 3D arrays
    !!   mpp_lnk_e     : interface (defined in lbclnk) for message passing of 2d array with extra halo (mpp_lnk_2d_e)
    !!   mpp_lnk_icb   : interface for message passing of 2d arrays with extra halo for icebergs (mpp_lnk_2d_icb)
-   !!   mpprecv         :
+   !!   mpprecv       :
    !!   mppsend       :   SUBROUTINE mpp_ini_znl
    !!   mppscatter    :
    !!   mppgather     :
@@ -171,7 +171,7 @@ MODULE lib_mpp
    INTEGER, PUBLIC                                  ::   ityp
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: lib_mpp.F90 7531 2017-01-06 15:13:06Z timgraham $
+   !! $Id: lib_mpp.F90 8537 2017-09-19 05:46:09Z gm $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -2879,26 +2879,21 @@ CONTAINS
       !! ** Action  :   ptab with update value at its periphery
       !!
       !!----------------------------------------------------------------------
-
-      USE lbcnfd          ! north fold
-
-      INCLUDE 'mpif.h'
-
       REAL(wp), DIMENSION(jpi,jpj,jpk), INTENT(inout) ::   ptab     ! 3D array on which the boundary condition is applied
       CHARACTER(len=1)                , INTENT(in   ) ::   cd_type  ! define the nature of ptab array grid-points
       !                                                             ! = T , U , V , F , W points
       REAL(wp)                        , INTENT(in   ) ::   psgn     ! =-1 the sign change across the north fold boundary
       !                                                             ! =  1. , the sign is kept
       INTEGER                         , INTENT(in   ) ::   ib_bdy   ! BDY boundary set
+      !
       INTEGER  ::   ji, jj, jk, jl             ! dummy loop indices
-      INTEGER  ::   imigr, iihom, ijhom        ! temporary integers
+      INTEGER  ::   imigr, iihom, ijhom        ! local integers
       INTEGER  ::   ml_req1, ml_req2, ml_err   ! for key_mpi_isend
-      REAL(wp) ::   zland
+      REAL(wp) ::   zland                      ! local scalar
       INTEGER, DIMENSION(MPI_STATUS_SIZE) ::   ml_stat   ! for key_mpi_isend
       !
       REAL(wp), DIMENSION(:,:,:,:), ALLOCATABLE ::   zt3ns, zt3sn   ! 3d for north-south & south-north
       REAL(wp), DIMENSION(:,:,:,:), ALLOCATABLE ::   zt3ew, zt3we   ! 3d for east-west & west-east
-
       !!----------------------------------------------------------------------
       
       ALLOCATE( zt3ns(jpi,jprecj,jpk,2), zt3sn(jpi,jprecj,jpk,2),   &
@@ -3081,7 +3076,8 @@ CONTAINS
       !
    END SUBROUTINE mpp_lnk_bdy_3d
 
-      SUBROUTINE mpp_lnk_bdy_2d( ptab, cd_type, psgn, ib_bdy )
+
+   SUBROUTINE mpp_lnk_bdy_2d( ptab, cd_type, psgn, ib_bdy )
       !!----------------------------------------------------------------------
       !!                  ***  routine mpp_lnk_bdy_2d  ***
       !!
@@ -3102,32 +3098,27 @@ CONTAINS
       !! ** Action  :   ptab with update value at its periphery
       !!
       !!----------------------------------------------------------------------
-
-      USE lbcnfd          ! north fold
-
-      INCLUDE 'mpif.h'
-
-      REAL(wp), DIMENSION(jpi,jpj)    , INTENT(inout) ::   ptab     ! 3D array on which the boundary condition is applied
-      CHARACTER(len=1)                , INTENT(in   ) ::   cd_type  ! define the nature of ptab array grid-points
-      !                                                             ! = T , U , V , F , W points
-      REAL(wp)                        , INTENT(in   ) ::   psgn     ! =-1 the sign change across the north fold boundary
-      !                                                             ! =  1. , the sign is kept
-      INTEGER                         , INTENT(in   ) ::   ib_bdy   ! BDY boundary set
+      REAL(wp), DIMENSION(jpi,jpj), INTENT(inout) ::   ptab     ! 3D array on which the boundary condition is applied
+      CHARACTER(len=1)            , INTENT(in   ) ::   cd_type  ! define the nature of ptab array grid-points
+      !                                                         ! = T , U , V , F , W points
+      REAL(wp)                    , INTENT(in   ) ::   psgn     ! =-1 the sign change across the north fold boundary
+      !                                                         ! =  1. , the sign is kept
+      INTEGER                     , INTENT(in   ) ::   ib_bdy   ! BDY boundary set
+      !
       INTEGER  ::   ji, jj, jl             ! dummy loop indices
-      INTEGER  ::   imigr, iihom, ijhom        ! temporary integers
+      INTEGER  ::   imigr, iihom, ijhom        ! local integers
       INTEGER  ::   ml_req1, ml_req2, ml_err   ! for key_mpi_isend
       REAL(wp) ::   zland
       INTEGER, DIMENSION(MPI_STATUS_SIZE) ::   ml_stat   ! for key_mpi_isend
       !
       REAL(wp), DIMENSION(:,:,:), ALLOCATABLE ::  zt2ns, zt2sn   ! 2d for north-south & south-north
       REAL(wp), DIMENSION(:,:,:), ALLOCATABLE ::  zt2ew, zt2we   ! 2d for east-west & west-east
-
       !!----------------------------------------------------------------------
 
       ALLOCATE( zt2ns(jpi,jprecj,2), zt2sn(jpi,jprecj,2),  &
          &      zt2ew(jpj,jpreci,2), zt2we(jpj,jpreci,2)   )
 
-      zland = 0.e0
+      zland = 0._wp
 
       ! 1. standard boundary treatment
       ! ------------------------------

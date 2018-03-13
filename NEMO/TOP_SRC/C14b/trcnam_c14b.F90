@@ -24,7 +24,7 @@ MODULE trcnam_c14b
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcnam_c14b.F90 4624 2014-04-28 12:09:03Z acc $ 
+   !! $Id: trcnam_c14b.F90 8353 2017-07-19 14:41:00Z lovato $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -54,6 +54,11 @@ CONTAINS
       NAMELIST/namc14date/ ndate_beg_b, nyear_res_b
       NAMELIST/namc14dia/  c14dia2d, c14dia3d     ! additional diagnostics
       !!-------------------------------------------------------------------
+      ctrcnm    (jp_c14b0) = 'C14B'
+      ctrcln    (jp_c14b0) = 'Bomb C14 Concentration'
+      ctrcun    (jp_c14b0) = 'ration'
+      ln_trc_ini(jp_c14b0) = .false.
+      ln_trc_wri(jp_c14b0) = .true.
       !                             ! Open namelist file
       CALL ctl_opn( numnatb_ref, 'namelist_c14b_ref'  ,     'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )
       CALL ctl_opn( numnatb_cfg, 'namelist_c14b_cfg'  ,     'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )   

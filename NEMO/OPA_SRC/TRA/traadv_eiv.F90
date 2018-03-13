@@ -43,7 +43,7 @@ MODULE traadv_eiv
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: traadv_eiv.F90 7494 2016-12-14 09:02:43Z timgraham $
+   !! $Id: traadv_eiv.F90 8627 2017-10-16 14:19:11Z gm $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -164,15 +164,17 @@ CONTAINS
          CALL iom_put( "uoce_eiv", u_eiv )    ! i-eiv current
          CALL iom_put( "voce_eiv", v_eiv )    ! j-eiv current
          CALL iom_put( "woce_eiv", w_eiv )    ! vert. eiv current
+         !
          IF( iom_use('weiv_masstr') ) THEN   ! vertical mass transport & its square value
-           z2d(:,:) = rau0 * e12t(:,:)
-           DO jk = 1, jpk
-              z3d(:,:,jk) = w_eiv(:,:,jk) * z2d(:,:)
-           END DO
-           CALL iom_put( "weiv_masstr" , z3d )  
+            z2d(:,:) = rau0 * e12t(:,:)
+            DO jk = 1, jpk
+               z3d(:,:,jk) = w_eiv(:,:,jk) * z2d(:,:)
+            END DO
+            CALL iom_put( "weiv_masstr" , z3d )  
          ENDIF
+         !
          IF( iom_use("ueiv_masstr") .OR. iom_use("ueiv_heattr") .OR. iom_use('ueiv_heattr3d')        &
-                                    .OR. iom_use("ueiv_salttr") .OR. iom_use('ueiv_salttr3d') ) THEN
+            &                       .OR. iom_use("ueiv_salttr") .OR. iom_use('ueiv_salttr3d') ) THEN
             z3d(:,:,jpk) = 0.e0
             z2d(:,:) = 0.e0
             DO jk = 1, jpkm1
@@ -181,7 +183,7 @@ CONTAINS
             END DO
             CALL iom_put( "ueiv_masstr", z3d )                  ! mass transport in i-direction
          ENDIF
-
+         !
          IF( iom_use('ueiv_heattr') .OR. iom_use('ueiv_heattr3d') ) THEN
             zztmp = 0.5 * rcp 
             z2d(:,:) = 0.e0 
@@ -203,7 +205,7 @@ CONTAINS
                CALL iom_put( "ueiv_heattr3d", zztmp * z3d_T )              ! 3D heat transport in i-direction
             ENDIF
          ENDIF
-
+         !
          IF( iom_use('ueiv_salttr') .OR. iom_use('ueiv_salttr3d') ) THEN
             zztmp = 0.5 * 0.001
             z2d(:,:) = 0.e0 
@@ -225,7 +227,7 @@ CONTAINS
                CALL iom_put( "ueiv_salttr3d", zztmp * z3d_T )              ! 3D salt transport in i-direction
             ENDIF
          ENDIF
-
+         !
          IF( iom_use("veiv_masstr") .OR. iom_use("veiv_heattr") .OR. iom_use('veiv_heattr3d')       &
                                     .OR. iom_use("veiv_salttr") .OR. iom_use('veiv_salttr3d') ) THEN
             z3d(:,:,jpk) = 0.e0
@@ -234,7 +236,7 @@ CONTAINS
             END DO
             CALL iom_put( "veiv_masstr", z3d )                  ! mass transport in j-direction
          ENDIF
-            
+         !   
          IF( iom_use('veiv_heattr') .OR. iom_use('veiv_heattr3d') ) THEN
             zztmp = 0.5 * rcp 
             z2d(:,:) = 0.e0 
@@ -256,7 +258,7 @@ CONTAINS
                CALL iom_put( "veiv_heattr3d", zztmp * z3d_T )              ! 3D heat transport in j-direction
             ENDIF
          ENDIF
-
+         !
          IF( iom_use('veiv_salttr') .OR. iom_use('veiv_salttr3d') ) THEN
             zztmp = 0.5 * 0.001
             z2d(:,:) = 0.e0 
@@ -278,7 +280,7 @@ CONTAINS
                CALL iom_put( "veiv_salttr3d", zztmp * z3d_T )              ! 3D salt transport in i-direction
             ENDIF
          ENDIF
-
+         !
          IF( iom_use('weiv_masstr') .OR. iom_use('weiv_heattr3d') .OR. iom_use('weiv_salttr3d')) THEN   ! vertical mass transport & its square value
            z2d(:,:) = rau0 * e12t(:,:)
            DO jk = 1, jpk
@@ -286,7 +288,7 @@ CONTAINS
            END DO
            CALL iom_put( "weiv_masstr" , z3d )                  ! mass transport in k-direction
          ENDIF
-
+         !
          IF( iom_use('weiv_heattr3d') ) THEN
             zztmp = 0.5 * rcp 
             DO jk = 1, jpkm1
@@ -299,7 +301,7 @@ CONTAINS
             CALL lbc_lnk( z3d_T, 'T', 1. )
             CALL iom_put( "weiv_heattr3d", zztmp * z3d_T )                 ! 3D heat transport in k-direction
          ENDIF
-
+         !
          IF( iom_use('weiv_salttr3d') ) THEN
             zztmp = 0.5 * 0.001 
             DO jk = 1, jpkm1
@@ -312,33 +314,52 @@ CONTAINS
             CALL lbc_lnk( z3d_T, 'T', 1. )
             CALL iom_put( "weiv_salttr3d", zztmp * z3d_T )                 ! 3D salt transport in k-direction
          ENDIF
-
-    END IF
-!
-    IF( ln_diaptr .AND. cdtype == 'TRA' ) THEN
-       z3d(:,:,:) = 0._wp
-       DO jk = 1, jpkm1
-          DO jj = 2, jpjm1
-             DO ji = fs_2, fs_jpim1   ! vector opt.
-                z3d(ji,jj,jk) = v_eiv(ji,jj,jk) * 0.5 * (tsn(ji,jj,jk,jp_tem)+tsn(ji,jj+1,jk,jp_tem)) &
-                &             * e1v(ji,jj) * fse3v(ji,jj,jk)
-             END DO
-          END DO
-       END DO
-       CALL dia_ptr_ohst_components( jp_tem, 'eiv', z3d )
-       z3d(:,:,:) = 0._wp
-       DO jk = 1, jpkm1
-          DO jj = 2, jpjm1
-             DO ji = fs_2, fs_jpim1   ! vector opt.
-                z3d(ji,jj,jk) = v_eiv(ji,jj,jk) * 0.5 * (tsn(ji,jj,jk,jp_sal)+tsn(ji,jj+1,jk,jp_sal)) &
-                &             * e1v(ji,jj) * fse3v(ji,jj,jk)
-             END DO
-          END DO
-       END DO
-       CALL dia_ptr_ohst_components( jp_sal, 'eiv', z3d )
-    ENDIF
-
-    IF( ln_KE_trd ) CALL trd_dyn(u_eiv, v_eiv, jpdyn_eivke, kt )
+         !
+         IF( ln_diaptr ) THEN
+            z3d(:,:,:) = 0._wp
+            DO jk = 1, jpkm1
+               DO jj = 2, jpjm1
+                  DO ji = fs_2, fs_jpim1   ! vector opt.
+                     z3d(ji,jj,jk) = v_eiv(ji,jj,jk) * 0.5 * (tsn(ji,jj,jk,jp_tem)+tsn(ji,jj+1,jk,jp_tem)) &
+                        &             * e1v(ji,jj) * fse3v(ji,jj,jk)
+                  END DO
+               END DO
+            END DO
+            CALL dia_ptr_ohst_components( jp_tem, 'eiv', z3d )
+            z3d(:,:,:) = 0._wp
+            DO jk = 1, jpkm1
+               DO jj = 2, jpjm1
+                  DO ji = fs_2, fs_jpim1   ! vector opt.
+                     z3d(ji,jj,jk) = v_eiv(ji,jj,jk) * 0.5 * (tsn(ji,jj,jk,jp_sal)+tsn(ji,jj+1,jk,jp_sal)) &
+                     &             * e1v(ji,jj) * fse3v(ji,jj,jk)
+                  END DO
+               END DO
+            END DO
+            CALL dia_ptr_ohst_components( jp_sal, 'eiv', z3d )
+         ENDIF
+         !
+!!gm add CMIP6 diag here instead of been done in trdken.F90
+         !
+         IF( iom_use('eketrd_eiv') ) THEN     ! tendency of EKE from parameterized eddy advection
+            ! CMIP6 diagnostic tknebto = tendency of EKE from parameterized mesoscale eddy advection
+            ! = vertical_integral( k (N S)^2 ) rho dz   where rho = rau0 and S = isoneutral slope.
+            z2d(:,:) = 0._wp
+            DO jk = 1, jpkm1
+               DO ji = 1, jpi
+                  DO jj = 1,jpj
+                     z2d(ji,jj) = z2d(ji,jj) + rau0 * fsaeiw(ji,jj,jk)                 &
+                        &                    * rn2b(ji,jj,jk) * fse3w(ji,jj,jk)        &
+                        &                    * (  wslpi(ji,jj,jk) * wslpi(ji,jj,jk)    &
+                        &                       + wslpj(ji,jj,jk) * wslpj(ji,jj,jk)  ) * wmask(ji,jj,jk)
+                  END DO
+               END DO
+            END DO
+            CALL iom_put( "eketrd_eiv", z2d )
+         ENDIF
+         !
+!!gm  removed from trdken.F90    IF( ln_KE_trd )   CALL trd_dyn(u_eiv, v_eiv, jpdyn_eivke, kt )
+         !
+      ENDIF
 # endif  
 
 # if defined key_diaeiv 

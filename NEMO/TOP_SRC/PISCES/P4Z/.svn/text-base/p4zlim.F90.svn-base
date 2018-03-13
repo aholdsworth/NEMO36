@@ -191,9 +191,14 @@ CONTAINS
          DO jj = 1, jpj
             DO ji = 1, jpi
                ! denitrification factor computed from O2 levels
-               nitrfac(ji,jj,jk) = MAX(  0.e0, 0.4 * ( 6.e-6  - trb(ji,jj,jk,jpoxy) )    &
+               nitrfac(ji,jj,jk)  = MAX(  0.e0, 0.4 * ( 6.e-6  - trb(ji,jj,jk,jpoxy) )    &
                   &                                / ( oxymin + trb(ji,jj,jk,jpoxy) )  )
-               nitrfac(ji,jj,jk) = MIN( 1., nitrfac(ji,jj,jk) )
+               nitrfac(ji,jj,jk)  = MIN( 1., nitrfac(ji,jj,jk) )
+               !
+               ! denitrification factor computed from NO3 levels
+               nitrfac2(ji,jj,jk) = MAX( 0.e0, ( 1.E-6 - trb(ji,jj,jk,jpno3) )  &
+                  &                               / ( 1.E-6 + trb(ji,jj,jk,jpno3) ) )
+               nitrfac2(ji,jj,jk) = MIN( 1., nitrfac2(ji,jj,jk) )
             END DO
          END DO
       END DO
@@ -265,6 +270,7 @@ CONTAINS
       ENDIF
       !
       nitrfac (:,:,:) = 0._wp
+      nitrfac2(:,:,:) = 0._wp
       !
    END SUBROUTINE p4z_lim_init
 

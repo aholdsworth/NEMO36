@@ -1,0 +1,1 @@
+/home/amh001/NAA_NEMO/NEMO/TOP_SRC/MY_TRC/trcice_my_trc.F90

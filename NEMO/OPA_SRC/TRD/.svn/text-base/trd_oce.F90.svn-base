@@ -75,7 +75,6 @@ MODULE trd_oce
    INTEGER, PUBLIC, PARAMETER ::   jpdyn_ken  = 13     !: use for calculation of KE
    INTEGER, PUBLIC, PARAMETER ::   jpdyn_spgflt  = 14  !: filter contribution to surface pressure gradient (spg_flt)
    INTEGER, PUBLIC, PARAMETER ::   jpdyn_spgexp  = 15  !: explicit contribution to surface pressure gradient (spg_flt)
-   INTEGER, PUBLIC, PARAMETER ::   jpdyn_eivke   = 16  !: K.E trend from Gent McWilliams scheme
    !
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)

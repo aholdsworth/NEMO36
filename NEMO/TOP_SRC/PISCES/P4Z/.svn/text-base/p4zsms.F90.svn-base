@@ -451,13 +451,13 @@ CONTAINS
       !!---------------------------------------------------------------------
 
       IF( kt == nittrc000 ) THEN 
+         xfact1 = rfact2r * 12. / 1.e15 * ryyss    ! conversion molC/kt --> PgC/yr
+         xfact2 = 1.e+3 * rno3 * 14. / 1.e12 * ryyss   ! conversion molC/l/s ----> TgN/m3/yr
+         xfact3 = 1.e+3 * rfact2r * rno3   ! conversion molC/l/kt ----> molN/m3/s
          IF( ln_check_mass .AND. lwp) THEN      !   Open budget file of NO3, ALK, Si, Fer
             CALL ctl_opn( numco2, 'carbon.budget'  , 'REPLACE', 'FORMATTED', 'SEQUENTIAL', -1, 6, .FALSE., narea )
             CALL ctl_opn( numnut, 'nutrient.budget', 'REPLACE', 'FORMATTED', 'SEQUENTIAL', -1, 6, .FALSE., narea )
             CALL ctl_opn( numnit, 'nitrogen.budget', 'REPLACE', 'FORMATTED', 'SEQUENTIAL', -1, 6, .FALSE., narea )
-            xfact1 = rfact2r * 12. / 1.e15 * ryyss    ! conversion molC/kt --> PgC/yr
-            xfact2 = 1.e+3 * rno3 * 14. / 1.e12 * ryyss   ! conversion molC/l/s ----> TgN/m3/yr
-            xfact3 = 1.e+3 * rfact2r * rno3   ! conversion molC/l/kt ----> molN/m3/s
             cltxt='time-step   Alkalinity        Nitrate        Phosphorus         Silicate           Iron'
             IF( lwp ) WRITE(numnut,*)  TRIM(cltxt)
             IF( lwp ) WRITE(numnut,*) 
@@ -530,17 +530,13 @@ CONTAINS
       ! --------------------------------------------------------------------------------
       IF( iom_use( "tnfix" ) .OR.  ( ln_check_mass .AND. kt == nitend )  ) THEN
          znitrpottot  = glob_sum ( nitrpot(:,:,:) * nitrfix * cvol(:,:,:) )
-         CALL iom_put( "tnfix"  , znitrpottot * 1.e+3 * rno3 )  ! Global  nitrogen fixation molC/l  to molN/m3 
+         CALL iom_put( "tnfix"  , znitrpottot * xfact3 )  ! Global  nitrogen fixation molC/l  to molN/m3 
       ENDIF
       !
       IF( iom_use( "tdenit" ) .OR.  ( ln_check_mass .AND. kt == nitend )  ) THEN
-         zrdenittot   = glob_sum ( denitr(:,:,:) * rdenit * xnegtr(:,:,:) * cvol(:,:,:) )
-         CALL iom_put( "tdenit"  , zrdenittot * 1.e+3 * rno3 )  ! Total denitrification molC/l to molN/m3 
-      ENDIF
-      !
-      IF( iom_use( "Sdenit" ) .OR.  ( ln_check_mass .AND. kt == nitend )  ) THEN
-         zsdenittot   = glob_sum ( sdenit(:,:) * e1e2t(:,:) )
-         CALL iom_put( "Sdenit", sdenit(:,:) * xfact3 * tmask(:,:,1) )  ! Nitrate reduction in the sediments
+         zrdenittot = glob_sum ( denitr(:,:,:) * rdenit * xnegtr(:,:,:) * cvol(:,:,:) ) ! denitrification in the water column
+         zsdenittot = glob_sum ( sdenit(:,:) * e1e2t(:,:) * tmask(:,:,1) )              ! denitrification in the sediments
+         CALL iom_put( "tdenit"  , ( zrdenittot + zsdenittot ) * xfact3 )               ! Total denitrification in molN/m3 
       ENDIF
 
       IF( ln_check_mass .AND. kt == nitend ) THEN   ! Compute the budget of NO3, ALK, Si, Fer

@@ -132,7 +132,7 @@ CONTAINS
       !
 
       IF( lk_iomput .AND. knt == nrdttrc ) THEN
-         IF( iom_use( "PH"     ) ) CALL iom_put( "PH"    , -1. * LOG10( hi(:,:,:) )          * tmask(:,:,:) )
+         IF( iom_use( "PH"     ) ) CALL iom_put( "PH"    , -1. * LOG10( MAX( rtrn, hi(:,:,:) ) )  * tmask(:,:,:) )
          IF( iom_use( "CO3"    ) ) CALL iom_put( "CO3"   , zco3(:,:,:)    * 1.e+3            * tmask(:,:,:) )
          IF( iom_use( "CO3sat" ) ) CALL iom_put( "CO3sat", zco3sat(:,:,:) * 1.e+3            * tmask(:,:,:) )
          IF( iom_use( "DCAL"   ) ) CALL iom_put( "DCAL"  , zcaldiss(:,:,:) * 1.e+3 * rfact2r * tmask(:,:,:) )

@@ -1,0 +1,48 @@
+# Intel compiler on bugaboo.westgrid.ca
+#
+# NCDF_HOME   root directory containing lib and include subdirectories for netcdf4
+# HDF5_HOME   root directory containing lib and include subdirectories for HDF5
+# XIOS_HOME   root directory containing lib for XIOS
+#
+# NCDF_INC    netcdf4 include file
+# NCDF_LIB    netcdf4 library
+# XIOS_INC    xios include file    (taken into account only if key_iomput is activated)
+# XIOS_LIB    xios library         (taken into account only if key_iomput is activated)
+#
+# FC          Fortran compiler command
+# FCFLAGS     Fortran compiler flags
+# FFLAGS      Fortran 77 compiler flags
+# LD          linker
+# LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries
+# FPPFLAGS    pre-processing flags
+# AR          assembler
+# ARFLAGS     assembler flags
+# MK          make
+# USER_INC    complete list of include files
+# USER_LIB    complete list of libraries to pass to the linker
+#
+# Note that:
+#  - unix variables "$..." are accpeted and will be evaluated before calling fcm.
+#  - fcm variables start with a % (and not a $)
+
+%XIOS_HOME           $HOME/XIOS
+
+%NCDF_LIB            -lnetcdf -lnetcdff -lpnetcdf -lhdf5 -lhdf5_hl
+%XIOS_INC            -I%XIOS_HOME/inc
+%XIOS_LIB            -L%XIOS_HOME/lib -lxios
+
+%CC                   icc
+%CFLAGS               -O0
+
+%CPP	             cpp
+%FC                  mpif90
+%FCFLAGS             -c -fpp -r8 -O3 -assume byterecl -heap-arrays -diag-disable 10010 -xSSE4.1 -axSSE4.2
+%FFLAGS              %FCFLAGS
+%LD                  mpif90
+%LDFLAGS             -lstdc++ -shared-intel -diag-disable 10010
+%FPPFLAGS            -P -traditional
+%AR                  ar
+%ARFLAGS             rcs
+%MK                  make
+%USER_INC            %XIOS_INC
+%USER_LIB            %XIOS_LIB %NCDF_LIB

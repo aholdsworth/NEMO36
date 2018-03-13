@@ -17,9 +17,11 @@ MODULE dynldf_bilap
    !!----------------------------------------------------------------------
    USE oce             ! ocean dynamics and tracers
    USE dom_oce         ! ocean space and time domain
+   USE phycst          ! physical constants
    USE ldfdyn_oce      ! ocean dynamics: lateral physics
    !
    USE in_out_manager  ! I/O manager
+   USE iom             ! I/O library
    USE lbclnk          ! ocean lateral boundary conditions (or mpp link)
    USE wrk_nemo        ! Memory Allocation
    USE timing          ! Timing
@@ -35,7 +37,7 @@ MODULE dynldf_bilap
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: dynldf_bilap.F90 4990 2014-12-15 16:42:49Z timgraham $ 
+   !! $Id: dynldf_bilap.F90 8627 2017-10-16 14:19:11Z gm $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -74,10 +76,11 @@ CONTAINS
       !!----------------------------------------------------------------------
       INTEGER, INTENT(in) ::   kt   ! ocean time-step index
       !
-      INTEGER  ::   ji, jj, jk                  ! dummy loop indices
-      REAL(wp) ::   zua, zva, zbt, ze2u, ze2v   ! temporary scalar
-      REAL(wp), POINTER, DIMENSION(:,:  ) :: zcu, zcv
-      REAL(wp), POINTER, DIMENSION(:,:,:) :: zuf, zut, zlu, zlv
+      INTEGER  ::   ji, jj, jk                       ! dummy loop indices
+      REAL(wp) ::   zua, zva, zbt, ze2u, ze2v, zzz   ! local scalar
+      REAL(wp), POINTER, DIMENSION(:,:  ) ::   zcu, zcv
+      REAL(wp), POINTER, DIMENSION(:,:,:) ::   zuf, zut, zlu, zlv
+      REAL(wp), ALLOCATABLE, DIMENSION(:,:) ::   z2d   ! 2D workspace 
       !!----------------------------------------------------------------------
       !
       IF( nn_timing == 1 )  CALL timing_start('dyn_ldf_bilap')
@@ -111,38 +114,63 @@ CONTAINS
             zuf(:,:,jk) = rotb(:,:,jk) * fse3f(:,:,jk)
             DO jj = 2, jpjm1
                DO ji = fs_2, fs_jpim1   ! vector opt.
-                  zlu(ji,jj,jk) = - ( zuf(ji,jj,jk) - zuf(ji,jj-1,jk) ) / ( e2u(ji,jj) * fse3u(ji,jj,jk) )   &
-                     &         + ( hdivb(ji+1,jj,jk) - hdivb(ji,jj,jk) ) / e1u(ji,jj)
+                  zlu(ji,jj,jk) = - (   zuf(ji  ,jj,jk) -   zuf(ji,jj-1,jk) ) / ( e2u(ji,jj) * fse3u(ji,jj,jk) )   &
+                     &            + ( hdivb(ji+1,jj,jk) - hdivb(ji,jj  ,jk) ) /   e1u(ji,jj)
    
-                  zlv(ji,jj,jk) = + ( zuf(ji,jj,jk) - zuf(ji-1,jj,jk) ) / ( e1v(ji,jj) * fse3v(ji,jj,jk) )   &
-                     &         + ( hdivb(ji,jj+1,jk) - hdivb(ji,jj,jk) ) / e2v(ji,jj)
+                  zlv(ji,jj,jk) = + (   zuf(ji,jj  ,jk) -   zuf(ji-1,jj,jk) ) / ( e1v(ji,jj) * fse3v(ji,jj,jk) )   &
+                     &            + ( hdivb(ji,jj+1,jk) - hdivb(ji  ,jj,jk) ) /   e2v(ji,jj)
                END DO
             END DO
          ELSE                            ! z-coordinate - full step
             DO jj = 2, jpjm1
                DO ji = fs_2, fs_jpim1   ! vector opt.
                   zlu(ji,jj,jk) = - ( rotb (ji  ,jj,jk) - rotb (ji,jj-1,jk) ) / e2u(ji,jj)   &
-                     &         + ( hdivb(ji+1,jj,jk) - hdivb(ji,jj  ,jk) ) / e1u(ji,jj)
+                     &            + ( hdivb(ji+1,jj,jk) - hdivb(ji,jj  ,jk) ) / e1u(ji,jj)
    
                   zlv(ji,jj,jk) = + ( rotb (ji,jj  ,jk) - rotb (ji-1,jj,jk) ) / e1v(ji,jj)   &
-                     &         + ( hdivb(ji,jj+1,jk) - hdivb(ji  ,jj,jk) ) / e2v(ji,jj)
+                     &            + ( hdivb(ji,jj+1,jk) - hdivb(ji  ,jj,jk) ) / e2v(ji,jj)
                END DO  
             END DO  
          ENDIF
       END DO
       CALL lbc_lnk( zlu, 'U', -1. )   ;   CALL lbc_lnk( zlv, 'V', -1. )   ! Boundary conditions
 
-         
-      DO jk = 1, jpkm1
+      IF( iom_use('dispkexyfo') ) THEN   ! ocean kinetic energy dissipation per unit area
+         !                               ! due to xy friction (xy=lateral) 
+         !   see NEMO_book appendix C, §C.7.2 (N.B. here averaged at t-points)
+         !   local dissipation of KE at t-point due to bilaplacian operator is given by :
+         !      + ahmu mi( zlu**2 ) + mj( ahmv zlv**2 )
+         !   Note that a sign + is used as in v3.6 ahm is negative for bilaplacian viscosity
+         !
+         ! NB: ahm is negative when bilaplacian is used
+         ALLOCATE( z2d(jpi,jpj) )
+         z2d(:,:) = 0._wp
+         DO jk = 1, jpkm1
+            DO jj = 2, jpjm1
+               DO ji = 2, jpim1
+                  z2d(ji,jj) = z2d(ji,jj)                                                                  &
+                     &  +  (  fsahmu(ji,jj,jk)*zlu(ji,jj,jk)**2 + fsahmu(ji-1,jj,jk)*zlu(ji-1,jj,jk)**2    &
+                     &      + fsahmv(ji,jj,jk)*zlv(ji,jj,jk)**2 + fsahmv(ji,jj-1,jk)*zlv(ji,jj-1,jk)**2  ) * tmask(ji,jj,jk)
+               END DO
+            END DO
+         END DO
+         zzz = 0.5_wp * rau0
+         z2d(:,:) = zzz * z2d(:,:) 
+         CALL lbc_lnk( z2d,'T', 1. )
+         CALL iom_put( 'dispkexyfo', z2d )
+         DEALLOCATE( z2d )
+      ENDIF
+      
    
-         ! Third derivative
-         ! ----------------
-         
+      ! Third derivative
+      ! ----------------
+      !
+      DO jk = 1, jpkm1
+         !
          ! Multiply by the eddy viscosity coef. (at u- and v-points)
-         zlu(:,:,jk) = zlu(:,:,jk) * ( fsahmu(:,:,jk) * (1-nkahm_smag) + nkahm_smag)
-
-         zlv(:,:,jk) = zlv(:,:,jk) * ( fsahmv(:,:,jk) * (1-nkahm_smag) + nkahm_smag)
-         
+         zlu(:,:,jk) = zlu(:,:,jk) * fsahmu(:,:,jk) 
+         zlv(:,:,jk) = zlv(:,:,jk) * fsahmv(:,:,jk)
+         !         
          ! Contravariant "laplacian"
          zcu(:,:) = e1u(:,:) * zlu(:,:,jk)
          zcv(:,:) = e2v(:,:) * zlv(:,:,jk)
@@ -151,8 +179,8 @@ CONTAINS
          DO jj = 1, jpjm1
             DO ji = 1, fs_jpim1   ! vector opt.
                zuf(ji,jj,jk) = fmask(ji,jj,jk) * (  zcv(ji+1,jj  ) - zcv(ji,jj)      &
-                  &                            - zcu(ji  ,jj+1) + zcu(ji,jj)  )   &
-                  &       * fse3f(ji,jj,jk) / ( e1f(ji,jj)*e2f(ji,jj) )
+                  &                               - zcu(ji  ,jj+1) + zcu(ji,jj)  )   &
+                  &       * fse3f(ji,jj,jk) * r1_e12f(ji,jj)
             END DO  
          END DO  
 
@@ -174,17 +202,12 @@ CONTAINS
          END DO
       END DO
 
-
       ! boundary conditions on the laplacian curl and div (zuf,zut)
 !!bug gm no need to do this 2 following lbc...
       CALL lbc_lnk( zuf, 'F', 1. )
       CALL lbc_lnk( zut, 'T', 1. )
 
-      DO jk = 1, jpkm1      
-   
-         ! Bilaplacian
-         ! -----------
-
+      DO jk = 1, jpkm1               ! Bilaplacian
          DO jj = 2, jpjm1
             DO ji = fs_2, fs_jpim1   ! vector opt.
                ze2u = e2u(ji,jj) * fse3u(ji,jj,jk)
@@ -196,11 +219,10 @@ CONTAINS
                zva = + ( zuf(ji,jj  ,jk) - zuf(ji-1,jj,jk) ) / ze2v   &
                   &  + ( zut(ji,jj+1,jk) - zut(ji  ,jj,jk) ) / e2v(ji,jj)
                ! add it to the general momentum trends
-               ua(ji,jj,jk) = ua(ji,jj,jk) + zua * ( fsahmu(ji,jj,jk)*nkahm_smag +(1 -nkahm_smag ))
-               va(ji,jj,jk) = va(ji,jj,jk) + zva * ( fsahmv(ji,jj,jk)*nkahm_smag +(1 -nkahm_smag ))
+               ua(ji,jj,jk) = ua(ji,jj,jk) + zua
+               va(ji,jj,jk) = va(ji,jj,jk) + zva
             END DO
          END DO
-
          !                                             ! ===============
       END DO                                           !   End of slab
       !                                                ! ===============

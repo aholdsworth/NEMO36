@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/nemo/svn/!svn/ver/7751/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF
+END
+nemo_mpi.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/nemo_mpi.h
+END
+agrif_opa.in
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/agrif_opa.in
+END

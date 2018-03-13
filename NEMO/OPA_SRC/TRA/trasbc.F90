@@ -43,7 +43,7 @@ MODULE trasbc
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.7 , NEMO Consortium (2014)
-   !! $Id: trasbc.F90 6688 2016-06-13 12:50:45Z lovato $
+   !! $Id: trasbc.F90 7784 2017-03-10 16:12:32Z cetlod $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -247,15 +247,6 @@ CONTAINS
                   &              + zfact * (risf_tsc_b(ji,jj,jp_sal) + risf_tsc(ji,jj,jp_sal)) * r1_hisf_tbl(ji,jj) * ralpha(ji,jj) 
             END DO
          END DO
-         IF( lrst_oce ) THEN
-            IF(lwp) WRITE(numout,*)
-            IF(lwp) WRITE(numout,*) 'sbc : isf surface tracer content forcing fields written in ocean restart file ',   &
-               &                    'at it= ', kt,' date= ', ndastp
-            IF(lwp) WRITE(numout,*) '~~~~'
-            CALL iom_rstput( kt, nitrst, numrow, 'fwf_isf_b', fwfisf(:,:)          )
-            CALL iom_rstput( kt, nitrst, numrow, 'isf_hc_b' , risf_tsc(:,:,jp_tem) )
-            CALL iom_rstput( kt, nitrst, numrow, 'isf_sc_b' , risf_tsc(:,:,jp_sal) )
-         ENDIF
       END IF
       !
       !----------------------------------------

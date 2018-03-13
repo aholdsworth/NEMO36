@@ -66,7 +66,7 @@ MODULE sbcmod
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO-consortium (2011) 
-   !! $Id: sbcmod.F90 6459 2016-04-08 16:00:11Z lovato $
+   !! $Id: sbcmod.F90 7784 2017-03-10 16:12:32Z cetlod $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -299,6 +299,8 @@ CONTAINS
       !
       IF( ln_ssr           )   CALL sbc_ssr_init               ! Sea-Surface Restoring initialisation
       !
+      IF( nn_isf   /= 0    )   CALL sbc_isf_init               ! Compute iceshelves
+
                                CALL sbc_rnf_init               ! Runof initialisation
       !
       IF( nn_ice == 3      )   CALL sbc_lim_init               ! LIM3 initialisation
@@ -342,6 +344,10 @@ CONTAINS
          IF ( ln_rnf ) THEN
             rnf_b    (:,:  ) = rnf    (:,:  )
             rnf_tsc_b(:,:,:) = rnf_tsc(:,:,:)
+         ENDIF
+         IF( nn_isf /= 0  )  THEN
+            fwfisf_b  (:,:  ) = fwfisf  (:,:  )               
+            risf_tsc_b(:,:,:) = risf_tsc(:,:,:)              
          ENDIF
       ENDIF
       !                                            ! ---------------------------------------- !

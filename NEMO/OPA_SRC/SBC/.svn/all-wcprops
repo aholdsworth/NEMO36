@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 79
-/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC
+/nemo/svn/!svn/ver/8529/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC
 END
 tide_mod.F90
 K 25
@@ -13,19 +13,19 @@ albedo.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
-/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/albedo.F90
-END
-sbc_ice.F90
-K 25
-svn:wc:ra_dav:version-url
-V 91
-/nemo/svn/!svn/ver/6399/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbc_ice.F90
+/nemo/svn/!svn/ver/7814/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/albedo.F90
 END
 tide.h90
 K 25
 svn:wc:ra_dav:version-url
 V 88
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/tide.h90
+END
+sbc_ice.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/6399/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbc_ice.F90
 END
 sbcwave.F90
 K 25
@@ -43,7 +43,7 @@ sbc_oce.F90
 K 25
 svn:wc:ra_dav:version-url
 V 91
-/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbc_oce.F90
+/nemo/svn/!svn/ver/8368/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbc_oce.F90
 END
 geo2ocean.F90
 K 25
@@ -51,17 +51,23 @@ svn:wc:ra_dav:version-url
 V 93
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/geo2ocean.F90
 END
+sbcblk_clio.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/8529/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcblk_clio.F90
+END
 sbcfwb.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
 /nemo/svn/!svn/ver/5628/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcfwb.F90
 END
-sbcblk_clio.F90
+sbcmod.F90
 K 25
 svn:wc:ra_dav:version-url
-V 95
-/nemo/svn/!svn/ver/6399/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcblk_clio.F90
+V 90
+/nemo/svn/!svn/ver/7784/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcmod.F90
 END
 sbcdcy.F90
 K 25
@@ -69,17 +75,11 @@ svn:wc:ra_dav:version-url
 V 90
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcdcy.F90
 END
-sbcmod.F90
-K 25
-svn:wc:ra_dav:version-url
-V 90
-/nemo/svn/!svn/ver/6459/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcmod.F90
-END
 sbcisf.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
-/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcisf.F90
+/nemo/svn/!svn/ver/7982/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcisf.F90
 END
 sbcice_lim_2.F90
 K 25
@@ -115,7 +115,7 @@ sbcice_lim.F90
 K 25
 svn:wc:ra_dav:version-url
 V 94
-/nemo/svn/!svn/ver/6963/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcice_lim.F90
+/nemo/svn/!svn/ver/7778/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcice_lim.F90
 END
 sbcssm.F90
 K 25
@@ -129,17 +129,17 @@ svn:wc:ra_dav:version-url
 V 91
 /nemo/svn/!svn/ver/5912/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/updtide.F90
 END
-cpl_oasis3.F90
-K 25
-svn:wc:ra_dav:version-url
-V 94
-/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/cpl_oasis3.F90
-END
 sbcssr.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcssr.F90
+END
+cpl_oasis3.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/7846/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/cpl_oasis3.F90
 END
 fldread.F90
 K 25
@@ -151,13 +151,7 @@ sbcblk_mfs.F90
 K 25
 svn:wc:ra_dav:version-url
 V 94
-/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcblk_mfs.F90
-END
-sbccpl.F90
-K 25
-svn:wc:ra_dav:version-url
-V 90
-/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbccpl.F90
+/nemo/svn/!svn/ver/8145/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcblk_mfs.F90
 END
 sbcice_if.F90
 K 25
@@ -165,11 +159,17 @@ svn:wc:ra_dav:version-url
 V 93
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcice_if.F90
 END
+sbccpl.F90
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7963/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbccpl.F90
+END
 sbcblk_core.F90
 K 25
 svn:wc:ra_dav:version-url
 V 95
-/nemo/svn/!svn/ver/6811/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcblk_core.F90
+/nemo/svn/!svn/ver/8529/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcblk_core.F90
 END
 sbcapr.F90
 K 25
@@ -181,7 +181,7 @@ sbcrnf.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
-/nemo/svn/!svn/ver/6459/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcrnf.F90
+/nemo/svn/!svn/ver/7963/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/SBC/sbcrnf.F90
 END
 sbcflx.F90
 K 25

@@ -46,7 +46,7 @@ MODULE trdtra
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: trdtra.F90 7555 2017-01-13 13:31:43Z davestorkey $
+   !! $Id: trdtra.F90 8102 2017-05-31 09:08:52Z davestorkey $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -300,59 +300,72 @@ CONTAINS
       !! 
       !! ** Purpose :   output 3D tracer trends using IOM
       !!----------------------------------------------------------------------
-      REAL(wp), DIMENSION(:,:,:), INTENT(inout) ::   ptrdx   ! Temperature or U trend 
-      REAL(wp), DIMENSION(:,:,:), INTENT(inout) ::   ptrdy   ! Salinity    or V trend
-      INTEGER                   , INTENT(in   ) ::   ktrd    ! tracer trend index
-      INTEGER                   , INTENT(in   ) ::   kt      ! time step
-      !!
-      INTEGER ::   ji, jj, jk   ! dummy loop indices
-      INTEGER ::   ikbu, ikbv   ! local integers
-      REAL(wp), POINTER, DIMENSION(:,:)   ::   z2dx, z2dy   ! 2D workspace 
-      !!----------------------------------------------------------------------
-      !
-!!gm Rq: mask the trends already masked in trd_tra, but lbc_lnk should probably be added
-      !
-      SELECT CASE( ktrd )
-      CASE( jptra_xad  )   ;   CALL iom_put( "ttrd_xad" , ptrdx )        ! x- horizontal advection
-                               CALL iom_put( "strd_xad" , ptrdy )
-      CASE( jptra_yad  )   ;   CALL iom_put( "ttrd_yad" , ptrdx )        ! y- horizontal advection
-                               CALL iom_put( "strd_yad" , ptrdy )
-      CASE( jptra_zad  )   ;   CALL iom_put( "ttrd_zad" , ptrdx )        ! z- vertical   advection
-                               CALL iom_put( "strd_zad" , ptrdy )
-                               IF( .NOT. lk_vvl ) THEN                   ! cst volume : adv flux through z=0 surface
-                               	 CALL wrk_alloc( jpi, jpj, z2dx, z2dy )
-                                  z2dx(:,:) = wn(:,:,1) * tsn(:,:,1,jp_tem) / fse3t(:,:,1)
-                                  z2dy(:,:) = wn(:,:,1) * tsn(:,:,1,jp_sal) / fse3t(:,:,1)
-                                  CALL iom_put( "ttrd_sad", z2dx )
-                                  CALL iom_put( "strd_sad", z2dy )
-                                  CALL wrk_dealloc( jpi, jpj, z2dx, z2dy )
-                               ENDIF
-      CASE( jptra_totad  ) ;   CALL iom_put( "ttrd_totad" , ptrdx )        ! total   advection
-                               CALL iom_put( "strd_totad" , ptrdy )
-      CASE( jptra_ldf  )   ;   CALL iom_put( "ttrd_ldf" , ptrdx )        ! lateral diffusion
-                               CALL iom_put( "strd_ldf" , ptrdy )
-      CASE( jptra_zdf  )   ;   CALL iom_put( "ttrd_zdf" , ptrdx )        ! vertical diffusion (including Kz contribution)
-                               CALL iom_put( "strd_zdf" , ptrdy )
-      CASE( jptra_zdfp )   ;   CALL iom_put( "ttrd_zdfp", ptrdx )        ! PURE vertical diffusion (no isoneutral contribution)
-                               CALL iom_put( "strd_zdfp", ptrdy )
-      CASE( jptra_evd )    ;   CALL iom_put( "ttrd_evd", ptrdx )         ! EVD trend (convection)
-                               CALL iom_put( "strd_evd", ptrdy )
-      CASE( jptra_dmp  )   ;   CALL iom_put( "ttrd_dmp" , ptrdx )        ! internal restoring (damping)
-                               CALL iom_put( "strd_dmp" , ptrdy )
-      CASE( jptra_bbl  )   ;   CALL iom_put( "ttrd_bbl" , ptrdx )        ! bottom boundary layer
-                               CALL iom_put( "strd_bbl" , ptrdy )
-      CASE( jptra_npc  )   ;   CALL iom_put( "ttrd_npc" , ptrdx )        ! static instability mixing
-                               CALL iom_put( "strd_npc" , ptrdy )
-      CASE( jptra_nsr  )   ;   CALL iom_put( "ttrd_qns" , ptrdx(:,:,1) )        ! surface forcing + runoff (ln_rnf=T)
-                               CALL iom_put( "strd_cdt" , ptrdy(:,:,1) )        ! output as 2D surface fields
-      CASE( jptra_qsr  )   ;   CALL iom_put( "ttrd_qsr" , ptrdx )        ! penetrative solar radiat. (only on temperature)
-      CASE( jptra_bbc  )   ;   CALL iom_put( "ttrd_bbc" , ptrdx )        ! geothermal heating   (only on temperature)
-      CASE( jptra_atf  )   ;   CALL iom_put( "ttrd_atf" , ptrdx )        ! asselin time Filter
-                               CALL iom_put( "strd_atf" , ptrdy )
-      CASE( jptra_tot  )   ;   CALL iom_put( "ttrd_tot" , ptrdx )        ! model total trend
-                               CALL iom_put( "strd_tot" , ptrdy )
-      END SELECT
-      !
+     REAL(wp), DIMENSION(:,:,:), INTENT(inout) ::   ptrdx   ! Temperature or U trend 
+     REAL(wp), DIMENSION(:,:,:), INTENT(inout) ::   ptrdy   ! Salinity    or V trend
+     INTEGER                   , INTENT(in   ) ::   ktrd    ! tracer trend index
+     INTEGER                   , INTENT(in   ) ::   kt      ! time step
+     !!
+     INTEGER ::   ji, jj, jk   ! dummy loop indices
+     INTEGER ::   ikbu, ikbv   ! local integers
+     REAL(wp), POINTER, DIMENSION(:,:)   ::   z2dx, z2dy   ! 2D workspace 
+     !!----------------------------------------------------------------------
+     !
+     !!gm Rq: mask the trends already masked in trd_tra, but lbc_lnk should probably be added
+     !
+     ! Trends evaluated every time step that could go to the standard T file and can be output every ts into a 1ts file if 1ts output is selected
+     SELECT CASE( ktrd )
+     ! This total trend is done every time step
+     CASE( jptra_tot  )   ;   CALL iom_put( "ttrd_tot" , ptrdx )           ! model total trend
+        CALL iom_put( "strd_tot" , ptrdy )
+     END SELECT
+
+     ! These trends are done every second time step. When 1ts output is selected must go different (2ts) file from standard T-file
+     IF( MOD( kt, 2 ) == 0 ) THEN
+        SELECT CASE( ktrd )
+        CASE( jptra_xad  )   ;   CALL iom_put( "ttrd_xad" , ptrdx )        ! x- horizontal advection
+           CALL iom_put( "strd_xad" , ptrdy )
+        CASE( jptra_yad  )   ;   CALL iom_put( "ttrd_yad" , ptrdx )        ! y- horizontal advection
+           CALL iom_put( "strd_yad" , ptrdy )
+        CASE( jptra_zad  )   ;   CALL iom_put( "ttrd_zad" , ptrdx )        ! z- vertical   advection
+           CALL iom_put( "strd_zad" , ptrdy )
+           IF( .NOT. lk_vvl ) THEN                   ! cst volume : adv flux through z=0 surface
+              CALL wrk_alloc( jpi, jpj, z2dx, z2dy )
+              z2dx(:,:) = wn(:,:,1) * tsn(:,:,1,jp_tem) / fse3t(:,:,1)
+              z2dy(:,:) = wn(:,:,1) * tsn(:,:,1,jp_sal) / fse3t(:,:,1)
+              CALL iom_put( "ttrd_sad", z2dx )
+              CALL iom_put( "strd_sad", z2dy )
+              CALL wrk_dealloc( jpi, jpj, z2dx, z2dy )
+           ENDIF
+        CASE( jptra_totad  ) ;   CALL iom_put( "ttrd_totad" , ptrdx )      ! total   advection
+           CALL iom_put( "strd_totad" , ptrdy )
+        CASE( jptra_ldf  )   ;   CALL iom_put( "ttrd_ldf" , ptrdx )        ! lateral diffusion
+           CALL iom_put( "strd_ldf" , ptrdy )
+        CASE( jptra_zdf  )   ;   CALL iom_put( "ttrd_zdf" , ptrdx )        ! vertical diffusion (including Kz contribution)
+           CALL iom_put( "strd_zdf" , ptrdy )
+        CASE( jptra_zdfp )   ;   CALL iom_put( "ttrd_zdfp", ptrdx )        ! PURE vertical diffusion (no isoneutral contribution)
+           CALL iom_put( "strd_zdfp", ptrdy )
+        CASE( jptra_evd )    ;   CALL iom_put( "ttrd_evd", ptrdx )         ! EVD trend (convection)
+           CALL iom_put( "strd_evd", ptrdy )
+        CASE( jptra_dmp  )   ;   CALL iom_put( "ttrd_dmp" , ptrdx )        ! internal restoring (damping)
+           CALL iom_put( "strd_dmp" , ptrdy )
+        CASE( jptra_bbl  )   ;   CALL iom_put( "ttrd_bbl" , ptrdx )        ! bottom boundary layer
+           CALL iom_put( "strd_bbl" , ptrdy )
+        CASE( jptra_npc  )   ;   CALL iom_put( "ttrd_npc" , ptrdx )        ! static instability mixing
+           CALL iom_put( "strd_npc" , ptrdy )
+        CASE( jptra_bbc  )   ;   CALL iom_put( "ttrd_bbc" , ptrdx )        ! geothermal heating   (only on temperature)
+        CASE( jptra_nsr  )   ;   CALL iom_put( "ttrd_qns" , ptrdx(:,:,1) ) ! surface forcing + runoff (ln_rnf=T)
+           CALL iom_put( "strd_cdt" , ptrdy(:,:,1) )        ! output as 2D surface fields
+        CASE( jptra_qsr  )   ;   CALL iom_put( "ttrd_qsr" , ptrdx )        ! penetrative solar radiat. (only on temperature)
+        END SELECT
+        ! the Asselin filter trend  is also every other time step but needs to be lagged one time step
+        ! Even when 1ts output is selected can go to the same (2ts) file as the trends plotted every even time step.
+     ELSE IF( MOD( kt, 2 ) == 1 ) THEN
+        SELECT CASE( ktrd )
+        CASE( jptra_atf  )   ;   CALL iom_put( "ttrd_atf" , ptrdx )        ! asselin time Filter
+           CALL iom_put( "strd_atf" , ptrdy )
+        END SELECT
+     END IF
+     !
    END SUBROUTINE trd_tra_iom
 
    !!======================================================================

@@ -36,6 +36,10 @@ MODULE bdydta
    USE limvar          ! redistribute ice input into categories
 #endif
    USE sbcapr
+#if defined key_top
+   USE par_trc
+   USE trc, ONLY: trn
+#endif
 
    IMPLICIT NONE
    PRIVATE

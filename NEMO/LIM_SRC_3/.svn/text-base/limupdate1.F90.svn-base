@@ -61,8 +61,9 @@ CONTAINS
       IF( ln_limdyn ) THEN 
 
       IF( kt == nit000 .AND. lwp ) THEN
-         WRITE(numout,*) ' lim_update1 ' 
-         WRITE(numout,*) ' ~~~~~~~~~~~ '
+         WRITE(numout,*)'' 
+         WRITE(numout,*)' lim_update1 ' 
+         WRITE(numout,*)' ~~~~~~~~~~~ '
       ENDIF
 
       ! conservation test

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/nemo/svn/!svn/ver/6392/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/SIREN/templates
+END
+create_boundary.nam
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/6392/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/SIREN/templates/create_boundary.nam
+END
+merge_bathy.nam
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/6392/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/SIREN/templates/merge_bathy.nam
+END
+create_restart.nam
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/6392/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/SIREN/templates/create_restart.nam
+END
+create_coord.nam
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6392/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/SIREN/templates/create_coord.nam
+END
+create_bathy.nam
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6392/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/SIREN/templates/create_bathy.nam
+END

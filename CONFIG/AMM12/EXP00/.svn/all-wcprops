@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/nemo/svn/!svn/ver/6314/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/AMM12/EXP00
+END
+field_def.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/AMM12/EXP00/field_def.xml
+END
+domain_def.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/AMM12/EXP00/domain_def.xml
+END
+iodef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/AMM12/EXP00/iodef.xml
+END
+namelist_ref
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/AMM12/EXP00/namelist_ref
+END
+namelist_cfg
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/6314/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/AMM12/EXP00/namelist_cfg
+END

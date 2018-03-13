@@ -86,6 +86,9 @@ MODULE asminc
 
    REAL(wp), DIMENSION(:,:), ALLOCATABLE ::   ssh_bkg, ssh_bkginc   ! Background sea surface height and its increment
    REAL(wp), DIMENSION(:,:), ALLOCATABLE ::   seaice_bkginc         ! Increment to the background sea ice conc
+#if defined key_cice && defined key_asminc
+   REAL(wp), DIMENSION(:,:), ALLOCATABLE ::   ndaice_da             ! ice increment tendency into CICE
+#endif
 
    !! * Substitutions
 #  include "domzgr_substitute.h90"
@@ -93,7 +96,7 @@ MODULE asminc
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: asminc.F90 5540 2015-07-02 15:11:23Z jchanut $
+   !! $Id: asminc.F90 8551 2017-09-21 07:45:58Z timgraham $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -335,6 +338,9 @@ CONTAINS
 #if defined key_asminc
       ALLOCATE( ssh_iau(jpi,jpj)      )
 #endif
+#if defined key_cice && defined key_asminc
+      ALLOCATE( ndaice_da(jpi,jpj)      )
+#endif
       t_bkginc(:,:,:) = 0.0
       s_bkginc(:,:,:) = 0.0
       u_bkginc(:,:,:) = 0.0
@@ -343,6 +349,9 @@ CONTAINS
       seaice_bkginc(:,:) = 0.0
 #if defined key_asminc
       ssh_iau(:,:)    = 0.0
+#endif
+#if defined key_cice && defined key_asminc
+      ndaice_da(:,:) = 0.0
 #endif
       IF ( ( ln_trainc ).OR.( ln_dyninc ).OR.( ln_sshinc ).OR.( ln_seaiceinc ) ) THEN
 
@@ -890,7 +899,12 @@ CONTAINS
             IF ( kt == nitiaufin_r ) THEN
                DEALLOCATE( ssh_bkginc )
             ENDIF
-
+#if defined key_asminc
+         ELSE IF( kt == nitiaufin_r+1 ) THEN
+            !  
+            ssh_iau(:,:) = 0._wp
+            ! 
+#endif
          ENDIF
 
       ELSEIF ( ln_asmdin ) THEN

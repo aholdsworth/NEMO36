@@ -15,25 +15,26 @@ MODULE bdytra
    !!   bdy_tra            : Apply open boundary conditions to T and S
    !!   bdy_tra_frs        : Apply Flow Relaxation Scheme
    !!----------------------------------------------------------------------
-   USE timing          ! Timing
-   USE oce             ! ocean dynamics and tracers variables
-   USE dom_oce         ! ocean space and time domain variables 
-   USE bdy_oce         ! ocean open boundary conditions
-   USE bdylib          ! for orlanski library routines
-   USE bdydta, ONLY:   bf
-   USE lbclnk          ! ocean lateral boundary conditions (or mpp link)
-   USE in_out_manager  ! I/O manager
-
+   USE oce            ! ocean dynamics and tracers variables
+   USE dom_oce        ! ocean space and time domain variables 
+   USE bdy_oce        ! ocean open boundary conditions
+   USE bdylib         ! for orlanski library routines
+   USE bdydta   , ONLY:   bf   ! 
+   USE ldftra_oce
+   !
+   USE in_out_manager ! I/O manager
+   USE lbclnk         ! ocean lateral boundary conditions (or mpp link)
+   USE timing         ! Timing
 
    IMPLICIT NONE
    PRIVATE
 
-   PUBLIC bdy_tra      ! routine called in tranxt.F90 
-   PUBLIC bdy_tra_dmp  ! routine called in step.F90 
+   PUBLIC   bdy_tra      ! called in tranxt.F90 
+   PUBLIC   bdy_tra_dmp  ! called in step.F90 
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: bdytra.F90 4292 2013-11-20 16:28:04Z cetlod $ 
+   !! $Id: bdytra.F90 6808 2016-07-19 08:38:35Z jamesharle $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -45,39 +46,38 @@ CONTAINS
       !! ** Purpose : - Apply open boundary conditions for temperature and salinity
       !!
       !!----------------------------------------------------------------------
-      INTEGER, INTENT( in ) :: kt     ! Main time step counter
-      !!
-      INTEGER               :: ib_bdy ! Loop index
+      INTEGER, INTENT(in) ::   kt   ! Main time step counter
+      !
+      INTEGER ::   ib_bdy           ! Loop index
+      !!----------------------------------------------------------------------
 
       DO ib_bdy=1, nb_bdy
-
+         !
          SELECT CASE( cn_tra(ib_bdy) )
-         CASE('none')
-            CYCLE
-         CASE('frs')
-            CALL bdy_tra_frs( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt )
-         CASE('specified')
-            CALL bdy_tra_spe( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt )
-         CASE('neumann')
-            CALL bdy_tra_nmn( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt )
-         CASE('orlanski')
-            CALL bdy_tra_orlanski( idx_bdy(ib_bdy), dta_bdy(ib_bdy), ll_npo=.false. )
-         CASE('orlanski_npo')
-            CALL bdy_tra_orlanski( idx_bdy(ib_bdy), dta_bdy(ib_bdy), ll_npo=.true. )
-         CASE('runoff')
-            CALL bdy_tra_rnf( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt )
-         CASE DEFAULT
-            CALL ctl_stop( 'bdy_tra : unrecognised option for open boundaries for T and S' )
+         CASE('none'        )   ;   CYCLE
+         CASE('frs'         )   ;   CALL bdy_tra_frs     ( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt ,ib_bdy)
+         CASE('specified'   )   ;   CALL bdy_tra_spe     ( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt )
+         CASE('neumann'     )   ;   CALL bdy_tra_nmn     ( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt , ib_bdy)
+         CASE('orlanski'    )   ;   CALL bdy_tra_orlanski( idx_bdy(ib_bdy), dta_bdy(ib_bdy), ll_npo=.false. )
+         CASE('orlanski_npo')   ;   CALL bdy_tra_orlanski( idx_bdy(ib_bdy), dta_bdy(ib_bdy), ll_npo=.true. )
+         CASE('runoff'      )   ;   CALL bdy_tra_rnf     ( idx_bdy(ib_bdy), dta_bdy(ib_bdy), kt )
+         CASE DEFAULT           ;   CALL ctl_stop( 'bdy_tra : unrecognised option for open boundaries for T and S' )
          END SELECT
          ! Boundary points should be updated
          CALL lbc_bdy_lnk( tsa(:,:,:,jp_tem), 'T', 1., ib_bdy )
          CALL lbc_bdy_lnk( tsa(:,:,:,jp_sal), 'T', 1., ib_bdy )
-      ENDDO
-      !
+#if !defined key_traldf_c1d 
+         CALL lbc_bdy_lnk( ahtu, 'U', 1., ib_bdy )    ! Boundary points should be updated
+         CALL lbc_bdy_lnk( ahtv, 'V', 1., ib_bdy )
+#endif
+     
+!ML
+    ENDDO 
 
-   END SUBROUTINE bdy_tra
+END SUBROUTINE bdy_tra
 
-   SUBROUTINE bdy_tra_frs( idx, dta, kt )
+
+   SUBROUTINE bdy_tra_frs( idx, dta, kt ,iib_bdy)
       !!----------------------------------------------------------------------
       !!                 ***  SUBROUTINE bdy_tra_frs  ***
       !!                    
@@ -85,16 +85,16 @@ CONTAINS
       !! 
       !! Reference : Engedahl H., 1995, Tellus, 365-382.
       !!----------------------------------------------------------------------
-      INTEGER,         INTENT(in) ::   kt
-      TYPE(OBC_INDEX), INTENT(in) ::   idx  ! OBC indices
-      TYPE(OBC_DATA),  INTENT(in) ::   dta  ! OBC external data
-      !! 
+      INTEGER,         INTENT(in) ::   kt ,iib_bdy   !
+      TYPE(OBC_INDEX), INTENT(in) ::   idx   ! OBC indices
+      TYPE(OBC_DATA),  INTENT(in) ::   dta   ! OBC external data
+      !
       REAL(wp) ::   zwgt           ! boundary weight
       INTEGER  ::   ib, ik, igrd   ! dummy loop indices
       INTEGER  ::   ii, ij         ! 2D addresses
       !!----------------------------------------------------------------------
       !
-      IF( nn_timing == 1 ) CALL timing_start('bdy_tra_frs')
+      IF( nn_timing == 1 )   CALL timing_start('bdy_tra_frs')
       !
       igrd = 1                       ! Everything is at T-points here
       DO ib = 1, idx%nblen(igrd)
@@ -106,13 +106,43 @@ CONTAINS
             tsa(ii,ij,ik,jp_sal) = ( tsa(ii,ij,ik,jp_sal) + zwgt * ( dta%sal(ib,ik) - tsa(ii,ij,ik,jp_sal) ) ) * tmask(ii,ij,ik)
          END DO
       END DO 
+
+!ML no sponge layer for bilap
+      IF(ln_traldf_lap.AND.ln_sponge(iib_bdy) )THEN
+      igrd = 2                      !
+      DO ib = 1, idx%nblen(igrd)
+            ii   = idx%nbi(ib,igrd)
+            ij   = idx%nbj(ib,igrd)
+             zwgt = 1.0 + (rn_sponge(iib_bdy) - 1.0 )*idx%nbw(ib,igrd)
+#if defined key_traldf_c3d  
+             ahtu(ii,ij,:) = ahtu(ii,ij,:) * zwgt
+#elif defined  key_traldf_c2d
+             ahtu(ii,ij)   = ahtu(ii,ij)   * zwgt
+#endif 
+      END DO
+      igrd = 3
+      DO ib = 1, idx%nblen(igrd)
+            ii   = idx%nbi(ib,igrd)
+            ij   = idx%nbj(ib,igrd)
+             zwgt = 1.0 + (rn_sponge(iib_bdy) - 1.0 )*idx%nbw(ib,igrd)
+#if defined key_traldf_c3d
+             ahtv(ii,ij,:) = ahtv(ii,ij,:) * zwgt
+#elif defined  key_traldf_c2d
+             ahtv(ii,ij)   = ahtv(ii,ij)   * zwgt
+#endif
+      END DO
+      ENDIF
+
+
+
       !
-      IF( kt .eq. nit000 ) CLOSE( unit = 102 )
+      IF( kt .eq. nit000 )   CLOSE( unit = 102 )
       !
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_tra_frs')
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_tra_frs')
       !
    END SUBROUTINE bdy_tra_frs
-  
+
+
    SUBROUTINE bdy_tra_spe( idx, dta, kt )
       !!----------------------------------------------------------------------
       !!                 ***  SUBROUTINE bdy_tra_frs  ***
@@ -120,10 +150,10 @@ CONTAINS
       !! ** Purpose : Apply a specified value for tracers at open boundaries.
       !! 
       !!----------------------------------------------------------------------
-      INTEGER,         INTENT(in) ::   kt
-      TYPE(OBC_INDEX), INTENT(in) ::   idx  ! OBC indices
-      TYPE(OBC_DATA),  INTENT(in) ::   dta  ! OBC external data
-      !! 
+      INTEGER,         INTENT(in) ::   kt    !
+      TYPE(OBC_INDEX), INTENT(in) ::   idx   ! OBC indices
+      TYPE(OBC_DATA),  INTENT(in) ::   dta   ! OBC external data
+      !
       REAL(wp) ::   zwgt           ! boundary weight
       INTEGER  ::   ib, ik, igrd   ! dummy loop indices
       INTEGER  ::   ii, ij         ! 2D addresses
@@ -141,29 +171,31 @@ CONTAINS
          END DO
       END DO
       !
-      IF( kt .eq. nit000 ) CLOSE( unit = 102 )
+      IF( kt == nit000 )   CLOSE( unit = 102 )
       !
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_tra_spe')
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_tra_spe')
       !
    END SUBROUTINE bdy_tra_spe
 
-   SUBROUTINE bdy_tra_nmn( idx, dta, kt )
+
+   SUBROUTINE bdy_tra_nmn( idx, dta, kt ,iib_bdy)
       !!----------------------------------------------------------------------
       !!                 ***  SUBROUTINE bdy_tra_nmn  ***
       !!                    
       !! ** Purpose : Duplicate the value for tracers at open boundaries.
       !! 
       !!----------------------------------------------------------------------
-      INTEGER,         INTENT(in) ::   kt
-      TYPE(OBC_INDEX), INTENT(in) ::   idx  ! OBC indices
-      TYPE(OBC_DATA),  INTENT(in) ::   dta  ! OBC external data
-      !! 
-      REAL(wp) ::   zwgt           ! boundary weight
-      INTEGER  ::   ib, ik, igrd   ! dummy loop indices
-      INTEGER  ::   ii, ij,zcoef, zcoef1,zcoef2, ip, jp   ! 2D addresses
+      INTEGER,         INTENT(in) ::   kt,iib_bdy    ! 
+      TYPE(OBC_INDEX), INTENT(in) ::   idx   ! OBC indices
+      TYPE(OBC_DATA) , INTENT(in) ::   dta   ! OBC external data
+      !
+      REAL(wp) ::   zwgt             ! boundary weight
+      REAL(wp) ::   zcoef, zcoef1,zcoef2
+      INTEGER  ::   ib, ik, igrd     ! dummy loop indices
+      INTEGER  ::   ii, ij, ip, jp   ! 2D addresses
       !!----------------------------------------------------------------------
       !
-      IF( nn_timing == 1 ) CALL timing_start('bdy_tra_nmn')
+      IF( nn_timing == 1 )   CALL timing_start('bdy_tra_nmn')
       !
       igrd = 1                       ! Everything is at T-points here
       DO ib = 1, idx%nblenrim(igrd)
@@ -173,31 +205,57 @@ CONTAINS
             ! search the sense of the gradient
             zcoef1 = bdytmask(ii-1,ij  ) +  bdytmask(ii+1,ij  )
             zcoef2 = bdytmask(ii  ,ij-1) +  bdytmask(ii  ,ij+1)
-            IF ( zcoef1+zcoef2 == 0) THEN
+            IF ( NINT(zcoef1+zcoef2) == 0) THEN
                ! corner
                zcoef = tmask(ii-1,ij,ik) + tmask(ii+1,ij,ik) +  tmask(ii,ij-1,ik) +  tmask(ii,ij+1,ik)
                tsa(ii,ij,ik,jp_tem) = tsa(ii-1,ij  ,ik,jp_tem) * tmask(ii-1,ij  ,ik) + &
                  &                    tsa(ii+1,ij  ,ik,jp_tem) * tmask(ii+1,ij  ,ik) + &
                  &                    tsa(ii  ,ij-1,ik,jp_tem) * tmask(ii  ,ij-1,ik) + &
                  &                    tsa(ii  ,ij+1,ik,jp_tem) * tmask(ii  ,ij+1,ik)
-               tsa(ii,ij,ik,jp_tem) = ( tsa(ii,ij,ik,jp_tem) / MAX( 1, zcoef) ) * tmask(ii,ij,ik)
+               tsa(ii,ij,ik,jp_tem) = ( tsa(ii,ij,ik,jp_tem) / MAX( 1._wp, zcoef) ) * tmask(ii,ij,ik)
                tsa(ii,ij,ik,jp_sal) = tsa(ii-1,ij  ,ik,jp_sal) * tmask(ii-1,ij  ,ik) + &
                  &                    tsa(ii+1,ij  ,ik,jp_sal) * tmask(ii+1,ij  ,ik) + &
                  &                    tsa(ii  ,ij-1,ik,jp_sal) * tmask(ii  ,ij-1,ik) + &
                  &                    tsa(ii  ,ij+1,ik,jp_sal) * tmask(ii  ,ij+1,ik)
-               tsa(ii,ij,ik,jp_sal) = ( tsa(ii,ij,ik,jp_sal) / MAX( 1, zcoef) ) * tmask(ii,ij,ik)
+               tsa(ii,ij,ik,jp_sal) = ( tsa(ii,ij,ik,jp_sal) / MAX( 1._wp, zcoef) ) * tmask(ii,ij,ik)
             ELSE
-               ip = bdytmask(ii+1,ij  ) - bdytmask(ii-1,ij  )
-               jp = bdytmask(ii  ,ij+1) - bdytmask(ii  ,ij-1)
+               ip = NINT(bdytmask(ii+1,ij  ) - bdytmask(ii-1,ij  ))
+               jp = NINT(bdytmask(ii  ,ij+1) - bdytmask(ii  ,ij-1))
                tsa(ii,ij,ik,jp_tem) = tsa(ii+ip,ij+jp,ik,jp_tem) * tmask(ii+ip,ij+jp,ik)
                tsa(ii,ij,ik,jp_sal) = tsa(ii+ip,ij+jp,ik,jp_sal) * tmask(ii+ip,ij+jp,ik)
             ENDIF
          END DO
       END DO
       !
-      IF( kt .eq. nit000 ) CLOSE( unit = 102 )
+!ML no sponge layer for bilap
+      IF(ln_traldf_lap.AND.ln_sponge(iib_bdy)  )THEN 
+      igrd = 2                      !
+      DO ib = 1, idx%nblen(igrd)
+            ii   = idx%nbi(ib,igrd)
+            ij   = idx%nbj(ib,igrd)
+             zwgt = 1.0 + (rn_sponge(iib_bdy) - 1.0 )*idx%nbw(ib,igrd)
+#if defined key_traldf_c3d
+             ahtu(ii,ij,:) = ahtu(ii,ij,:) * zwgt
+#elif defined  key_traldf_c2d
+             ahtu(ii,ij)   = ahtu(ii,ij)   * zwgt
+#endif
+      END DO
+      igrd = 3
+      DO ib = 1, idx%nblen(igrd)
+            ii   = idx%nbi(ib,igrd)
+            ij   = idx%nbj(ib,igrd)
+             zwgt = 1.0 + (rn_sponge(iib_bdy) - 1.0 )*idx%nbw(ib,igrd)
+#if defined key_traldf_c3d
+             ahtv(ii,ij,:) = ahtv(ii,ij,:) * zwgt
+#elif defined  key_traldf_c2d
+             ahtv(ii,ij)   = ahtv(ii,ij)   * zwgt
+#endif
+      END DO
+      ENDIF
+
+      IF( kt == nit000 )   CLOSE( unit = 102 )
       !
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_tra_nmn')
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_tra_nmn')
       !
    END SUBROUTINE bdy_tra_nmn
  
@@ -212,13 +270,13 @@ CONTAINS
       !!
       !! References:  Marchesiello, McWilliams and Shchepetkin, Ocean Modelling vol. 3 (2001)    
       !!----------------------------------------------------------------------
-      TYPE(OBC_INDEX),              INTENT(in) ::   idx  ! OBC indices
-      TYPE(OBC_DATA),               INTENT(in) ::   dta  ! OBC external data
-      LOGICAL,                      INTENT(in) ::   ll_npo  ! switch for NPO version
-
+      TYPE(OBC_INDEX), INTENT(in) ::   idx     ! OBC indices
+      TYPE(OBC_DATA) , INTENT(in) ::   dta     ! OBC external data
+      LOGICAL        , INTENT(in) ::   ll_npo  ! switch for NPO version
+      !
       INTEGER  ::   igrd                                    ! grid index
       !!----------------------------------------------------------------------
-
+      !
       IF( nn_timing == 1 ) CALL timing_start('bdy_tra_orlanski')
       !
       igrd = 1      ! Orlanski bc on temperature; 
@@ -229,9 +287,8 @@ CONTAINS
       !  
       CALL bdy_orlanski_3d( idx, igrd, tsb(:,:,:,jp_sal), tsa(:,:,:,jp_sal), dta%sal, ll_npo )
       !
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_tra_orlanski')
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_tra_orlanski')
       !
-
    END SUBROUTINE bdy_tra_orlanski
 
 
@@ -244,16 +301,16 @@ CONTAINS
       !!                  - duplicate the value for the temperature
       !! 
       !!----------------------------------------------------------------------
-      INTEGER,         INTENT(in) ::   kt
-      TYPE(OBC_INDEX), INTENT(in) ::   idx  ! OBC indices
-      TYPE(OBC_DATA),  INTENT(in) ::   dta  ! OBC external data
-      !! 
+      INTEGER        , INTENT(in) ::   kt    ! 
+      TYPE(OBC_INDEX), INTENT(in) ::   idx   ! OBC indices
+      TYPE(OBC_DATA) , INTENT(in) ::   dta   ! OBC external data
+      !
       REAL(wp) ::   zwgt           ! boundary weight
       INTEGER  ::   ib, ik, igrd   ! dummy loop indices
       INTEGER  ::   ii, ij, ip, jp ! 2D addresses
       !!----------------------------------------------------------------------
       !
-      IF( nn_timing == 1 ) CALL timing_start('bdy_tra_rnf')
+      IF( nn_timing == 1 )   CALL timing_start('bdy_tra_rnf')
       !
       igrd = 1                       ! Everything is at T-points here
       DO ib = 1, idx%nblenrim(igrd)
@@ -267,11 +324,12 @@ CONTAINS
          END DO
       END DO
       !
-      IF( kt .eq. nit000 ) CLOSE( unit = 102 )
+      IF( kt == nit000 )   CLOSE( unit = 102 )
       !
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_tra_rnf')
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_tra_rnf')
       !
    END SUBROUTINE bdy_tra_rnf
+
 
    SUBROUTINE bdy_tra_dmp( kt )
       !!----------------------------------------------------------------------
@@ -280,8 +338,8 @@ CONTAINS
       !! ** Purpose : Apply damping for tracers at open boundaries.
       !! 
       !!----------------------------------------------------------------------
-      INTEGER,         INTENT(in) ::   kt
-      !! 
+      INTEGER, INTENT(in) ::   kt   !
+      !
       REAL(wp) ::   zwgt           ! boundary weight
       REAL(wp) ::   zta, zsa, ztime
       INTEGER  ::   ib, ik, igrd   ! dummy loop indices
@@ -289,10 +347,10 @@ CONTAINS
       INTEGER  ::   ib_bdy         ! Loop index
       !!----------------------------------------------------------------------
       !
-      IF( nn_timing == 1 ) CALL timing_start('bdy_tra_dmp')
+      IF( nn_timing == 1 )   CALL timing_start('bdy_tra_dmp')
       !
-      DO ib_bdy=1, nb_bdy
-         IF ( ln_tra_dmp(ib_bdy) ) THEN
+      DO ib_bdy = 1, nb_bdy
+         IF( ln_tra_dmp(ib_bdy) ) THEN
             igrd = 1                       ! Everything is at T-points here
             DO ib = 1, idx_bdy(ib_bdy)%nblen(igrd)
                ii = idx_bdy(ib_bdy)%nbi(ib,igrd)
@@ -306,9 +364,9 @@ CONTAINS
                END DO
             END DO
          ENDIF
-      ENDDO
+      END DO
       !
-      IF( nn_timing == 1 ) CALL timing_stop('bdy_tra_dmp')
+      IF( nn_timing == 1 )   CALL timing_stop('bdy_tra_dmp')
       !
    END SUBROUTINE bdy_tra_dmp
  
@@ -324,7 +382,6 @@ CONTAINS
    SUBROUTINE bdy_tra_dmp(kt)      ! Empty routine
       WRITE(*,*) 'bdy_tra_dmp: You should not have seen this print! error?', kt
    END SUBROUTINE bdy_tra_dmp
-
 #endif
 
    !!======================================================================

@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 79
-/nemo/svn/!svn/ver/6812/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/ICB
+/nemo/svn/!svn/ver/8081/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/ICB
 END
 icbclv.F90
 K 25
@@ -61,7 +61,7 @@ icbtrj.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
-/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/ICB/icbtrj.F90
+/nemo/svn/!svn/ver/8081/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/ICB/icbtrj.F90
 END
 icblbc.F90
 K 25

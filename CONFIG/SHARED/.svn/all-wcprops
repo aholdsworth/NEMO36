@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED
+END
+field_def.xml
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/field_def.xml
+END
+namelist_c14b_ref
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_c14b_ref
+END
+namelist_cfc_ref
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_cfc_ref
+END
+domain_def.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/domain_def.xml
+END
+namelist_age_ref
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_age_ref
+END
+1_namelist_ref
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/1_namelist_ref
+END
+namelist_ref
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_ref
+END
+namelist_top_ref
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/6312/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_top_ref
+END
+README_configs_namcfg_namdom
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/README_configs_namcfg_namdom
+END
+namelist_ice_lim2_ref
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_ice_lim2_ref
+END
+namelist_ice_lim3_ref
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_ice_lim3_ref
+END
+namelist_pisces_ref
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/6944/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/SHARED/namelist_pisces_ref
+END

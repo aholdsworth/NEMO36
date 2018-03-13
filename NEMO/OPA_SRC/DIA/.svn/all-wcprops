@@ -1,13 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 79
-/nemo/svn/!svn/ver/7515/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA
+/nemo/svn/!svn/ver/8588/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA
 END
 diaprod.F90
 K 25
 svn:wc:ra_dav:version-url
 V 91
-/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaprod.F90
+/nemo/svn/!svn/ver/8588/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaprod.F90
 END
 diaptr.F90
 K 25
@@ -19,7 +19,7 @@ diaar5.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
-/nemo/svn/!svn/ver/7515/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaar5.F90
+/nemo/svn/!svn/ver/8220/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diaar5.F90
 END
 diaharm.F90
 K 25
@@ -31,7 +31,7 @@ diadct.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
-/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diadct.F90
+/nemo/svn/!svn/ver/8127/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diadct.F90
 END
 dianam.F90
 K 25
@@ -61,7 +61,7 @@ diawri.F90
 K 25
 svn:wc:ra_dav:version-url
 V 90
-/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diawri.F90
+/nemo/svn/!svn/ver/8473/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/DIA/diawri.F90
 END
 diahth.F90
 K 25

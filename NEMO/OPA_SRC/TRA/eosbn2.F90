@@ -175,7 +175,7 @@ MODULE eosbn2
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.7 , NEMO Consortium (2014)
-   !! $Id: eosbn2.F90 6506 2016-05-01 16:21:24Z gm $
+   !! $Id: eosbn2.F90 8026 2017-05-15 15:54:57Z lovato $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -696,8 +696,8 @@ CONTAINS
       !
       CASE( -1, 0 )                !==  polynomial TEOS-10 / EOS-80 ==!
          !
-         DO jj = 1, jpjm1
-            DO ji = 1, fs_jpim1   ! vector opt.
+         DO jj = 1, jpj
+            DO ji = 1, jpi
                !
                zh  = pdep(ji,jj) * r1_Z0                                  ! depth
                zt  = pts (ji,jj,jp_tem) * r1_T0                           ! temperature
@@ -749,13 +749,10 @@ CONTAINS
             END DO
          END DO
          !
-         CALL lbc_lnk( pab(:,:,jp_tem), 'T', 1. )                    ! Lateral boundary conditions
-         CALL lbc_lnk( pab(:,:,jp_sal), 'T', 1. )                    
-         !
       CASE( 1 )                  !==  simplified EOS  ==!
          !
-         DO jj = 1, jpjm1
-            DO ji = 1, fs_jpim1   ! vector opt.
+         DO jj = 1, jpj
+            DO ji = 1, jpi
                !
                zt    = pts  (ji,jj,jp_tem) - 10._wp   ! pot. temperature anomaly (t-T0)
                zs    = pts  (ji,jj,jp_sal) - 35._wp   ! abs. salinity anomaly (s-S0)
@@ -769,9 +766,6 @@ CONTAINS
                !
             END DO
          END DO
-         !
-         CALL lbc_lnk( pab(:,:,jp_tem), 'T', 1. )                    ! Lateral boundary conditions
-         CALL lbc_lnk( pab(:,:,jp_sal), 'T', 1. )                    
          !
       CASE DEFAULT
          IF(lwp) WRITE(numout,cform_err)

@@ -240,11 +240,11 @@ SUBROUTINE Agrif_InitValues_cont
          WRITE(cl_check1,*)  NINT(Agrif_Parent(rdt))
          WRITE(cl_check2,*)  NINT(rdt)
          WRITE(cl_check3,*)  NINT(Agrif_Parent(rdt)/Agrif_Rhot())
-         CALL ctl_warn( 'incompatible time step between grids',   &
+         CALL ctl_stop( 'incompatible time step between grids',   &
                &               'parent grid value : '//cl_check1    ,   & 
                &               'child  grid value : '//cl_check2    ,   & 
-               &               'value on child grid will be changed to : '//cl_check3 )
-         rdt=Agrif_Parent(rdt)/Agrif_Rhot()
+               &               'value on child grid must be changed to : '//cl_check3 )
+!         rdt=Agrif_Parent(rdt)/Agrif_Rhot()
       ENDIF
 
       ! Check run length
@@ -253,8 +253,8 @@ SUBROUTINE Agrif_InitValues_cont
          WRITE(cl_check1,*)  (Agrif_Parent(nit000)-1)*Agrif_IRhot() + 1
          WRITE(cl_check2,*)   Agrif_Parent(nitend)   *Agrif_IRhot()
          CALL ctl_warn( 'incompatible run length between grids'               ,   &
-               &              ' nit000 on fine grid will be change to : '//cl_check1,   &
-               &              ' nitend on fine grid will be change to : '//cl_check2    )
+               &              ' nit000 on fine grid will be changed to : '//cl_check1,   &
+               &              ' nitend on fine grid will be changed to : '//cl_check2    )
          nit000 = (Agrif_Parent(nit000)-1)*Agrif_IRhot() + 1
          nitend =  Agrif_Parent(nitend)   *Agrif_IRhot()
       ENDIF
@@ -609,12 +609,12 @@ SUBROUTINE Agrif_InitValues_cont_top
          WRITE(cl_check1,*)  Agrif_Parent(rdt)
          WRITE(cl_check2,*)  rdt
          WRITE(cl_check3,*)  rdt*Agrif_Rhot()
-         CALL ctl_warn( 'incompatible time step between grids',   &
+         CALL ctl_stop( 'incompatible time step between grids',   &
                &               'parent grid value : '//cl_check1    ,   & 
                &               'child  grid value : '//cl_check2    ,   & 
-               &               'value on child grid will be changed to  &
+               &               'value on child grid must be changed to  &
                &               :'//cl_check3  )
-         rdt=rdt*Agrif_Rhot()
+!         rdt=rdt*Agrif_Rhot()
       ENDIF
 
       ! Check run length
@@ -623,8 +623,8 @@ SUBROUTINE Agrif_InitValues_cont_top
          WRITE(cl_check1,*)  (Agrif_Parent(nit000)-1)*Agrif_IRhot() + 1
          WRITE(cl_check2,*)   Agrif_Parent(nitend)   *Agrif_IRhot()
          CALL ctl_warn( 'incompatible run length between grids'               ,   &
-               &              ' nit000 on fine grid will be change to : '//cl_check1,   &
-               &              ' nitend on fine grid will be change to : '//cl_check2    )
+               &              ' nit000 on fine grid will be changed to : '//cl_check1,   &
+               &              ' nitend on fine grid will be changed to : '//cl_check2    )
          nit000 = (Agrif_Parent(nit000)-1)*Agrif_IRhot() + 1
          nitend =  Agrif_Parent(nitend)   *Agrif_IRhot()
       ENDIF

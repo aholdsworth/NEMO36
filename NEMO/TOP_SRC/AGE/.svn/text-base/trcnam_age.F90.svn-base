@@ -13,6 +13,7 @@ MODULE trcnam_age
    !!----------------------------------------------------------------------
    USE oce_trc         ! Ocean variables
    USE trcsms_age      ! AGE specific variable
+   USE trc
 
    IMPLICIT NONE
    PRIVATE
@@ -43,6 +44,11 @@ CONTAINS
       !!
       NAMELIST/namage/ rn_age_depth, rn_age_kill_rate 
       !!----------------------------------------------------------------------
+      ! Variable setting
+      ctrcnm    (jp_age0) = 'Age'
+      ctrcln    (jp_age0) = 'Sea water age since surface contact'
+      ctrcun    (jp_age0) = 'year'
+      ln_trc_ini(jp_age0) = .false.
       !                             ! Open namelist files
       CALL ctl_opn( numnatg_ref, 'namelist_age_ref'   ,     'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )
       CALL ctl_opn( numnatg_cfg, 'namelist_age_cfg'   ,     'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )

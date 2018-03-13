@@ -49,7 +49,7 @@ MODULE agrif_opa_interp
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/NST 3.6 , NEMO Consortium (2010)
-   !! $Id: agrif_opa_interp.F90 6204 2016-01-04 13:47:06Z cetlod $
+   !! $Id: agrif_opa_interp.F90 8633 2017-10-18 14:40:42Z jchanut $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -807,7 +807,7 @@ CONTAINS
       !!---------------------------------------------    
       !
       IF (before) THEN 
-         DO jk=1,jpk
+         DO jk=1,jpkm1
             DO jj=j1,j2
                DO ji=i1,i2
                   ptab(ji,jj,jk) = e2u(ji,jj) * un(ji,jj,jk)
@@ -875,7 +875,7 @@ CONTAINS
       !      
       IF (before) THEN          
          !interpv entre 1 et k2 et interpv2d en jpkp1
-         DO jk=k1,jpk
+         DO jk=1,jpkm1
             DO jj=j1,j2
                DO ji=i1,i2
                   ptab(ji,jj,jk) = e1v(ji,jj) * vn(ji,jj,jk)

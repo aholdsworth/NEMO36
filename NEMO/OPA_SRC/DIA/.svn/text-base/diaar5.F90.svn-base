@@ -80,7 +80,7 @@ CONTAINS
       REAL(wp) ::   zaw, zbw, zrw
       !
       REAL(wp), POINTER, DIMENSION(:,:)     :: zarea_ssh , zbotpres       ! 2D workspace 
-      REAL(wp), POINTER, DIMENSION(:,:)     :: pe                         ! 2D workspace 
+      REAL(wp), POINTER, DIMENSION(:,:)     :: zpe                        ! 2D workspace 
       REAL(wp), POINTER, DIMENSION(:,:,:)   :: zrhd , zrhop               ! 3D workspace
       REAL(wp), POINTER, DIMENSION(:,:,:,:) :: ztsn                       ! 4D workspace
       !!--------------------------------------------------------------------
@@ -90,9 +90,9 @@ CONTAINS
       !initialisation
       IF( kt == nit000 )     CALL dia_ar5_init
  
-      CALL wrk_alloc( jpi , jpj              , zarea_ssh , zbotpres, pe )
-      CALL wrk_alloc( jpi , jpj , jpk        , zrhd      , zrhop    )
-      CALL wrk_alloc( jpi , jpj , jpk , jpts , ztsn                 )
+      CALL wrk_alloc( jpi , jpj              , zarea_ssh , zbotpres, zpe )
+      CALL wrk_alloc( jpi , jpj , jpk        , zrhd      , zrhop         )
+      CALL wrk_alloc( jpi , jpj , jpk , jpts , ztsn                      )
 
       zarea_ssh(:,:) = area(:,:) * sshn(:,:)
 
@@ -205,40 +205,41 @@ CONTAINS
       ! Work done against stratification by vertical mixing
       ! Exclude points where rn2 is negative as convection kicks in here and
       ! work is not being done against stratification
-          pe(:,:) = 0._wp
-          IF( lk_zdfddm ) THEN
-             DO ji=1,jpi
-                DO jj=1,jpj
-                   DO jk=1,jpk
-                      zrw =   ( fsdepw(ji,jj,jk  ) - fsdept(ji,jj,jk) )   &
-                         &  / ( fsdept(ji,jj,jk-1) - fsdept(ji,jj,jk) )
-                      !
-                      zaw = rab_n(ji,jj,jk,jp_tem) * (1. - zrw) + rab_n(ji,jj,jk-1,jp_tem)* zrw
-                      zbw = rab_n(ji,jj,jk,jp_sal) * (1. - zrw) + rab_n(ji,jj,jk-1,jp_sal)* zrw
-                      !
-                      pe(ji, jj) = pe(ji, jj) - MIN(0._wp, rn2(ji,jj,jk)) * &
-                           &       grav * (avt(ji,jj,jk) * zaw * (tsn(ji,jj,jk-1,jp_tem) - tsn(ji,jj,jk,jp_tem) )  &
-                           &       - fsavs(ji,jj,jk) * zbw * (tsn(ji,jj,jk-1,jp_sal) - tsn(ji,jj,jk,jp_sal) ) )
-
-                   ENDDO
-                ENDDO
-             ENDDO
+         zpe(:,:) = 0._wp
+         IF( lk_zdfddm ) THEN
+            DO jk = 2, jpk
+               DO jj = 1, jpj
+                  DO ji = 1, jpi
+                     IF( rn2(ji,jj,jk) > 0._wp ) THEN
+                        zrw =   ( fsdepw(ji,jj,jk  ) - fsdept(ji,jj,jk) )   &
+                           &  / ( fsdept(ji,jj,jk-1) - fsdept(ji,jj,jk) )
+                        !
+                        zaw = rab_n(ji,jj,jk,jp_tem) * (1. - zrw) + rab_n(ji,jj,jk-1,jp_tem)* zrw
+                        zbw = rab_n(ji,jj,jk,jp_sal) * (1. - zrw) + rab_n(ji,jj,jk-1,jp_sal)* zrw
+                        !
+                        zpe(ji, jj) = zpe(ji, jj)            &
+                           &        -  grav * (    avt(ji,jj,jk) * zaw * (tsn(ji,jj,jk-1,jp_tem) - tsn(ji,jj,jk,jp_tem) )  &
+                           &                   - fsavs(ji,jj,jk) * zbw * (tsn(ji,jj,jk-1,jp_sal) - tsn(ji,jj,jk,jp_sal) ) )
+                     ENDIF
+                  END DO
+               END DO
+             END DO
           ELSE
-             DO ji=1,jpi
-                DO jj=1,jpj
-                   DO jk=1,jpk
-                       pe(ji,jj) = pe(ji,jj) + avt(ji, jj, jk) * MIN(0._wp,rn2(ji, jj, jk)) * rau0 * fse3w(ji, jj, jk)
-                   ENDDO
-                ENDDO
-             ENDDO
-          ENDIF
-          CALL lbc_lnk(pe, 'T', 1._wp)         
-          CALL iom_put( 'tnpeo', pe )
+            DO jk = 1, jpk
+               DO ji = 1, jpi
+                  DO jj = 1, jpj
+                     zpe(ji,jj) = zpe(ji,jj) + avt(ji, jj, jk) * MIN(0._wp,rn2(ji, jj, jk)) * rau0 * fse3w(ji, jj, jk)
+                  END DO
+               END DO
+            END DO
+         ENDIF
+         CALL lbc_lnk(zpe, 'T', 1._wp)         
+         CALL iom_put( 'tnpeo', zpe  )
       ENDIF
       !
-      CALL wrk_dealloc( jpi , jpj              , zarea_ssh , zbotpres, pe )
-      CALL wrk_dealloc( jpi , jpj , jpk        , zrhd      , zrhop    )
-      CALL wrk_dealloc( jpi , jpj , jpk , jpts , ztsn                 )
+      CALL wrk_dealloc( jpi , jpj              , zarea_ssh , zbotpres, zpe )
+      CALL wrk_dealloc( jpi , jpj , jpk        , zrhd      , zrhop         )
+      CALL wrk_dealloc( jpi , jpj , jpk , jpts , ztsn                      )
       !
       IF( nn_timing == 1 )   CALL timing_stop('dia_ar5')
       !

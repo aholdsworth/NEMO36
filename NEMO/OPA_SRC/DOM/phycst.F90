@@ -39,11 +39,10 @@ MODULE phycst
    
    REAL(wp), PUBLIC ::   rtt      = 273.16_wp        !: triple point of temperature   [Kelvin]
    REAL(wp), PUBLIC ::   rt0      = 273.15_wp        !: freezing point of fresh water [Kelvin]
-#if defined key_lim3
    REAL(wp), PUBLIC ::   rt0_snow = 273.15_wp        !: melting point of snow         [Kelvin]
+#if defined key_lim3
    REAL(wp), PUBLIC ::   rt0_ice  = 273.15_wp        !: melting point of ice          [Kelvin]
 #else
-   REAL(wp), PUBLIC ::   rt0_snow = 273.15_wp        !: melting point of snow         [Kelvin]
    REAL(wp), PUBLIC ::   rt0_ice  = 273.05_wp        !: melting point of ice          [Kelvin]
 #endif
    REAL(wp), PUBLIC ::   rau0                        !: volumic mass of reference     [kg/m3]
@@ -91,7 +90,7 @@ MODULE phycst
 #endif
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: phycst.F90 7607 2017-01-25 15:37:31Z cetlod $ 
+   !! $Id: phycst.F90 7814 2017-03-20 16:21:42Z clem $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
    

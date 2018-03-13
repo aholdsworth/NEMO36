@@ -45,7 +45,7 @@ MODULE sbcblk_mfs
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.2 , LOCEAN-IPSL (2009) 
-   !! $Id: sbcblk_mfs.F90 5215 2015-04-15 16:11:56Z nicolasmartin $
+   !! $Id: sbcblk_mfs.F90 8145 2017-06-06 15:01:42Z emanuelaclementi $
    !! Software governed by the CeCILL licence (modipsl/doc/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -166,8 +166,8 @@ CONTAINS
          catm(:,:)   = 0.0    ! initializze cloud cover variable
          sh_now(:,:) = 0.0    ! initializze specifif humidity variable
 
-         DO jj = 2, jpjm1
-            DO ji = fs_2, fs_jpim1   ! vector opt.
+         DO jj = 1, jpj
+            DO ji = 1, jpi  
 
          ! Calculate Specific Humidity 
          !-------------------------------------------------
@@ -344,6 +344,9 @@ CONTAINS
            rel_windv(ji,jj) = vnow(ji,jj) - 0.5_wp * ( ssv_m(ji,jj-1) + ssv_m(ji,jj) )
           END DO
        END DO
+     
+       CALL lbc_lnk( rel_windu(:,:), 'U', -1. )
+       CALL lbc_lnk( rel_windv(:,:), 'V', -1. )
 
        rspeed(:,:)= SQRT(rel_windu(:,:)*rel_windu(:,:)   &
          &                   + rel_windv(:,:)*rel_windv(:,:)) 

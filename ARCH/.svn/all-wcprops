@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/nemo/svn/!svn/ver/7522/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH
+END
+arch-PW7_METO.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-PW7_METO.fcm
+END
+arch-XC40_METO.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-XC40_METO.fcm
+END
+arch-X64_CURIE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-X64_CURIE.fcm
+END
+arch-openmpi_NAVITI_MERCATOR.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-openmpi_NAVITI_MERCATOR.fcm
+END
+arch-PW7_C2A_XIO.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-PW7_C2A_XIO.fcm
+END
+arch-X64_ADA_O0.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-X64_ADA_O0.fcm
+END
+arch-X64_YELLOWSTONE.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-X64_YELLOWSTONE.fcm
+END
+arch-X64_VAYU.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-X64_VAYU.fcm
+END
+arch-PW7_MONSOON.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-PW7_MONSOON.fcm
+END
+arch-ALTIX_NAUTILUS_MPT.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-ALTIX_NAUTILUS_MPT.fcm
+END
+arch-X64_ADA.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-X64_ADA.fcm
+END
+arch-XC_ARCHER_INTEL.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-XC_ARCHER_INTEL.fcm
+END
+arch-XC_ARCHER.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-XC_ARCHER.fcm
+END
+arch-macport_osx.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/7522/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-macport_osx.fcm
+END
+arch-X64_MOBILIS.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/arch-X64_MOBILIS.fcm
+END

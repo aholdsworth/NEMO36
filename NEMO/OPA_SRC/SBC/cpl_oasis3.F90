@@ -1,3 +1,4 @@
+
 MODULE cpl_oasis3
    !!======================================================================
    !!                    ***  MODULE cpl_oasis  ***
@@ -84,7 +85,7 @@ MODULE cpl_oasis3
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: cpl_oasis3.F90 5407 2015-06-11 19:13:22Z smasson $
+   !! $Id: cpl_oasis3.F90 7846 2017-03-30 13:25:01Z cetlod $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -195,7 +196,7 @@ CONTAINS
          WRITE(numout,*) ' multiexchg: nldj, nlej, njmpp =', nldj, nlej, njmpp
       ENDIF
       
-      CALL oasis_def_partition ( id_part, paral, nerror )
+      CALL oasis_def_partition ( id_part, paral, nerror, jpiglo*jpjglo )
       !
       ! ... Announce send variables. 
       !
@@ -513,10 +514,11 @@ CONTAINS
       WRITE(numout,*) 'oasis_get_localcomm: Error you sould not be there...'
    END SUBROUTINE oasis_get_localcomm
 
-   SUBROUTINE oasis_def_partition(k1,k2,k3)
+   SUBROUTINE oasis_def_partition(k1,k2,k3,k4)
       INTEGER     , INTENT(  out) ::  k1,k3
       INTEGER     , INTENT(in   ) ::  k2(5)
-      k1 = k2(1) ; k3 = k2(5)
+      INTEGER     , INTENT(in   ) ::  k4
+      k1 = k2(1) ; k3 = k2(5)+k4
       WRITE(numout,*) 'oasis_def_partition: Error you sould not be there...'
    END SUBROUTINE oasis_def_partition
 

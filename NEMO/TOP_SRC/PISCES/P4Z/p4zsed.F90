@@ -41,7 +41,7 @@ MODULE p4zsed
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: p4zsed.F90 6315 2016-02-15 12:24:20Z cetlod $ 
+   !! $Id: p4zsed.F90 8610 2017-10-11 09:50:18Z cetlod $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -65,7 +65,7 @@ CONTAINS
 #endif
       REAL(wp) ::  zwflux, zfminus, zfplus
       REAL(wp) ::  zlim, zfact, zfactcal
-      REAL(wp) ::  zo2, zno3, zflx, zpdenit, z1pdenit, zdenitt, zolimit
+      REAL(wp) ::  zo2, zno3, zflx, zpdenit, z1pdenit, zolimit
       REAL(wp) ::  zsiloss, zcaloss, zws3, zws4, zwsc, zdep, zwstpoc
       REAL(wp) ::  ztrfer, ztrpo4, zwdust, zlight
       !
@@ -302,8 +302,8 @@ CONTAINS
             zrivalk  =  1._wp - ( rivalkinput * r1_ryyss ) * zfactcal / ( zsumsedcal + rtrn )
             tra(ji,jj,ikt,jptal) =  tra(ji,jj,ikt,jptal) + zcaloss * zrivalk * 2.0
             tra(ji,jj,ikt,jpdic) =  tra(ji,jj,ikt,jpdic) + zcaloss * zrivalk
-            zsedcal(ji,jj) = (1.0 - zrivalk) * zcaloss / zdep
-            zsedsi (ji,jj) = (1.0 - zrivsil) * zsiloss / zdep
+            zsedcal(ji,jj) = (1.0 - zrivalk) * zcaloss * fse3t(ji,jj,ikt) 
+            zsedsi (ji,jj) = (1.0 - zrivsil) * zsiloss * fse3t(ji,jj,ikt) 
 #endif
          END DO
       END DO
@@ -329,21 +329,21 @@ CONTAINS
 # endif
 
 #if ! defined key_sed
-            ! The 0.5 factor in zpdenit and zdenitt is to avoid negative NO3 concentration after both denitrification
-            ! in the sediments and just above the sediments. Not very clever, but simpliest option.
-            zpdenit  = MIN( 0.5 * ( trb(ji,jj,ikt,jpno3) - rtrn ) / rdenit, zdenit2d(ji,jj) * zwstpoc * zrivno3 )
+            ! The 0.5 factor in zpdenit is to avoid negative NO3 concentration after
+            ! denitrification in the sediments. Not very clever, but simpliest option.
+            zpdenit  = MIN( 0.5 * ( trb(ji,jj,ikt,jpno3) - rtrn ) / rdenit, &
+                            zdenit2d(ji,jj) * zwstpoc * zrivno3 * (1. - nitrfac2(ji,jj,ikt) ) )
             z1pdenit = zwstpoc * zrivno3 - zpdenit
             zolimit = MIN( ( trb(ji,jj,ikt,jpoxy) - rtrn ) / o2ut, z1pdenit * ( 1.- nitrfac(ji,jj,ikt) ) )
-            zdenitt = MIN(  0.5 * ( trb(ji,jj,ikt,jpno3) - rtrn ) / rdenit, z1pdenit * nitrfac(ji,jj,ikt) )
-            tra(ji,jj,ikt,jpdoc) = tra(ji,jj,ikt,jpdoc) + z1pdenit - zolimit - zdenitt
-            tra(ji,jj,ikt,jppo4) = tra(ji,jj,ikt,jppo4) + zpdenit + zolimit + zdenitt
-            tra(ji,jj,ikt,jpnh4) = tra(ji,jj,ikt,jpnh4) + zpdenit + zolimit + zdenitt
-            tra(ji,jj,ikt,jpno3) = tra(ji,jj,ikt,jpno3) - rdenit * (zpdenit + zdenitt)
+            tra(ji,jj,ikt,jpdoc) = tra(ji,jj,ikt,jpdoc) + z1pdenit - zolimit
+            tra(ji,jj,ikt,jppo4) = tra(ji,jj,ikt,jppo4) + zpdenit + zolimit
+            tra(ji,jj,ikt,jpnh4) = tra(ji,jj,ikt,jpnh4) + zpdenit + zolimit
+            tra(ji,jj,ikt,jpno3) = tra(ji,jj,ikt,jpno3) - rdenit * zpdenit
             tra(ji,jj,ikt,jpoxy) = tra(ji,jj,ikt,jpoxy) - zolimit * o2ut
-            tra(ji,jj,ikt,jptal) = tra(ji,jj,ikt,jptal) + rno3 * (zolimit + (1.+rdenit) * (zpdenit + zdenitt) )
-            tra(ji,jj,ikt,jpdic) = tra(ji,jj,ikt,jpdic) + zpdenit + zolimit + zdenitt
-            sdenit(ji,jj) = rdenit * zpdenit / zdep
-            zsedc(ji,jj)   = (1. - zrivno3) * zwstpoc / zdep
+            tra(ji,jj,ikt,jptal) = tra(ji,jj,ikt,jptal) + rno3 * (zolimit + (1.+rdenit) * zpdenit )
+            tra(ji,jj,ikt,jpdic) = tra(ji,jj,ikt,jpdic) + zpdenit + zolimit
+            sdenit(ji,jj) = rdenit * zpdenit * fse3t(ji,jj,ikt) 
+            zsedc(ji,jj)   = (1. - zrivno3) * zwstpoc * fse3t(ji,jj,ikt) 
 #endif
          END DO
       END DO
@@ -390,23 +390,25 @@ CONTAINS
 
       IF( lk_iomput ) THEN
          IF( knt == nrdttrc ) THEN
-            zfact = 1.e+3 * rfact2r * rno3  !  conversion from molC/l/kt  to molN/m3/s
-            IF( iom_use("Nfix"   ) ) CALL iom_put( "Nfix", nitrpot(:,:,:) * nitrfix * zfact * tmask(:,:,:) )  ! nitrogen fixation 
+            zfact = 1.e+3 * rfact2r  !  conversion from molC/l/kt  to molC/m3/s
+            IF( iom_use("Nfix"   ) ) CALL iom_put( "Nfix", nitrpot(:,:,:) * nitrfix * rno3 * zfact * tmask(:,:,:) )  ! nitrogen fixation 
             IF( iom_use("INTNFIX") ) THEN   ! nitrogen fixation rate in ocean ( vertically integrated )
                zwork1(:,:) = 0.
                DO jk = 1, jpkm1
-                 zwork1(:,:) = zwork1(:,:) + nitrpot(:,:,jk) * nitrfix * zfact * fse3t(:,:,jk) * tmask(:,:,jk)
+                 zwork1(:,:) = zwork1(:,:) + nitrpot(:,:,jk) * nitrfix * rno3 * zfact * fse3t(:,:,jk) * tmask(:,:,jk)
                ENDDO
                CALL iom_put( "INTNFIX" , zwork1 ) 
             ENDIF
-            IF( iom_use("SedCal" ) ) CALL iom_put( "SedCal", zsedcal(:,:) * 1.e+3 )
-            IF( iom_use("SedSi" ) )  CALL iom_put( "SedSi",  zsedsi (:,:) * 1.e+3 )
-            IF( iom_use("SedC" ) )   CALL iom_put( "SedC",   zsedc  (:,:) * 1.e+3 )
-            IF( iom_use("Sdenit" ) ) CALL iom_put( "Sdenit", sdenit (:,:) * 1.e+3 * rno3 )
+            IF( iom_use("SedCal" ) ) CALL iom_put( "SedCal", zsedcal(:,:) * zfact )
+            IF( iom_use("SedSi" ) )  CALL iom_put( "SedSi",  zsedsi (:,:) * zfact )
+            IF( iom_use("SedC" ) )   CALL iom_put( "SedC",   zsedc  (:,:) * zfact )
+            IF( iom_use("Sdenit" ) ) CALL iom_put( "Sdenit", sdenit (:,:) * rno3 * zfact )
          ENDIF
       ELSE
-         IF( ln_diatrc )  &
-            &  trc2d(:,:,jp_pcs0_2d + 12) = nitrpot(:,:,1) * nitrfix * rno3 * 1.e+3 * rfact2r * fse3t(:,:,1) * tmask(:,:,1)
+         IF( ln_diatrc ) THEN 
+            zfact = 1.e+3 * rfact2r  !  conversion from molC/l/kt  to molC/m3/s
+            trc2d(:,:,jp_pcs0_2d + 12) = nitrpot(:,:,1) * nitrfix * rno3 * zfact * fse3t(:,:,1) * tmask(:,:,1)
+         ENDIF
       ENDIF
       !
       IF(ln_ctl) THEN  ! print mean trends (USEd for debugging)

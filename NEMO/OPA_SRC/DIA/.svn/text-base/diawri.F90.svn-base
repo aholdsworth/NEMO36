@@ -295,17 +295,17 @@ CONTAINS
       ENDIF
       !
       IF ( iom_use("eken") ) THEN
-         rke(:,:,jk) = 0._wp                               !      kinetic energy 
+         rke(:,:,jpk) = 0._wp                               !      kinetic energy 
          DO jk = 1, jpkm1
             DO jj = 2, jpjm1
                DO ji = fs_2, fs_jpim1   ! vector opt.
-                  zztmp   = 1._wp / ( e1e2t(ji,jj) * fse3t(ji,jj,jk) )
-                  zztmpx  = 0.5 * (  un(ji-1,jj,jk) * un(ji-1,jj,jk) * e2u(ji-1,jj) * fse3u(ji-1,jj,jk)    &
-                     &             + un(ji  ,jj,jk) * un(ji  ,jj,jk) * e2u(ji  ,jj) * fse3u(ji  ,jj,jk) )  &
+                  zztmp   =  1 / (e1e2t(ji,jj) * fse3t(ji,jj,jk))
+                  zztmpx  = 0.5 * (  un(ji-1,jj,jk) * un(ji-1,jj,jk) * e1u(ji-1,jj) * e2u(ji-1,jj) * fse3u(ji-1,jj,jk)    &
+                     &             + un(ji  ,jj,jk) * un(ji  ,jj,jk) * e1u(ji,  jj) * e2u(ji  ,jj) * fse3u(ji  ,jj,jk) )  &
                      &          *  zztmp 
                   !
-                  zztmpy  = 0.5 * (  vn(ji,jj-1,jk) * vn(ji,jj-1,jk) * e1v(ji,jj-1) * fse3v(ji,jj-1,jk)    &
-                     &             + vn(ji,jj  ,jk) * vn(ji,jj  ,jk) * e1v(ji,jj  ) * fse3v(ji,jj  ,jk) )  &
+                  zztmpy  = 0.5 * (  vn(ji,jj-1,jk) * vn(ji,jj-1,jk) * e1v(ji,jj-1) * e2v(ji,jj-1) * fse3v(ji,jj-1,jk)    &
+                     &             + vn(ji,jj  ,jk) * vn(ji,jj  ,jk) * e1v(ji,jj  ) * e2v(ji,jj  ) * fse3v(ji,jj  ,jk) )  &
                      &          *  zztmp 
                   !
                   rke(ji,jj,jk) = 0.5_wp * ( zztmpx + zztmpy )

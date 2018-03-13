@@ -48,7 +48,7 @@ MODULE traldf
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: traldf.F90 6353 2016-02-24 19:04:41Z mathiot $ 
+   !! $Id: traldf.F90 8525 2017-09-15 13:27:33Z cbricaud $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -214,6 +214,8 @@ CONTAINS
       IF( nldf == 3 )   CALL ctl_warn( 'geopotential bilaplacian tracer diffusion in s-coords not thoroughly tested' )
       IF( ierr == 1 )   CALL ctl_stop( ' iso-level in z-coordinate - partial step, not allowed' )
       IF( ierr == 2 )   CALL ctl_stop( ' isoneutral bilaplacian operator does not exist' )
+      IF( ln_traldf_hor .AND. ln_traldf_grif )    &
+            &   CALL ctl_stop( ' horizontal operator and Griffies triads not available; sitch to isoneutral operator' )
       IF( ln_traldf_grif .AND. ln_isfcav         )   &
            CALL ctl_stop( ' ice shelf and traldf_grif not tested')
       IF( lk_traldf_eiv .AND. .NOT.ln_traldf_iso )   &

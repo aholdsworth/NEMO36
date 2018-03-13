@@ -1,0 +1,1 @@
+/home/amh001/NAA_NEMO/CONFIG/NAAv36/BLD/fcm_env.sh

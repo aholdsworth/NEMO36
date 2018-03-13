@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/nemo/svn/!svn/ver/6408/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE
+END
+batch-PW7_METO
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-PW7_METO
+END
+sette_batch_template
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/sette_batch_template
+END
+batch-XC40_METO
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-XC40_METO
+END
+batch-ifort_athena
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/6408/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-ifort_athena
+END
+batch-ifort_athena_xios
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/nemo/svn/!svn/ver/6408/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-ifort_athena_xios
+END
+batch-IBM_EKMAN_INGV
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-IBM_EKMAN_INGV
+END
+batch-PW6_CALYPSO
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-PW6_CALYPSO
+END
+batch-X64_CURIE
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-X64_CURIE
+END
+batch-openmpi_NAVITI_MERCATOR
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/nemo/svn/!svn/ver/5558/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-openmpi_NAVITI_MERCATOR
+END
+batch-PW6_VARGAS
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-PW6_VARGAS
+END
+batch-mpmd-ALTIX_NAUTILUS_MPT
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-mpmd-ALTIX_NAUTILUS_MPT
+END
+batch-X64_ADA_O0
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-X64_ADA_O0
+END
+batch-X64_TITANE
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-X64_TITANE
+END
+batch-PW7_MONSOON
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-PW7_MONSOON
+END
+batch-ALTIX_NAUTILUS_MPT
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-ALTIX_NAUTILUS_MPT
+END
+batch-X64_ADA
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-X64_ADA
+END
+batch-XC_ARCHER_INTEL
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-XC_ARCHER_INTEL
+END
+batch-macport_osx
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-macport_osx
+END
+batch-X64_MOBILIS
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/SETTE/BATCH_TEMPLATE/batch-X64_MOBILIS
+END

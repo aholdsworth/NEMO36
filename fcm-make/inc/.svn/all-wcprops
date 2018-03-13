@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc
+END
+keys-orca2_lim3.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-orca2_lim3.cfg
+END
+keys-gyre_pisces.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-gyre_pisces.cfg
+END
+keys-amm12.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-amm12.cfg
+END
+keys-orca2_lim_pisces.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-orca2_lim_pisces.cfg
+END
+keys-orca2_sas_lim.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-orca2_sas_lim.cfg
+END
+common.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/common.cfg
+END
+keys-orca2_lim_cfc.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-orca2_lim_cfc.cfg
+END
+keys-gyre.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-gyre.cfg
+END
+keys-orca2_off_pisces.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-orca2_off_pisces.cfg
+END
+keys-orca2_lim.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/fcm-make/inc/keys-orca2_lim.cfg
+END

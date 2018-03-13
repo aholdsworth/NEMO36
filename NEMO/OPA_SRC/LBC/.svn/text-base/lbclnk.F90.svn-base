@@ -224,7 +224,7 @@ CONTAINS
       CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
 
       !! Look if more arrays to process
-      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
+      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dB, cd_typeB, psgnB )
       IF(PRESENT (psgnC) )CALL lbc_lnk( pt2dC, cd_typeC, psgnC ) 
       IF(PRESENT (psgnD) )CALL lbc_lnk( pt2dD, cd_typeD, psgnD ) 
       IF(PRESENT (psgnE) )CALL lbc_lnk( pt2dE, cd_typeE, psgnE ) 
@@ -482,7 +482,7 @@ CONTAINS
       CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
 
       !! Look if more arrays to process
-      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
+      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dB, cd_typeB, psgnB )
       IF(PRESENT (psgnC) )CALL lbc_lnk( pt2dC, cd_typeC, psgnC ) 
       IF(PRESENT (psgnD) )CALL lbc_lnk( pt2dD, cd_typeD, psgnD ) 
       IF(PRESENT (psgnE) )CALL lbc_lnk( pt2dE, cd_typeE, psgnE ) 

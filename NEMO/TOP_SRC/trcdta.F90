@@ -39,7 +39,7 @@ MODULE trcdta
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: trcdta.F90 6688 2016-06-13 12:50:45Z lovato $ 
+   !! $Id: trcdta.F90 8543 2017-09-19 10:27:07Z cetlod $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -199,7 +199,7 @@ CONTAINS
             DO jj = 1, jpj                         ! vertical interpolation of T & S
                DO ji = 1, jpi
                   DO jk = 1, jpk                        ! determines the intepolated T-S profiles at each (i,j) points
-                     zl = fsdept_n(ji,jj,jk)
+                     zl = gdept_0(ji,jj,jk)
                      IF(     zl < gdept_1d(1  ) ) THEN         ! above the first level of data
                         ztp(jk) = ztrcdta(ji,jj,1)
                      ELSEIF( zl > gdept_1d(jpk) ) THEN         ! below the last level of data
@@ -228,12 +228,12 @@ CONTAINS
                   DO ji = 1, jpi
                      ik = mbkt(ji,jj) 
                      IF( ik > 1 ) THEN
-                        zl = ( gdept_1d(ik) - fsdept_n(ji,jj,ik) ) / ( gdept_1d(ik) - gdept_1d(ik-1) )
+                        zl = ( gdept_1d(ik) - gdept_0(ji,jj,ik) ) / ( gdept_1d(ik) - gdept_1d(ik-1) )
                         ztrcdta(ji,jj,ik) = (1.-zl) * ztrcdta(ji,jj,ik) + zl * ztrcdta(ji,jj,ik-1)
                      ENDIF
                      ik = mikt(ji,jj)
                      IF( ik > 1 ) THEN
-                        zl = ( fsdept_n(ji,jj,ik) - gdept_1d(ik) ) / ( gdept_1d(ik+1) - gdept_1d(ik) )
+                        zl = ( gdept_0(ji,jj,ik) - gdept_1d(ik) ) / ( gdept_1d(ik+1) - gdept_1d(ik) )
                         ztrcdta(ji,jj,ik) = (1.-zl) * ztrcdta(ji,jj,ik) + zl * ztrcdta(ji,jj,ik+1)
                      ENDIF
                   END DO

@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src
+END
+getincom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/getincom.f90
+END
+nc4interface.F90
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/nc4interface.F90
+END
+stringop.f90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/stringop.f90
+END
+histcom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/histcom.f90
+END
+ncunderflow.f90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/ncunderflow.f90
+END
+flincom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/flincom.f90
+END
+defprec.f90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/defprec.f90
+END
+errioipsl.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/errioipsl.f90
+END
+fliocom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/fliocom.f90
+END
+calendar.f90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/calendar.f90
+END
+mathelp.f90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/mathelp.f90
+END
+flio_rbld.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/flio_rbld.f90
+END
+restcom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/restcom.f90
+END
+ioipsl.f90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/REBUILD/src/ioipsl.f90
+END

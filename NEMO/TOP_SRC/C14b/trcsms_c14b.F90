@@ -53,7 +53,7 @@ MODULE trcsms_c14b
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcsms_c14b.F90 5215 2015-04-15 16:11:56Z nicolasmartin $ 
+   !! $Id: trcsms_c14b.F90 8353 2017-07-19 14:41:00Z lovato $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -290,8 +290,8 @@ CONTAINS
       ENDIF
       !    
       IF( lk_iomput ) THEN
-        CALL iom_put( "qtrC14b"  , qtr_c14  )
-        CALL iom_put( "qintC14b" , qint_c14 )
+        CALL iom_put( "qtr_C14b"  , qtr_c14  )
+        CALL iom_put( "qint_C14b" , qint_c14 )
         CALL iom_put( "fdecay"   , zdecay   )
       ELSE
          IF( ln_diatrc ) THEN

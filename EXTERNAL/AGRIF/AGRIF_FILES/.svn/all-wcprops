@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/7751/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES
+END
+modupdate.F90
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modupdate.F90
+END
+modbc.F90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modbc.F90
+END
+modupdatebasic.F90
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modupdatebasic.F90
+END
+modprocs.F90
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modprocs.F90
+END
+modseq.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modseq.F90
+END
+modcurgridfunctions.F90
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modcurgridfunctions.F90
+END
+modbcfunction.F90
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modbcfunction.F90
+END
+modmask.F90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modmask.F90
+END
+modmpp.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modmpp.F90
+END
+modinitvars.F90
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modinitvars.F90
+END
+modinterp.F90
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/7751/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modinterp.F90
+END
+modarrays.F90
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modarrays.F90
+END
+modinterpbasic.F90
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modinterpbasic.F90
+END
+modinit.F90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modinit.F90
+END
+modtypes.F90
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modtypes.F90
+END
+modgrids.F90
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modgrids.F90
+END
+modvariables.F90
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modvariables.F90
+END
+modutil.F90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modutil.F90
+END
+modsauv.F90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modsauv.F90
+END
+modlinktomodel.F90
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modlinktomodel.F90
+END
+modcluster.F90
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/AGRIF_FILES/modcluster.F90
+END

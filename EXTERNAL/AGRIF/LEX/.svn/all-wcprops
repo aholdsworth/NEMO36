@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LEX
+END
+fortran.lex
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LEX/fortran.lex
+END
+fortran.y
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LEX/fortran.y
+END
+Makefile.lex
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LEX/Makefile.lex
+END
+convert.lex
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LEX/convert.lex
+END
+convert.y
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LEX/convert.y
+END
+decl.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/AGRIF/LEX/decl.h
+END

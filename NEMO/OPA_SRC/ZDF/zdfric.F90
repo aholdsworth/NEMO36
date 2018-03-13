@@ -57,7 +57,7 @@ MODULE zdfric
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
-   !! $Id: zdfric.F90 7049 2016-10-20 09:15:23Z emanuelaclementi $
+   !! $Id: zdfric.F90 8595 2017-10-05 09:49:56Z flavoni $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -177,11 +177,20 @@ CONTAINS
 
       !  Compute Ekman depth from wind stress forcing.
       ! -------------------------------------------------------
-      zflageos = ( 0.5 + SIGN( 0.5, nn_eos - 1. ) ) * rau0
+      !SF  zflageos = ( 0.5 + SIGN( 0.5, nn_eos - 1. ) ) * rau0
+      !SF  DO jj = 1, jpj
+      !SF     DO ji = 1, jpi
+      !SF        zrhos          = rhop(ji,jj,1) + zflageos * ( 1. - tmask(ji,jj,1) )
+      !SF        zustar         = SQRT( taum(ji,jj) / ( zrhos +  rsmall ) )
+      !SF        ekm_dep(ji,jj) = rn_ekmfc * zustar / ( ABS( ff(ji,jj) ) + rsmall )
+      !SF        ekm_dep(ji,jj) = MAX(ekm_dep(ji,jj),rn_mldmin) ! Minimun allowed
+      !SF        ekm_dep(ji,jj) = MIN(ekm_dep(ji,jj),rn_mldmax) ! Maximum allowed
+      !SF     END DO
+      !SF  END DO
+
       DO jj = 1, jpj
          DO ji = 1, jpi
-            zrhos          = rhop(ji,jj,1) + zflageos * ( 1. - tmask(ji,jj,1) )
-            zustar         = SQRT( taum(ji,jj) / ( zrhos +  rsmall ) )
+            zustar         = SQRT( taum(ji,jj) * r1_rau0 )
             ekm_dep(ji,jj) = rn_ekmfc * zustar / ( ABS( ff(ji,jj) ) + rsmall )
             ekm_dep(ji,jj) = MAX(ekm_dep(ji,jj),rn_mldmin) ! Minimun allowed
             ekm_dep(ji,jj) = MIN(ekm_dep(ji,jj),rn_mldmax) ! Maximum allowed

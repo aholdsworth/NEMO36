@@ -70,7 +70,7 @@ MODULE sbcrnf
 #  include "domzgr_substitute.h90"  
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: sbcrnf.F90 6459 2016-04-08 16:00:11Z lovato $
+   !! $Id: sbcrnf.F90 7963 2017-04-24 16:28:04Z clem $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -137,7 +137,8 @@ CONTAINS
          !                                                           ! use runoffs salinity data
          IF( ln_rnf_sal )   rnf_tsc(:,:,jp_sal) = ( sf_s_rnf(1)%fnow(:,:,1) ) * rnf(:,:) * r1_rau0
          !                                                           ! else use S=0 for runoffs (done one for all in the init)
-         CALL iom_put( "runoffs", rnf )         ! output runoffs arrays
+         IF( iom_use('runoffs') )        CALL iom_put( 'runoffs'     , rnf(:,:)                         )   ! output runoff mass flux
+         IF( iom_use('hflx_rnf_cea') )   CALL iom_put( 'hflx_rnf_cea', rnf_tsc(:,:,jp_tem) * rau0 * rcp )   ! output runoff sensible heat (W/m2)
       ENDIF
       !
       !                                                ! ---------------------------------------- !

@@ -1,20 +1,20 @@
 MODULE daymod
    !!======================================================================
    !!                       ***  MODULE  daymod  ***
-   !! Ocean        :  calendar 
+   !! Ocean        :  calendar
    !!=====================================================================
    !! History :  OPA  ! 1994-09  (M. Pontaud M. Imbard)  Original code
    !!                 ! 1997-03  (O. Marti)
-   !!                 ! 1997-05  (G. Madec) 
+   !!                 ! 1997-05  (G. Madec)
    !!                 ! 1997-08  (M. Imbard)
    !!   NEMO     1.0  ! 2003-09  (G. Madec)  F90 + nyear, nmonth, nday
    !!                 ! 2004-01  (A.M. Treguier) new calculation based on adatrj
    !!                 ! 2006-08  (G. Madec)  surface module major update
-   !!----------------------------------------------------------------------      
+   !!----------------------------------------------------------------------
 
    !!----------------------------------------------------------------------
    !!   day        : calendar
-   !!  
+   !!
    !!           -------------------------------
    !!           ----------- WARNING -----------
    !!
@@ -23,28 +23,30 @@ MODULE daymod
    !!
    !!           ----------- WARNING -----------
    !!           -------------------------------
-   !!  
+   !!
    !!----------------------------------------------------------------------
    USE dom_oce         ! ocean space and time domain
    USE phycst          ! physical constants
    USE in_out_manager  ! I/O manager
-   USE iom             ! 
+   USE iom             !
    USE ioipsl, ONLY :   ymds2ju   ! for calendar
    USE prtctl          ! Print control
-   USE restart         ! 
+   USE trc_oce, ONLY : lk_offline ! offline flag
    USE timing          ! Timing
+   USE restart         ! restart
 
    IMPLICIT NONE
    PRIVATE
 
    PUBLIC   day        ! called by step.F90
    PUBLIC   day_init   ! called by istate.F90
+   PUBLIC   day_mth    ! Needed by TAM
 
-   INTEGER ::   nsecd, nsecd05, ndt, ndt05
+   INTEGER, PUBLIC ::   nsecd, nsecd05, ndt, ndt05 ! (PUBLIC for TAM)
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: daymod.F90 5564 2015-07-08 12:10:46Z clem $
+   !! $Id: daymod.F90 8581 2017-10-03 08:03:41Z cbricaud $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -52,8 +54,8 @@ CONTAINS
    SUBROUTINE day_init
       !!----------------------------------------------------------------------
       !!                   ***  ROUTINE day_init  ***
-      !! 
-      !! ** Purpose :   Initialization of the calendar values to their values 1 time step before nit000 
+      !!
+      !! ** Purpose :   Initialization of the calendar values to their values 1 time step before nit000
       !!                because day will be called at the beginning of step
       !!
       !! ** Action  : - nyear        : current year
@@ -84,16 +86,13 @@ CONTAINS
       ndt     = NINT(      rdttra(1))
       ndt05   = NINT(0.5 * rdttra(1))
 
-      ! ==> clem: here we read the ocean restart for the date (only if it exists)
-      !           It is not clean and another solution should be found
-      CALL day_rst( nit000, 'READ' )
-      ! ==>
+      IF( .NOT. lk_offline ) CALL day_rst( nit000, 'READ' )
 
-      ! set the calendar from ndastp (read in restart file and namelist)
+      ! set the calandar from ndastp (read in restart file and namelist)
 
       nyear   =   ndastp / 10000
       nmonth  = ( ndastp - (nyear * 10000) ) / 100
-      nday    =   ndastp - (nyear * 10000) - ( nmonth * 100 ) 
+      nday    =   ndastp - (nyear * 10000) - ( nmonth * 100 )
 
       CALL ymds2ju( nyear, nmonth, nday, 0.0, fjulday )  ! we assume that we start run at 00:00
       IF( ABS(fjulday - REAL(NINT(fjulday),wp)) < 0.1 / rday )   fjulday = REAL(NINT(fjulday),wp)   ! avoid truncation error
@@ -101,9 +100,9 @@ CONTAINS
 
       nsec1jan000 = 0
       CALL day_mth
-      
+
       IF ( nday == 0 ) THEN     !   for ex if ndastp = ndate0 - 1
-         nmonth = nmonth - 1  
+         nmonth = nmonth - 1
          nday = nmonth_len(nmonth)
       ENDIF
       IF ( nmonth == 0 ) THEN   ! go at the end of previous year
@@ -112,14 +111,14 @@ CONTAINS
          nsec1jan000 = nsec1jan000 - nsecd * nyear_len(0)
          IF( nleapy == 1 )   CALL day_mth
       ENDIF
-      
+
       ! day since january 1st
       nday_year = nday + SUM( nmonth_len(1:nmonth - 1) )
 
-      !compute number of days between last monday and today      
+      !compute number of days between last monday and today
       CALL ymds2ju( 1900, 01, 01, 0.0, zjul )  ! compute julian day value of 01.01.1900 (our reference that was a Monday)
-      inbday = NINT(fjulday - zjul)            ! compute nb day between  01.01.1900 and current day  
-      idweek = MOD(inbday, 7)                  ! compute nb day between last monday and current day  
+      inbday = NINT(fjulday - zjul)            ! compute nb day between  01.01.1900 and current day
+      idweek = MOD(inbday, 7)                  ! compute nb day between last monday and current day
 
       ! number of seconds since the beginning of current year/month/week/day at the middle of the time-step
       nsec_year  = nday_year * nsecd - ndt05   ! 1 time step before the middle of the first time step
@@ -141,7 +140,7 @@ CONTAINS
    SUBROUTINE day_mth
       !!----------------------------------------------------------------------
       !!                   ***  ROUTINE day_init  ***
-      !! 
+      !!
       !! ** Purpose :   calendar values related to the months
       !!
       !! ** Action  : - nmonth_len    : length in days of the months of the current year
@@ -153,7 +152,7 @@ CONTAINS
       !!----------------------------------------------------------------------
 
       ! length of the month of the current year (from nleapy, read in namelist)
-      IF ( nleapy < 2 ) THEN 
+      IF ( nleapy < 2 ) THEN
          nmonth_len(:) = (/ 31, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, 31 /)
          nyear_len(:) = 365
          IF ( nleapy == 1 ) THEN   ! we are using calandar with leap years
@@ -176,7 +175,7 @@ CONTAINS
       ! half month in second since the begining of the year:
       ! time since Jan 1st   0     1     2    ...    11    12    13
       !          ---------*--|--*--|--*--| ... |--*--|--*--|--*--|--------------------------------------
-      !                 <---> <---> <--->  ...  <---> <---> <--->        
+      !                 <---> <---> <--->  ...  <---> <---> <--->
       ! month number      0     1     2    ...    11    12    13
       !
       ! nmonth_half(jm) = rday * REAL( 0.5 * nmonth_len(jm) + SUM(nmonth_len(1:jm-1)) )
@@ -189,14 +188,14 @@ CONTAINS
       DO jm = 1, 13
          nmonth_end(jm) = nmonth_end(jm-1) + nsecd * nmonth_len(jm)
       END DO
-      !           
-   END SUBROUTINE 
+      !
+   END SUBROUTINE
 
 
    SUBROUTINE day( kt )
       !!----------------------------------------------------------------------
       !!                      ***  ROUTINE day  ***
-      !! 
+      !!
       !! ** Purpose :   Compute the date with a day iteration IF necessary.
       !!
       !! ** Method  : - ???
@@ -208,7 +207,7 @@ CONTAINS
       !!              - ndastp    : = nyear*10000 + nmonth*100 + nday
       !!              - adatrj    : date in days since the beginning of the run
       !!              - nsec_year : current time of the year (in second since 00h, jan 1st)
-      !!----------------------------------------------------------------------      
+      !!----------------------------------------------------------------------
       INTEGER, INTENT(in) ::   kt        ! ocean time-step indices
       !
       CHARACTER (len=25) ::   charout
@@ -219,15 +218,15 @@ CONTAINS
       !
       zprec = 0.1 / rday
       !                                                 ! New time-step
-      nsec_year  = nsec_year  + ndt 
-      nsec_month = nsec_month + ndt                 
+      nsec_year  = nsec_year  + ndt
+      nsec_month = nsec_month + ndt
       nsec_week  = nsec_week  + ndt
-      nsec_day   = nsec_day   + ndt                
+      nsec_day   = nsec_day   + ndt
       adatrj  = adatrj  + rdttra(1) / rday
       fjulday = fjulday + rdttra(1) / rday
       IF( ABS(fjulday - REAL(NINT(fjulday),wp)) < zprec )   fjulday = REAL(NINT(fjulday),wp)   ! avoid truncation error
       IF( ABS(adatrj  - REAL(NINT(adatrj ),wp)) < zprec )   adatrj  = REAL(NINT(adatrj ),wp)   ! avoid truncation error
-      
+
       IF( nsec_day > nsecd ) THEN                       ! New day
          !
          nday      = nday + 1
@@ -260,20 +259,15 @@ CONTAINS
       ENDIF
 
       IF( nsec_week > 7*nsecd )   nsec_week = ndt05     ! New week
-      
+
       IF(ln_ctl) THEN
          WRITE(charout,FMT="('kt =', I4,'  d/m/y =',I2,I2,I4)") kt, nday, nmonth, nyear
          CALL prt_ctl_info(charout)
       ENDIF
 
-      ! since we no longer call rst_opn, need to define nitrst here, used by ice restart routine
-      IF( kt == nit000 ) nitrst = nitend
-      IF( MOD( kt - 1, nstock ) == 0 ) THEN
-         ! we use kt - 1 and not kt - nit000 to keep the same periodicity from the beginning of the experiment
-         nitrst = kt + nstock - 1                  ! define the next value of nitrst for restart writing
-         IF( nitrst > nitend )   nitrst = nitend   ! make sure we write a restart at the end of the run
-      ENDIF
-
+      IF( .NOT. lk_offline ) CALL rst_opn( kt )               ! Open the restart file if needed and control lrst_oce
+      IF( lrst_oce         ) CALL day_rst( kt, 'WRITE' )      ! write day restart information
+      !
       IF( nn_timing == 1 )  CALL timing_stop('day')
       !
    END SUBROUTINE day
@@ -371,5 +365,6 @@ CONTAINS
       ENDIF
       !
    END SUBROUTINE day_rst
+
    !!======================================================================
 END MODULE daymod

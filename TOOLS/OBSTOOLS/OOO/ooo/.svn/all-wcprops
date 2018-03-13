@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/OOO/ooo
+END
+ooo.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/OOO/ooo/ooo.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/OOO/ooo/__init__.py
+END
+locator.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/OOO/ooo/locator.py
+END
+run.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/OOO/ooo/run.py
+END
+test_nml.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/OOO/ooo/test_nml.py
+END
+nml.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/OOO/ooo/nml.py
+END

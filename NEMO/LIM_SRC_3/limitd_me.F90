@@ -60,7 +60,7 @@ MODULE limitd_me
    !
    !!----------------------------------------------------------------------
    !! NEMO/LIM3 3.3 , UCL - NEMO Consortium (2010)
-   !! $Id: limitd_me.F90 6963 2016-09-30 12:40:04Z clem $
+   !! $Id: limitd_me.F90 7814 2017-03-20 16:21:42Z clem $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -258,6 +258,7 @@ CONTAINS
                IF( ABS( asum(ji,jj) - 1._wp ) < epsi10 ) THEN
                   closing_net(ji,jj) = 0._wp
                   opning     (ji,jj) = 0._wp
+                  ato_i      (ji,jj) = MAX( 0._wp, 1._wp - SUM( a_i(ji,jj,:) ) )
                ELSE
                   iterate_ridging    = 1
                   divu_adv   (ji,jj) = ( 1._wp - asum(ji,jj) ) * r1_rdtice
@@ -843,7 +844,7 @@ CONTAINS
             END DO
          END DO
    
-         strength(:,:) = rn_pe_rdg * Cp * strength(:,:) / aksum(:,:)
+         strength(:,:) = rn_pe_rdg * Cp * strength(:,:) / aksum(:,:) * tmask(:,:,1)
                          ! where Cp = (g/2)*(rhow-rhoi)*(rhoi/rhow) and rn_pe_rdg accounts for frictional dissipation
          ksmooth = 1
 
@@ -852,7 +853,7 @@ CONTAINS
          !------------------------------------------------------------------------------!
       ELSE                      ! kstrngth ne 1:  Hibler (1979) form
          !
-         strength(:,:) = rn_pstar * vt_i(:,:) * EXP( - rn_crhg * ( 1._wp - at_i(:,:) )  )
+         strength(:,:) = rn_pstar * vt_i(:,:) * EXP( - rn_crhg * ( 1._wp - at_i(:,:) )  ) * tmask(:,:,1)
          !
          ksmooth = 1
          !

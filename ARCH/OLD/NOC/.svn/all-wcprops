@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/NOC
+END
+arch-pgf90_mobius.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/NOC/arch-pgf90_mobius.fcm
+END
+arch-ALTIX_NAUTILUS.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/NOC/arch-ALTIX_NAUTILUS.fcm
+END
+arch-XT6_HECTORcrayftn.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/NOC/arch-XT6_HECTORcrayftn.fcm
+END

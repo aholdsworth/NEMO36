@@ -51,7 +51,7 @@ MODULE lbclnk
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: lbclnk.F90 6476 2016-04-15 12:50:29Z mcastril $
+   !! $Id: lbclnk.F90 8113 2017-06-01 13:53:24Z lovato $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -105,7 +105,7 @@ MODULE lbclnk
    
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: lbclnk.F90 6476 2016-04-15 12:50:29Z mcastril $
+   !! $Id: lbclnk.F90 8113 2017-06-01 13:53:24Z lovato $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -224,7 +224,7 @@ CONTAINS
       CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
 
       !! Look if more arrays to process
-      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
+      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dB, cd_typeB, psgnB )
       IF(PRESENT (psgnC) )CALL lbc_lnk( pt2dC, cd_typeC, psgnC ) 
       IF(PRESENT (psgnD) )CALL lbc_lnk( pt2dD, cd_typeD, psgnD ) 
       IF(PRESENT (psgnE) )CALL lbc_lnk( pt2dE, cd_typeE, psgnE ) 
@@ -482,7 +482,7 @@ CONTAINS
       CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
 
       !! Look if more arrays to process
-      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dA, cd_typeA, psgnA ) 
+      IF(PRESENT (psgnB) )CALL lbc_lnk( pt2dB, cd_typeB, psgnB )
       IF(PRESENT (psgnC) )CALL lbc_lnk( pt2dC, cd_typeC, psgnC ) 
       IF(PRESENT (psgnD) )CALL lbc_lnk( pt2dD, cd_typeD, psgnD ) 
       IF(PRESENT (psgnE) )CALL lbc_lnk( pt2dE, cd_typeE, psgnE ) 

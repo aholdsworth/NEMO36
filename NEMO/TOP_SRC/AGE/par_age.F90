@@ -6,7 +6,7 @@ MODULE par_age
    !! History :   2.0  !  2007-12  (C. Ethe, G. Madec)  revised architecture
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: par_age.F90 7491 2016-12-12 16:44:27Z timgraham $ 
+   !! $Id: par_age.F90 8353 2017-07-19 14:41:00Z lovato $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
    USE par_pisces , ONLY : jp_pisces       !: number of tracers in PISCES
@@ -24,12 +24,17 @@ MODULE par_age
    USE par_c14b   , ONLY : jp_c14b_3d      !: number of tracers in C14
    USE par_c14b   , ONLY : jp_c14b_trd     !: number of tracers in C14
 
+   USE par_my_trc , ONLY : jp_my_trc       !: number of tracers in MY_TRC
+   USE par_my_trc , ONLY : jp_my_trc_2d    !: number of 2D diag in MY_TRC
+   USE par_my_trc , ONLY : jp_my_trc_3d    !: number of 3D diag in MY_TRC
+   USE par_my_trc , ONLY : jp_my_trc_trd   !: number of biological diag in MY_TRC
+
    IMPLICIT NONE
 
-   INTEGER, PARAMETER ::   jp_lm      =  jp_pisces     + jp_cfc     + jp_c14b     !: 
-   INTEGER, PARAMETER ::   jp_lm_2d   =  jp_pisces_2d  + jp_cfc_2d  + jp_c14b_2d  !:
-   INTEGER, PARAMETER ::   jp_lm_3d   =  jp_pisces_3d  + jp_cfc_3d  + jp_c14b_3d  !:
-   INTEGER, PARAMETER ::   jp_lm_trd  =  jp_pisces_trd + jp_cfc_trd + jp_c14b_trd !:
+   INTEGER, PARAMETER ::   jp_lm      =  jp_pisces     + jp_my_trc     + jp_cfc     + jp_c14b     !: 
+   INTEGER, PARAMETER ::   jp_lm_2d   =  jp_pisces_2d  + jp_my_trc_2d  + jp_cfc_2d  + jp_c14b_2d  !:
+   INTEGER, PARAMETER ::   jp_lm_3d   =  jp_pisces_3d  + jp_my_trc_3d  + jp_cfc_3d  + jp_c14b_3d  !:
+   INTEGER, PARAMETER ::   jp_lm_trd  =  jp_pisces_trd + jp_my_trc_trd + jp_cfc_trd + jp_c14b_trd !:
 
 #if defined key_age
    !!---------------------------------------------------------------------

@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/nemo/svn/!svn/ver/6820/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src
+END
+agrif_partial_steps.f90
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_partial_steps.f90
+END
+agrif_gridsearch.f90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_gridsearch.f90
+END
+agrif_modutil.f90
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_modutil.f90
+END
+agrif_create_restart_trc.f90
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_create_restart_trc.f90
+END
+io_netcdf.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/io_netcdf.f90
+END
+agrif_readwrite.f90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_readwrite.f90
+END
+agrif_interpolation.f90
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_interpolation.f90
+END
+agrif_extrapolation.f90
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_extrapolation.f90
+END
+agrif_create_bathy.f90
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_create_bathy.f90
+END
+agrif_connect_topo.f90
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_connect_topo.f90
+END
+agrif_create_data.f90
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_create_data.f90
+END
+agrif_create_coordinates.f90
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_create_coordinates.f90
+END
+bilinear_interp.f90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/bilinear_interp.f90
+END
+agrif_types.f90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/6820/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_types.f90
+END
+agrif_create_restart.f90
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/agrif_create_restart.f90
+END
+bicubic_interp.f90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/NESTING/src/bicubic_interp.f90
+END

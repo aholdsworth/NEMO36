@@ -1,0 +1,347 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src
+END
+fbstat.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbstat.F90
+END
+obsvel_io.h90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obsvel_io.h90
+END
+enact2fb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/enact2fb.F90
+END
+ooo_data.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/ooo_data.F90
+END
+omonainfo.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/omonainfo.F90
+END
+proftools.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/proftools.F90
+END
+lbcnfd.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/lbcnfd.F90
+END
+coords.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/coords.F90
+END
+distance.h90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/distance.h90
+END
+fbstatncio.F90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbstatncio.F90
+END
+date_utils.F90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/date_utils.F90
+END
+fbacctype.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbacctype.F90
+END
+obs_prof_io.F90
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_prof_io.F90
+END
+ioncdf.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/ioncdf.F90
+END
+obs_conv_functions.h90
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_conv_functions.h90
+END
+corio2fb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/corio2fb.F90
+END
+ooo_write.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/ooo_write.F90
+END
+c4comb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/c4comb.F90
+END
+ddatetoymdhms.h90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/ddatetoymdhms.h90
+END
+fbmatchup.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbmatchup.F90
+END
+obssla_types.h90
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obssla_types.h90
+END
+fbthin.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbthin.F90
+END
+ooo_utils.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/ooo_utils.F90
+END
+lib_mpp.F90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/lib_mpp.F90
+END
+greg2jul.h90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/greg2jul.h90
+END
+str_c_to_for.h90
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/str_c_to_for.h90
+END
+convmerge.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/convmerge.F90
+END
+in_out_manager.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/in_out_manager.F90
+END
+par_kind.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/par_kind.F90
+END
+fbaccdata.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbaccdata.F90
+END
+fbcomb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbcomb.F90
+END
+obs_const.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_const.F90
+END
+ctl_stop.h90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/ctl_stop.h90
+END
+grt_cir_dis.h90
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/grt_cir_dis.h90
+END
+fbsel.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbsel.F90
+END
+test_arrays_mod.F90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/test_arrays_mod.F90
+END
+test_fbgenerate.F90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/test_fbgenerate.F90
+END
+fbgenerate.F90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbgenerate.F90
+END
+obs_utils.F90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_utils.F90
+END
+obsprof_io.h90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obsprof_io.h90
+END
+fbprint.F90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbprint.F90
+END
+dom_oce.F90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/dom_oce.F90
+END
+obs_sla_types.F90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_sla_types.F90
+END
+obs_fbm.F90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_fbm.F90
+END
+toolspar_kind.F90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/toolspar_kind.F90
+END
+par_oce.F90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/par_oce.F90
+END
+obs_conv.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_conv.F90
+END
+sla2fb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/sla2fb.F90
+END
+obs_sla_io.F90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_sla_io.F90
+END
+fbgenerate_coords.F90
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/fbgenerate_coords.F90
+END
+obssla_io.h90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obssla_io.h90
+END
+grt_cir_dis_saa.h90
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/grt_cir_dis_saa.h90
+END
+index_sort.F90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/index_sort.F90
+END
+obs_vel_io.F90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/obs_vel_io.F90
+END
+vel2fb.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/vel2fb.F90
+END
+wrk_nemo.F90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/wrk_nemo.F90
+END
+nctools.F90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/src/nctools.F90
+END

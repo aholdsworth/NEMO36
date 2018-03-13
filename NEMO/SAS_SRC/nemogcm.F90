@@ -63,7 +63,9 @@ MODULE nemogcm
    USE bdydta          ! open boundary cond. setting   (bdy_dta_init routine). clem: mandatory for LIM3
 #endif
    USE bdy_par
+   USE restart
 
+   
    IMPLICIT NONE
    PRIVATE
 
@@ -74,7 +76,7 @@ MODULE nemogcm
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
-   !! $Id: nemogcm.F90 6204 2016-01-04 13:47:06Z cetlod $
+   !! $Id: nemogcm.F90 8581 2017-10-03 08:03:41Z cbricaud $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -356,15 +358,18 @@ CONTAINS
 
       IF( ln_ctl        )   CALL prt_ctl_init   ! Print control
                             CALL day_init   ! model calendar (using both namelist and restart infos)
+      IF( ln_rstart )       CALL rst_read_open
 
                             CALL sbc_init   ! Forcings : surface module 
                             
       ! ==> clem: open boundaries init. is mandatory for LIM3 because ice BDY is not decoupled from  
       !           the environment of ocean BDY. Therefore bdy is called in both OPA and SAS modules. 
       !           This is not clean and should be changed in the future. 
+#if defined key_bdy
       IF( lk_bdy        )   CALL     bdy_init
       IF( lk_bdy        )   CALL bdy_dta_init
       ! ==>
+#endif
       
       IF(lwp) WRITE(numout,*) 'Euler time step switch is ', neuler
       !
@@ -620,9 +625,7 @@ CONTAINS
       INTEGER :: ilfax(ntest)
       !
       ! lfax contains the set of allowed factors.
-      data (ilfax(jl),jl=1,ntest) / 16384, 8192, 4096, 2048, 1024, 512, 256,  &
-         &                            128,   64,   32,   16,    8,   4,   2  /
-      !!----------------------------------------------------------------------
+      ilfax(:) = (/(2**jl,jl=ntest,1,-1)/)
 
       ! Clear the error flag and initialise output vars
       kerr = 0

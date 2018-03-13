@@ -96,7 +96,7 @@ MODULE sbcblk_core
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.7 , NEMO-consortium (2014)
-   !! $Id: sbcblk_core.F90 6811 2016-07-20 18:54:40Z mathiot $
+   !! $Id: sbcblk_core.F90 8529 2017-09-15 15:37:45Z cbricaud $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -189,6 +189,10 @@ CONTAINS
          DO ifpr= 1, jfld
             ALLOCATE( sf(ifpr)%fnow(jpi,jpj,1) )
             IF( slf_i(ifpr)%ln_tint )   ALLOCATE( sf(ifpr)%fdta(jpi,jpj,1,2) )
+
+            IF( slf_i(ifpr)%nfreqh .GT. 0._wp .AND. MOD( 3600._wp * slf_i(ifpr)%nfreqh , REAL(nn_fsbc, wp) * rdt) .NE. 0._wp  )   &
+            &  CALL ctl_warn( 'sbcmod time step rdt * nn_fsbc is NOT a submultiple of atmospheric forcing frequency' )
+
          END DO
          !                                         ! fill sf with slf_i and control print
          CALL fld_fill( sf, slf_i, cn_dir, 'sbc_blk_core', 'flux formulation for ocean surface boundary condition', 'namsbc_core' )

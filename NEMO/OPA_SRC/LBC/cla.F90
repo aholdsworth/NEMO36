@@ -54,7 +54,7 @@ MODULE cla
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: cla.F90 4147 2013-11-04 11:51:55Z cetlod $
+   !! $Id: cla.F90 8538 2017-09-19 06:02:33Z gm $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -76,8 +76,6 @@ CONTAINS
       !!----------------------------------------------------------------------
       !     
       IF( kt == nit000 ) THEN
-         !
-         CALL cla_init                                        ! control check 
          !
          IF(lwp) WRITE(numout,*)
          IF(lwp) WRITE(numout,*) 'div_cla : cross land advection on hdiv '

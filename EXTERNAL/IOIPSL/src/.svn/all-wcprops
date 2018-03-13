@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src
+END
+getincom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/getincom.f90
+END
+nc4interface.F90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/nc4interface.F90
+END
+stringop.f90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/stringop.f90
+END
+histcom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/histcom.f90
+END
+flincom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/flincom.f90
+END
+defprec.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/defprec.f90
+END
+errioipsl.f90
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/errioipsl.f90
+END
+fliocom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/fliocom.f90
+END
+calendar.f90
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/calendar.f90
+END
+mathelp.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/mathelp.f90
+END
+restcom.f90
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/restcom.f90
+END
+ioipsl.f90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/EXTERNAL/IOIPSL/src/ioipsl.f90
+END

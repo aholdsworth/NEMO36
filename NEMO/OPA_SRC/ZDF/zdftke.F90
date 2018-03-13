@@ -103,7 +103,7 @@ MODULE zdftke
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
-   !! $Id: zdftke.F90 6314 2016-02-15 12:04:56Z cetlod $
+   !! $Id: zdftke.F90 8290 2017-07-06 08:40:38Z emanuelaclementi $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -322,7 +322,7 @@ CONTAINS
                   zind = 0.5 - SIGN( 0.5, fsdepw(ji,jj,jk) - zhlc(ji,jj) )
                   zwlc = zind * rn_lc * zus * SIN( rpi * fsdepw(ji,jj,jk) / zhlc(ji,jj) )
                   !                                           ! TKE Langmuir circulation source term
-                  en(ji,jj,jk) = en(ji,jj,jk) + rdt * ( 1._wp - fr_i(ji,jj) ) * ( zwlc * zwlc * zwlc ) /   &
+                  en(ji,jj,jk) = en(ji,jj,jk) + rdt * MAX(0.,1._wp - 2.*fr_i(ji,jj) ) * ( zwlc * zwlc * zwlc ) /   &
                      &   zhlc(ji,jj) * wmask(ji,jj,jk) * tmask(ji,jj,1)
                END DO
             END DO
@@ -435,7 +435,7 @@ CONTAINS
             DO jj = 2, jpjm1
                DO ji = fs_2, fs_jpim1   ! vector opt.
                   en(ji,jj,jk) = en(ji,jj,jk) + rn_efr * en(ji,jj,1) * EXP( -fsdepw(ji,jj,jk) / htau(ji,jj) )   &
-                     &                                 * ( 1._wp - fr_i(ji,jj) )  * wmask(ji,jj,jk) * tmask(ji,jj,1)
+                     &                                 * MAX(0.,1._wp - 2.*fr_i(ji,jj) )  * wmask(ji,jj,jk) * tmask(ji,jj,1)
                END DO
             END DO
          END DO
@@ -444,7 +444,7 @@ CONTAINS
             DO ji = fs_2, fs_jpim1   ! vector opt.
                jk = nmln(ji,jj)
                en(ji,jj,jk) = en(ji,jj,jk) + rn_efr * en(ji,jj,1) * EXP( -fsdepw(ji,jj,jk) / htau(ji,jj) )   &
-                  &                                 * ( 1._wp - fr_i(ji,jj) )  * wmask(ji,jj,jk) * tmask(ji,jj,1)
+                  &                                 * MAX(0.,1._wp - 2.*fr_i(ji,jj) )  * wmask(ji,jj,jk) * tmask(ji,jj,1)
             END DO
          END DO
       ELSEIF( nn_etau == 3 ) THEN       !* penetration belox the mixed layer (HF variability)
@@ -460,7 +460,7 @@ CONTAINS
                   zdif = taum(ji,jj) - ztau                            ! mean of modulus - modulus of the mean 
                   zdif = rhftau_scl * MAX( 0._wp, zdif + rhftau_add )  ! apply some modifications...
                   en(ji,jj,jk) = en(ji,jj,jk) + zbbrau * zdif * EXP( -fsdepw(ji,jj,jk) / htau(ji,jj) )   &
-                     &                        * ( 1._wp - fr_i(ji,jj) ) * wmask(ji,jj,jk) * tmask(ji,jj,1)
+                     &                        * MAX(0.,1._wp - 2.*fr_i(ji,jj) ) * wmask(ji,jj,jk) * tmask(ji,jj,1)
                END DO
             END DO
          END DO
@@ -864,23 +864,17 @@ CONTAINS
               en (:,:,:) = rn_emin * tmask(:,:,:)
               CALL tke_avn                               ! recompute avt, avm, avmu, avmv and dissl (approximation)
               !
-              avt_k (:,:,:) = avt (:,:,:)
-              avm_k (:,:,:) = avm (:,:,:)
-              avmu_k(:,:,:) = avmu(:,:,:)
-              avmv_k(:,:,:) = avmv(:,:,:)
-              !
               DO jit = nit000 + 1, nit000 + 10   ;   CALL zdf_tke( jit )   ;   END DO
            ENDIF
         ELSE                                   !* Start from rest
            en(:,:,:) = rn_emin * tmask(:,:,:)
-           DO jk = 1, jpk                           ! set the Kz to the background value
-              avt (:,:,jk) = avtb(jk) * wmask (:,:,jk)
-              avm (:,:,jk) = avmb(jk) * wmask (:,:,jk)
-              avmu(:,:,jk) = avmb(jk) * wumask(:,:,jk)
-              avmv(:,:,jk) = avmb(jk) * wvmask(:,:,jk)
-           END DO
         ENDIF
-        !
+           !                                   ! Initialize av*_k
+           avt_k (:,:,:) = avt (:,:,:)
+           avm_k (:,:,:) = avm (:,:,:)
+           avmu_k(:,:,:) = avmu(:,:,:)
+           avmv_k(:,:,:) = avmv(:,:,:)
+           !
      ELSEIF( TRIM(cdrw) == 'WRITE' ) THEN   ! Create restart file
         !                                   ! -------------------
         IF(lwp) WRITE(numout,*) '---- tke-rst ----'

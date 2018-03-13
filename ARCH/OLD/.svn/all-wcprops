@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD
+END
+arch-PW6_METO.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-PW6_METO.fcm
+END
+arch-PW6_C1A.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-PW6_C1A.fcm
+END
+arch-gfortran_linux.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-gfortran_linux.fcm
+END
+arch-ifort_linux.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-ifort_linux.fcm
+END
+arch-pgf90_linux.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-pgf90_linux.fcm
+END
+arch-xlf_pwr6.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-xlf_pwr6.fcm
+END
+arch-gfortran_osx.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-gfortran_osx.fcm
+END
+arch-ifort_osx.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-ifort_osx.fcm
+END
+arch-ifort_linux_omp.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-ifort_linux_omp.fcm
+END
+arch-ifort_MERCATOR_CLUSTER.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-ifort_MERCATOR_CLUSTER.fcm
+END
+arch-lahey_linux.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-lahey_linux.fcm
+END
+arch-xlf_osx.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-xlf_osx.fcm
+END
+arch-g95_linux.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-g95_linux.fcm
+END
+arch-pathscale_linux.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-pathscale_linux.fcm
+END
+arch-nag_linux.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-nag_linux.fcm
+END
+arch-XT6_HECTOR.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-XT6_HECTOR.fcm
+END
+arch-mpxlf_aix.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-mpxlf_aix.fcm
+END
+arch-xlf_aix.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-xlf_aix.fcm
+END
+arch-g95_osx.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/OLD/arch-g95_osx.fcm
+END

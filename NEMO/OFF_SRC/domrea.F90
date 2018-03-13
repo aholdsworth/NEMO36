@@ -34,7 +34,7 @@ MODULE domrea
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OFF 3.3 , NEMO Consortium (2010)
-   !! $Id: domrea.F90 7522 2017-01-02 10:06:49Z cetlod $
+   !! $Id: domrea.F90 8617 2017-10-12 08:18:54Z cetlod $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -81,11 +81,9 @@ CONTAINS
       e1e2t   (:,:) = e1t(:,:) * e2t(:,:)
       e12u    (:,:) = e1u(:,:) * e2u(:,:)
       e12v    (:,:) = e1v(:,:) * e2v(:,:)
-      e12f    (:,:) = e1f(:,:) * e2f(:,:)
       r1_e12t (:,:) = 1._wp    / e12t(:,:)
       r1_e12u (:,:) = 1._wp    / e12u(:,:)
       r1_e12v (:,:) = 1._wp    / e12v(:,:)
-      r1_e12f (:,:) = 1._wp    / e12f(:,:)
       re2u_e1u(:,:) = e2u(:,:) / e1u(:,:)
       re1v_e2v(:,:) = e1v(:,:) / e2v(:,:)
       !

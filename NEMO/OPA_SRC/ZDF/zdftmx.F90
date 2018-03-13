@@ -54,7 +54,7 @@ MODULE zdftmx
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
-   !! $Id: zdftmx.F90 6314 2016-02-15 12:04:56Z cetlod $
+   !! $Id: zdftmx.F90 8788 2017-11-22 18:01:02Z gsamson $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -234,6 +234,7 @@ CONTAINS
       CALL wrk_alloc( jpi,jpj,jpk, zempba_3d_1, zempba_3d_2, zempba_3d, zdn2dz, zavt_itf )
 
       !                             ! compute the form function using N2 at each time step
+      zdn2dz     (:,:,jpk) = 0.e0
       zempba_3d_1(:,:,jpk) = 0.e0
       zempba_3d_2(:,:,jpk) = 0.e0
       DO jk = 1, jpkm1             
@@ -615,7 +616,7 @@ CONTAINS
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2016)
-   !! $Id: zdftmx.F90 6314 2016-02-15 12:04:56Z cetlod $
+   !! $Id: zdftmx.F90 8788 2017-11-22 18:01:02Z gsamson $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS

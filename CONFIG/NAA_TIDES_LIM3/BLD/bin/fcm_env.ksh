@@ -1,0 +1,1 @@
+/home/amh001/NAA_NEMO/CONFIG/NAA_TIDES_LIM3/BLD/fcm_env.sh

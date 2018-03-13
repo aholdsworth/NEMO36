@@ -248,7 +248,7 @@ CONTAINS
 
            !debug this section computing ?
            lldebug=.FALSE.
-           IF( (jsec==nn_secdebug .OR. nn_secdebug==-1) .AND.  kt==nit000+nn_dct-1 .AND. lwp ) lldebug=.TRUE. 
+           IF( (jsec==nn_secdebug .OR. nn_secdebug==-1) .AND.  kt==nit000+nn_dct-1 ) lldebug=.TRUE. 
 
            !Compute transport through section  
            CALL transport(secs(jsec),lldebug,jsec) 
@@ -257,7 +257,7 @@ CONTAINS
              
         IF( MOD(kt,nn_dctwri)==0 )THEN
 
-           IF( lwp .AND. kt==nit000+nn_dctwri-1 )WRITE(numout,*)"      diadct: average transports and write at kt = ",kt         
+           IF( kt==nit000+nn_dctwri-1 )WRITE(numout,*)"      diadct: average transports and write at kt = ",kt         
   
            !! divide arrays by nn_dctwri/nn_dct to obtain average 
            transports_3d(:,:,:,:)=transports_3d(:,:,:,:)/(nn_dctwri/nn_dct) 
@@ -343,7 +343,7 @@ CONTAINS
      
      DO jsec=1,nb_sec_max      !loop on the nb_sec sections
 
-        IF ( lwp .AND. ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) ) &
+        IF ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) &
            & WRITE(numout,*)'debuging for section number: ',jsec 
 
         !initialization
@@ -363,7 +363,7 @@ CONTAINS
         WRITE(cltmp,'(a,i4.4,a,i4.4)')'diadct: read sections : Problem of section number: isec= ',isec,' and jsec= ',jsec
         IF( jsec .NE. isec )  CALL ctl_stop( cltmp )
 
-        IF( lwp .AND. ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) )WRITE(numout,*)"isec ",isec 
+        IF( jsec==nn_secdebug .OR. nn_secdebug==-1 )WRITE(numout,*)"isec ",isec 
 
         READ(numdct_in)secs(jsec)%name
         READ(numdct_in)secs(jsec)%llstrpond
@@ -382,7 +382,7 @@ CONTAINS
         !debug
         !-----
 
-        IF( lwp .AND. ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) )THEN
+        IF( jsec==nn_secdebug .OR. nn_secdebug==-1 )THEN
           
             WRITE(clformat,'(a,i2,a)') '(A40,', nb_class_max,'(f8.3,1X))' 
 
@@ -415,7 +415,7 @@ CONTAINS
     
            !debug
            !-----
-           IF( lwp .AND. ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) )THEN
+           IF( jsec==nn_secdebug .OR. nn_secdebug==-1 )THEN
               WRITE(numout,*)"      List of points in global domain:"
               DO jpt=1,iptglo
                  WRITE(numout,*)'        # I J ',jpt,coordtemp(jpt),directemp(jpt)
@@ -449,7 +449,7 @@ CONTAINS
 
            !debug
            !-----
-           IF(   lwp .AND. ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) )THEN
+           IF( jsec==nn_secdebug .OR. nn_secdebug==-1 )THEN
               WRITE(numout,*)"      List of points selected by the proc:"
               DO jpt = 1,iptloc
                  iiglo = secs(jsec)%listPoint(jpt)%I + jpizoom - 1 + nimpp - 1
@@ -467,7 +467,7 @@ CONTAINS
 
            !remove redundant points between processors
            !------------------------------------------
-           lldebug = .FALSE. ; IF ( (jsec==nn_secdebug .OR. nn_secdebug==-1) .AND. lwp ) lldebug = .TRUE.
+           lldebug = .FALSE. ; IF ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) lldebug = .TRUE.
            IF( iptloc .NE. 0 )THEN
               CALL removepoints(secs(jsec),'I','top_list',lldebug)
               CALL removepoints(secs(jsec),'I','bot_list',lldebug)
@@ -483,7 +483,7 @@ CONTAINS
 
            !debug
            !-----
-           IF( lwp .AND. ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) )THEN
+           IF( jsec==nn_secdebug .OR. nn_secdebug==-1 )THEN
               WRITE(numout,*)"      List of points after removepoints:"
               iptloc = secs(jsec)%nb_point
               DO jpt = 1,iptloc
@@ -495,7 +495,7 @@ CONTAINS
            ENDIF
 
         ELSE  ! iptglo = 0
-           IF( lwp .AND. ( jsec==nn_secdebug .OR. nn_secdebug==-1 ) )&
+           IF( jsec==nn_secdebug .OR. nn_secdebug==-1 )&
               WRITE(numout,*)'   No points for this section.'
         ENDIF
 

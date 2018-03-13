@@ -57,10 +57,10 @@ CONTAINS
       ! write the tracer concentrations in the file
       ! ---------------------------------------
       IF( lk_pisces  )   CALL trc_wri_pisces     ! PISCES 
+      IF( lk_my_trc  )   CALL trc_wri_my_trc     ! MY_TRC  tracers
       IF( lk_cfc     )   CALL trc_wri_cfc        ! surface fluxes of CFC
       IF( lk_c14b    )   CALL trc_wri_c14b       ! surface fluxes of C14
       IF( lk_age     )   CALL trc_wri_age        ! AGE tracer
-      IF( lk_my_trc  )   CALL trc_wri_my_trc     ! MY_TRC  tracers
       !
       IF( nn_timing == 1 )  CALL timing_stop('trc_wri')
       !
@@ -79,7 +79,7 @@ CONTAINS
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcwri.F90 7494 2016-12-14 09:02:43Z timgraham $
+   !! $Id: trcwri.F90 8353 2017-07-19 14:41:00Z lovato $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!======================================================================
 END MODULE trcwri

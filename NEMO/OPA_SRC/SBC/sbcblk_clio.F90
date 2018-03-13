@@ -88,7 +88,7 @@ MODULE sbcblk_clio
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
-   !! $Id: sbcblk_clio.F90 6399 2016-03-22 17:17:23Z clem $ 
+   !! $Id: sbcblk_clio.F90 8529 2017-09-15 15:37:45Z cbricaud $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -163,6 +163,10 @@ CONTAINS
          DO ifpr= 1, jpfld
             ALLOCATE( sf(ifpr)%fnow(jpi,jpj,1) , STAT=ierr1)
             IF( slf_i(ifpr)%ln_tint ) ALLOCATE( sf(ifpr)%fdta(jpi,jpj,1,2) , STAT=ierr2 )
+
+            IF( slf_i(ifpr)%nfreqh .GT. 0._wp .AND. MOD( 3600._wp * slf_i(ifpr)%nfreqh , REAL(nn_fsbc, wp) * rdt) .NE. 0._wp  )   &
+            &  CALL ctl_warn( 'sbcmod time step rdt * nn_fsbc is NOT a submultiple of atmospheric forcing frequency' )
+
          END DO
          IF( ierr1+ierr2 > 0 )   CALL ctl_stop( 'STOP', 'sbc_blk_clio: unable to allocate sf array structure' )
          ! fill sf with slf_i and control print

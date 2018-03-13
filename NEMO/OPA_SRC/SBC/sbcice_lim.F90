@@ -77,7 +77,7 @@ MODULE sbcice_lim
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , UCL NEMO Consortium (2011)
-   !! $Id: sbcice_lim.F90 6963 2016-09-30 12:40:04Z clem $
+   !! $Id: sbcice_lim.F90 7778 2017-03-09 14:19:31Z clem $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -649,6 +649,7 @@ CONTAINS
    !!----------------------------------------------------------------------
 CONTAINS
    SUBROUTINE sbc_ice_lim ( kt, kblk )     ! Dummy routine
+      INTEGER, INTENT(in) ::   kt, kblk
       WRITE(*,*) 'sbc_ice_lim: You should not have seen this print! error?', kt, kblk
    END SUBROUTINE sbc_ice_lim
    SUBROUTINE sbc_lim_init                 ! Dummy routine

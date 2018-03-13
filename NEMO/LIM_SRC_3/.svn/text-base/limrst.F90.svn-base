@@ -107,7 +107,7 @@ CONTAINS
       INTEGER ::   ji, jj, jk ,jl   ! dummy loop indices
       INTEGER ::   iter
       CHARACTER(len=15) ::   znam
-      CHARACTER(len=1)  ::   zchar, zchar1
+      CHARACTER(len=2)  ::   zchar, zchar1
       REAL(wp), POINTER, DIMENSION(:,:) :: z2d
       !!----------------------------------------------------------------------
 
@@ -129,39 +129,31 @@ CONTAINS
 
       ! Prognostic variables 
       DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
-         znam = 'v_i'//'_htc'//zchar
+         WRITE(zchar,'(I2)') jl
+         znam = 'v_i'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = v_i(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'v_s'//'_htc'//zchar
+         znam = 'v_s'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = v_s(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'smv_i'//'_htc'//zchar
+         znam = 'smv_i'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = smv_i(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'oa_i'//'_htc'//zchar
+         znam = 'oa_i'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = oa_i(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'a_i'//'_htc'//zchar
+         znam = 'a_i'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = a_i(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 't_su'//'_htc'//zchar
+         znam = 't_su'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = t_su(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-      END DO
-
-      DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
-         znam = 'tempt_sl1'//'_htc'//zchar
+         znam = 'tempt_sl1'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = e_s(:,:,1,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-      END DO
-
-      DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
          DO jk = 1, nlay_i 
-            WRITE(zchar1,'(I1)') jk
-            znam = 'tempt'//'_il'//zchar1//'_htc'//zchar
+            WRITE(zchar1,'(I2)') jk
+            znam = 'tempt'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             z2d(:,:) = e_i(:,:,jk,jl)
             CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
          END DO
@@ -176,95 +168,95 @@ CONTAINS
       CALL iom_rstput( iter, nitrst, numriw, 'snwice_mass_b', snwice_mass_b )
 
       DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
-         znam = 'sxice'//'_htc'//zchar
+         WRITE(zchar,'(I2)') jl
+         znam = 'sxice'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxice(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syice'//'_htc'//zchar
+         znam = 'syice'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syice(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxxice'//'_htc'//zchar
+         znam = 'sxxice'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxxice(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syyice'//'_htc'//zchar
+         znam = 'syyice'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syyice(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxyice'//'_htc'//zchar
+         znam = 'sxyice'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxyice(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxsn'//'_htc'//zchar
+         znam = 'sxsn'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxsn(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sysn'//'_htc'//zchar
+         znam = 'sysn'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sysn(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxxsn'//'_htc'//zchar
+         znam = 'sxxsn'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxxsn(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syysn'//'_htc'//zchar
+         znam = 'syysn'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syysn(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxysn'//'_htc'//zchar
+         znam = 'sxysn'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxysn(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxa'//'_htc'//zchar
+         znam = 'sxa'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxa(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sya'//'_htc'//zchar
+         znam = 'sya'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sya(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxxa'//'_htc'//zchar
+         znam = 'sxxa'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxxa(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syya'//'_htc'//zchar
+         znam = 'syya'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syya(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxya'//'_htc'//zchar
+         znam = 'sxya'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxya(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxc0'//'_htc'//zchar
+         znam = 'sxc0'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxc0(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syc0'//'_htc'//zchar
+         znam = 'syc0'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syc0(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxxc0'//'_htc'//zchar
+         znam = 'sxxc0'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxxc0(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syyc0'//'_htc'//zchar
+         znam = 'syyc0'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syyc0(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxyc0'//'_htc'//zchar
+         znam = 'sxyc0'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxyc0(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxsal'//'_htc'//zchar
+         znam = 'sxsal'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxsal(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sysal'//'_htc'//zchar
+         znam = 'sysal'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sysal(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxxsal'//'_htc'//zchar
+         znam = 'sxxsal'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxxsal(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syysal'//'_htc'//zchar
+         znam = 'syysal'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syysal(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxysal'//'_htc'//zchar
+         znam = 'sxysal'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxysal(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxage'//'_htc'//zchar
+         znam = 'sxage'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxage(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syage'//'_htc'//zchar
+         znam = 'syage'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syage(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxxage'//'_htc'//zchar
+         znam = 'sxxage'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxxage(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'syyage'//'_htc'//zchar
+         znam = 'syyage'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = syyage(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-         znam = 'sxyage'//'_htc'//zchar
+         znam = 'sxyage'//'_htc'//TRIM(ADJUSTL(zchar))
          z2d(:,:) = sxyage(:,:,jl)
          CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
       END DO
@@ -276,22 +268,22 @@ CONTAINS
       CALL iom_rstput( iter, nitrst, numriw, 'sxyopw' ,  sxyopw )
 
       DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
+         WRITE(zchar,'(I2)') jl
          DO jk = 1, nlay_i 
-            WRITE(zchar1,'(I1)') jk
-            znam = 'sxe'//'_il'//zchar1//'_htc'//zchar
+            WRITE(zchar1,'(I2)') jk
+            znam = 'sxe'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             z2d(:,:) = sxe(:,:,jk,jl)
             CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-            znam = 'sye'//'_il'//zchar1//'_htc'//zchar
+            znam = 'sye'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             z2d(:,:) = sye(:,:,jk,jl)
             CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-            znam = 'sxxe'//'_il'//zchar1//'_htc'//zchar
+            znam = 'sxxe'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             z2d(:,:) = sxxe(:,:,jk,jl)
             CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-            znam = 'syye'//'_il'//zchar1//'_htc'//zchar
+            znam = 'syye'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             z2d(:,:) = syye(:,:,jk,jl)
             CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
-            znam = 'sxye'//'_il'//zchar1//'_htc'//zchar
+            znam = 'sxye'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             z2d(:,:) = sxye(:,:,jk,jl)
             CALL iom_rstput( iter, nitrst, numriw, znam , z2d )
          END DO
@@ -317,7 +309,7 @@ CONTAINS
       REAL(wp) ::   zfice, ziter
       REAL(wp), POINTER, DIMENSION(:,:) ::   z2d
       CHARACTER(len=15) ::   znam
-      CHARACTER(len=1)  ::   zchar, zchar1
+      CHARACTER(len=2)  ::   zchar, zchar1
       INTEGER           ::   jlibalt = jprstlib
       LOGICAL           ::   llok
       !!----------------------------------------------------------------------
@@ -355,40 +347,33 @@ CONTAINS
          &                   '   verify the file or rerun with the value 0 for the',         &
          &                   '   control of time parameter  nrstdt' )
 
+      ! Prognostic variables 
       DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
-         znam = 'v_i'//'_htc'//zchar
+         WRITE(zchar,'(I2)') jl
+         znam = 'v_i'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          v_i(:,:,jl) = z2d(:,:)
-         znam = 'v_s'//'_htc'//zchar
+         znam = 'v_s'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          v_s(:,:,jl) = z2d(:,:) 
-         znam = 'smv_i'//'_htc'//zchar
+         znam = 'smv_i'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          smv_i(:,:,jl) = z2d(:,:)
-         znam = 'oa_i'//'_htc'//zchar
+         znam = 'oa_i'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          oa_i(:,:,jl) = z2d(:,:)
-         znam = 'a_i'//'_htc'//zchar
+         znam = 'a_i'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          a_i(:,:,jl) = z2d(:,:)
-         znam = 't_su'//'_htc'//zchar
+         znam = 't_su'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          t_su(:,:,jl) = z2d(:,:)
-      END DO
-
-      DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
-         znam = 'tempt_sl1'//'_htc'//zchar
+         znam = 'tempt_sl1'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          e_s(:,:,1,jl) = z2d(:,:)
-      END DO
-
-      DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
          DO jk = 1, nlay_i 
-            WRITE(zchar1,'(I1)') jk
-            znam = 'tempt'//'_il'//zchar1//'_htc'//zchar
+            WRITE(zchar1,'(I2)') jk
+            znam = 'tempt'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
             e_i(:,:,jk,jl) = z2d(:,:)
          END DO
@@ -403,95 +388,95 @@ CONTAINS
       CALL iom_get( numrir, jpdom_autoglo, 'snwice_mass_b', snwice_mass_b )
 
       DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
-         znam = 'sxice'//'_htc'//zchar
+         WRITE(zchar,'(I2)') jl
+         znam = 'sxice'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxice(:,:,jl) = z2d(:,:)
-         znam = 'syice'//'_htc'//zchar
+         znam = 'syice'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syice(:,:,jl) = z2d(:,:)
-         znam = 'sxxice'//'_htc'//zchar
+         znam = 'sxxice'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxxice(:,:,jl) = z2d(:,:)
-         znam = 'syyice'//'_htc'//zchar
+         znam = 'syyice'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syyice(:,:,jl) = z2d(:,:)
-         znam = 'sxyice'//'_htc'//zchar
+         znam = 'sxyice'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxyice(:,:,jl) = z2d(:,:)
-         znam = 'sxsn'//'_htc'//zchar
+         znam = 'sxsn'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxsn(:,:,jl) = z2d(:,:)
-         znam = 'sysn'//'_htc'//zchar
+         znam = 'sysn'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sysn(:,:,jl) = z2d(:,:)
-         znam = 'sxxsn'//'_htc'//zchar
+         znam = 'sxxsn'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxxsn(:,:,jl) = z2d(:,:)
-         znam = 'syysn'//'_htc'//zchar
+         znam = 'syysn'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syysn(:,:,jl) = z2d(:,:)
-         znam = 'sxysn'//'_htc'//zchar
+         znam = 'sxysn'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxysn(:,:,jl) = z2d(:,:)
-         znam = 'sxa'//'_htc'//zchar
+         znam = 'sxa'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxa(:,:,jl) = z2d(:,:)
-         znam = 'sya'//'_htc'//zchar
+         znam = 'sya'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sya(:,:,jl) = z2d(:,:)
-         znam = 'sxxa'//'_htc'//zchar
+         znam = 'sxxa'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxxa(:,:,jl) = z2d(:,:)
-         znam = 'syya'//'_htc'//zchar
+         znam = 'syya'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syya(:,:,jl) = z2d(:,:)
-         znam = 'sxya'//'_htc'//zchar
+         znam = 'sxya'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxya(:,:,jl) = z2d(:,:)
-         znam = 'sxc0'//'_htc'//zchar
+         znam = 'sxc0'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxc0(:,:,jl) = z2d(:,:)
-         znam = 'syc0'//'_htc'//zchar
+         znam = 'syc0'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syc0(:,:,jl) = z2d(:,:)
-         znam = 'sxxc0'//'_htc'//zchar
+         znam = 'sxxc0'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxxc0(:,:,jl) = z2d(:,:)
-         znam = 'syyc0'//'_htc'//zchar
+         znam = 'syyc0'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syyc0(:,:,jl) = z2d(:,:)
-         znam = 'sxyc0'//'_htc'//zchar
+         znam = 'sxyc0'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxyc0(:,:,jl) = z2d(:,:)
-         znam = 'sxsal'//'_htc'//zchar
+         znam = 'sxsal'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxsal(:,:,jl) = z2d(:,:)
-         znam = 'sysal'//'_htc'//zchar
+         znam = 'sysal'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sysal(:,:,jl) = z2d(:,:)
-         znam = 'sxxsal'//'_htc'//zchar
+         znam = 'sxxsal'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxxsal(:,:,jl) = z2d(:,:)
-         znam = 'syysal'//'_htc'//zchar
+         znam = 'syysal'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syysal(:,:,jl) = z2d(:,:)
-         znam = 'sxysal'//'_htc'//zchar
+         znam = 'sxysal'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxysal(:,:,jl) = z2d(:,:)
-         znam = 'sxage'//'_htc'//zchar
+         znam = 'sxage'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxage(:,:,jl) = z2d(:,:)
-         znam = 'syage'//'_htc'//zchar
+         znam = 'syage'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syage(:,:,jl) = z2d(:,:)
-         znam = 'sxxage'//'_htc'//zchar
+         znam = 'sxxage'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxxage(:,:,jl) = z2d(:,:)
-         znam = 'syyage'//'_htc'//zchar
+         znam = 'syyage'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          syyage(:,:,jl) = z2d(:,:)
-         znam = 'sxyage'//'_htc'//zchar
+         znam = 'sxyage'//'_htc'//TRIM(ADJUSTL(zchar))
          CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
          sxyage(:,:,jl)= z2d(:,:)
       END DO
@@ -503,22 +488,22 @@ CONTAINS
       CALL iom_get( numrir, jpdom_autoglo, 'sxyopw' ,  sxyopw )
 
       DO jl = 1, jpl 
-         WRITE(zchar,'(I1)') jl
+         WRITE(zchar,'(I2)') jl
          DO jk = 1, nlay_i 
-            WRITE(zchar1,'(I1)') jk
-            znam = 'sxe'//'_il'//zchar1//'_htc'//zchar
+            WRITE(zchar1,'(I2)') jk
+            znam = 'sxe'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
             sxe(:,:,jk,jl) = z2d(:,:)
-            znam = 'sye'//'_il'//zchar1//'_htc'//zchar
+            znam = 'sye'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
             sye(:,:,jk,jl) = z2d(:,:)
-            znam = 'sxxe'//'_il'//zchar1//'_htc'//zchar
+            znam = 'sxxe'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
             sxxe(:,:,jk,jl) = z2d(:,:)
-            znam = 'syye'//'_il'//zchar1//'_htc'//zchar
+            znam = 'syye'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
             syye(:,:,jk,jl) = z2d(:,:)
-            znam = 'sxye'//'_il'//zchar1//'_htc'//zchar
+            znam = 'sxye'//'_il'//TRIM(ADJUSTL(zchar1))//'_htc'//TRIM(ADJUSTL(zchar))
             CALL iom_get( numrir, jpdom_autoglo, znam , z2d )
             sxye(:,:,jk,jl) = z2d(:,:)
          END DO

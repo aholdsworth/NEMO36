@@ -234,6 +234,7 @@ CONTAINS
       CALL wrk_alloc( jpi,jpj,jpk, zempba_3d_1, zempba_3d_2, zempba_3d, zdn2dz, zavt_itf )
 
       !                             ! compute the form function using N2 at each time step
+      zdn2dz     (:,:,jpk) = 0.e0
       zempba_3d_1(:,:,jpk) = 0.e0
       zempba_3d_2(:,:,jpk) = 0.e0
       DO jk = 1, jpkm1             

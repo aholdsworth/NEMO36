@@ -290,8 +290,8 @@ CONTAINS
       ENDIF
       !    
       IF( lk_iomput ) THEN
-        CALL iom_put( "qtrC14b"  , qtr_c14  )
-        CALL iom_put( "qintC14b" , qint_c14 )
+        CALL iom_put( "qtr_C14b"  , qtr_c14  )
+        CALL iom_put( "qint_C14b" , qint_c14 )
         CALL iom_put( "fdecay"   , zdecay   )
       ELSE
          IF( ln_diatrc ) THEN

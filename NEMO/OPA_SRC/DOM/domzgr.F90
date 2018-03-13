@@ -76,7 +76,7 @@ MODULE domzgr
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3.1 , NEMO Consortium (2011)
-   !! $Id: domzgr.F90 7524 2017-01-03 17:32:32Z mathiot $
+   !! $Id: domzgr.F90 8594 2017-10-05 08:32:46Z flavoni $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS       
@@ -1969,6 +1969,8 @@ CONTAINS
       ! Envelope bathymetry saved in hbatt
       hbatt(:,:) = zenv(:,:) 
       IF( MINVAL( gphit(:,:) ) * MAXVAL( gphit(:,:) ) <= 0._wp ) THEN
+      IF ( jphgr_msh == 2 .OR. jphgr_msh == 3) CALL ctl_stop( 'dom:zgr_sco:  if jphgr_msh = 2 or 3 and  &  
+                                & s-coordinates stop, if not correction at Equator is applied, but it is wrong')
          CALL ctl_warn( ' s-coordinates are tapered in vicinity of the Equator' )
          DO jj = 1, jpj
             DO ji = 1, jpi

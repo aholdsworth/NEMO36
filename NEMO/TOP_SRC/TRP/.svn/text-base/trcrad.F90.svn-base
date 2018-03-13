@@ -21,7 +21,7 @@ MODULE trcrad
    IMPLICIT NONE
    PRIVATE
 
-   PUBLIC trc_rad         ! routine called by trcstp.F90
+   PUBLIC trc_rad, trc_rad_sms        ! routine called by trcstp.F90
 
    !! * Substitutions
 #  include "top_substitute.h90"

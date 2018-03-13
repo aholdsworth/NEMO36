@@ -807,7 +807,7 @@ CONTAINS
       !!---------------------------------------------    
       !
       IF (before) THEN 
-         DO jk=1,jpk
+         DO jk=1,jpkm1
             DO jj=j1,j2
                DO ji=i1,i2
                   ptab(ji,jj,jk) = e2u(ji,jj) * un(ji,jj,jk)
@@ -875,7 +875,7 @@ CONTAINS
       !      
       IF (before) THEN          
          !interpv entre 1 et k2 et interpv2d en jpkp1
-         DO jk=k1,jpk
+         DO jk=1,jpkm1
             DO jj=j1,j2
                DO ji=i1,i2
                   ptab(ji,jj,jk) = e1v(ji,jj) * vn(ji,jj,jk)

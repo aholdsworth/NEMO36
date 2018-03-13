@@ -38,7 +38,7 @@ MODULE limupdate1
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/LIM3 4.0 , UCL - NEMO Consortium (2011)
-   !! $Id: limupdate1.F90 6311 2016-02-15 11:28:31Z cetlod $
+   !! $Id: limupdate1.F90 7814 2017-03-20 16:21:42Z clem $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -61,8 +61,9 @@ CONTAINS
       IF( ln_limdyn ) THEN 
 
       IF( kt == nit000 .AND. lwp ) THEN
-         WRITE(numout,*) ' lim_update1 ' 
-         WRITE(numout,*) ' ~~~~~~~~~~~ '
+         WRITE(numout,*)'' 
+         WRITE(numout,*)' lim_update1 ' 
+         WRITE(numout,*)' ~~~~~~~~~~~ '
       ENDIF
 
       ! conservation test

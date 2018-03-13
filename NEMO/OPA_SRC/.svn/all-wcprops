@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 75
-/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC
+/nemo/svn/!svn/ver/8788/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC
 END
 lib_print.f90
 K 25
@@ -19,7 +19,7 @@ nemogcm.F90
 K 25
 svn:wc:ra_dav:version-url
 V 87
-/nemo/svn/!svn/ver/7515/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/nemogcm.F90
+/nemo/svn/!svn/ver/8566/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/nemogcm.F90
 END
 par_kind.F90
 K 25
@@ -39,17 +39,17 @@ svn:wc:ra_dav:version-url
 V 84
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/nemo.f90
 END
-step_oce.F90
-K 25
-svn:wc:ra_dav:version-url
-V 88
-/nemo/svn/!svn/ver/7502/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/step_oce.F90
-END
 lib_fortran.F90
 K 25
 svn:wc:ra_dav:version-url
 V 91
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/lib_fortran.F90
+END
+step_oce.F90
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/nemo/svn/!svn/ver/7502/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/step_oce.F90
 END
 module_example
 K 25
@@ -73,7 +73,7 @@ stpctl.F90
 K 25
 svn:wc:ra_dav:version-url
 V 86
-/nemo/svn/!svn/ver/7607/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/stpctl.F90
+/nemo/svn/!svn/ver/7847/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/stpctl.F90
 END
 vectopt_loop_substitute.h90
 K 25
@@ -85,13 +85,13 @@ step.F90
 K 25
 svn:wc:ra_dav:version-url
 V 84
-/nemo/svn/!svn/ver/7494/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/step.F90
+/nemo/svn/!svn/ver/8477/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/step.F90
 END
 trc_oce.F90
 K 25
 svn:wc:ra_dav:version-url
 V 87
-/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/trc_oce.F90
+/nemo/svn/!svn/ver/8026/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OPA_SRC/trc_oce.F90
 END
 wrk_nemo.F90
 K 25

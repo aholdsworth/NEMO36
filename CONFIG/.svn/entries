@@ -1,0 +1,169 @@
+10
+
+dir
+7756
+http://forge.ipsl.jussieu.fr/nemo/svn/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG
+http://forge.ipsl.jussieu.fr/nemo/svn
+
+
+
+2017-01-25T15:37:31.870315Z
+7607
+cetlod
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+4aad9cc9-4d31-0410-b1e8-ee312aa4b1ec
+
+ORCA2_LIM3
+dir
+
+GYRE_BFM
+dir
+
+ORCA2_LIM_CFC_C14b
+dir
+
+makenemo
+file
+
+
+
+
+2017-03-04T18:26:48.000000Z
+7d0dc6dfdf82428d3a4014ee1d7968be
+2015-03-11T15:51:28.220912Z
+5144
+timgraham
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+11143
+
+uspcfg.txt
+file
+
+
+
+
+2017-03-04T18:26:48.000000Z
+26dfdfa6ef06a0535f0305c56da77419
+2015-06-01T17:09:27.039790Z
+5333
+mathiot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+258
+
+SHARED
+dir
+
+ORCA2_OFF_PISCES
+dir
+
+GYRE
+dir
+
+ORCA2_LIM
+dir
+
+GYRE_XIOS
+dir
+
+C1D_PAPA
+dir
+
+GYRE_PISCES
+dir
+
+cfg.txt
+file
+
+
+
+
+2017-03-04T18:26:48.000000Z
+3aa55de881e85f2605122d5756f5ec88
+2016-02-24T10:44:07.768164Z
+6348
+cetlod
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+381
+
+ORCA2_SAS_LIM
+dir
+
+ORCA2_LIM_PISCES
+dir
+
+AMM12
+dir
+

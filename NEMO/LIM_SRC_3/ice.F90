@@ -411,14 +411,14 @@ MODULE ice
    !
    !!----------------------------------------------------------------------
    !! NEMO/LIM3 4.0 , UCL - NEMO Consortium (2010)
-   !! $Id: ice.F90 7607 2017-01-25 15:37:31Z cetlod $
+   !! $Id: ice.F90 7814 2017-03-20 16:21:42Z clem $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
 
    FUNCTION ice_alloc()
       !!-----------------------------------------------------------------
-      !!               *** Routine ice_alloc_2 ***
+      !!               *** Routine ice_alloc ***
       !!-----------------------------------------------------------------
       INTEGER :: ice_alloc
       !
@@ -505,7 +505,7 @@ CONTAINS
          &      diag_smvi  (jpi,jpj), diag_vice   (jpi,jpj), diag_vsnw  (jpi,jpj), STAT=ierr(ii) )
 
       ice_alloc = MAXVAL( ierr(:) )
-      IF( ice_alloc /= 0 )   CALL ctl_warn('ice_alloc_2: failed to allocate arrays.')
+      IF( ice_alloc /= 0 )   CALL ctl_warn('ice_alloc: failed to allocate arrays.')
       !
    END FUNCTION ice_alloc
 

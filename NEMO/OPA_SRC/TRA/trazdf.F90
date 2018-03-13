@@ -45,7 +45,7 @@ MODULE trazdf
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.7 , NEMO Consortium (2014)
-   !! $Id: trazdf.F90 5385 2015-06-09 13:50:42Z cetlod $
+   !! $Id: trazdf.F90 8102 2017-05-31 09:08:52Z davestorkey $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -93,10 +93,20 @@ CONTAINS
       WHERE ( tsa(:,:,:,jp_sal) < 0._wp )   tsa(:,:,:,jp_sal) = 0.1_wp
 
       IF( l_trdtra )   THEN                      ! save the vertical diffusive trends for further diagnostics
-         DO jk = 1, jpkm1
-            ztrdt(:,:,jk) = ( ( tsa(:,:,jk,jp_tem) - tsb(:,:,jk,jp_tem) ) / r2dtra(jk) ) - ztrdt(:,:,jk)
-            ztrds(:,:,jk) = ( ( tsa(:,:,jk,jp_sal) - tsb(:,:,jk,jp_sal) ) / r2dtra(jk) ) - ztrds(:,:,jk)
-         END DO
+         ! G Nurser 23 Mar 2017. Recalculate trend as Delta(e3t*T)/e3tn.
+         IF( lk_vvl ) THEN
+            DO jk = 1, jpkm1
+               ztrdt(:,:,jk) = ( ( tsa(:,:,jk,jp_tem)*fse3t_a(:,:,jk) - tsb(:,:,jk,jp_tem)*fse3t_b(:,:,jk) ) &
+                    & / (fse3t_n(:,:,jk)*r2dtra(jk)) ) - ztrdt(:,:,jk)
+               ztrds(:,:,jk) = ( ( tsa(:,:,jk,jp_sal)*fse3t_a(:,:,jk) - tsb(:,:,jk,jp_sal)*fse3t_b(:,:,jk) ) &
+                    & / (fse3t_n(:,:,jk)*r2dtra(jk)) ) - ztrds(:,:,jk)
+            END DO
+         ELSE
+            DO jk = 1, jpkm1
+               ztrdt(:,:,jk) = ( ( tsa(:,:,jk,jp_tem) - tsb(:,:,jk,jp_tem) ) / r2dtra(jk) ) - ztrdt(:,:,jk)
+               ztrds(:,:,jk) = ( ( tsa(:,:,jk,jp_sal) - tsb(:,:,jk,jp_sal) ) / r2dtra(jk) ) - ztrds(:,:,jk)
+            END DO
+         END IF
          CALL lbc_lnk( ztrdt, 'T', 1. )
          CALL lbc_lnk( ztrds, 'T', 1. )
          CALL trd_tra( kt, 'TRA', jp_tem, jptra_zdf, ztrdt )

@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source
+END
+remap_vars.f
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap_vars.f
+END
+remap_read.f
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap_read.f
+END
+timers.f
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/timers.f
+END
+remap_conserv.f
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap_conserv.f
+END
+netcdf.f
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/netcdf.f
+END
+remap.f
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap.f
+END
+kinds_mod.f
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/kinds_mod.f
+END
+grids.f
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/grids.f
+END
+remap_distwgt.f
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap_distwgt.f
+END
+remap_bilinear.f
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap_bilinear.f
+END
+constants.f
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/constants.f
+END
+remap_write.f
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap_write.f
+END
+scrip_test.f
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/scrip_test.f
+END
+scrip_test_repeat.f
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/scrip_test_repeat.f
+END
+scrip.f
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/scrip.f
+END
+remap_bicubic.f
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/remap_bicubic.f
+END
+copyright
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/copyright
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/makefile
+END
+iounits.f
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/WEIGHTS/SCRIP1.4/source/iounits.f
+END

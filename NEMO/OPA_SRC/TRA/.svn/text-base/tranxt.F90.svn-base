@@ -128,24 +128,35 @@ CONTAINS
       ! trends computation initialisation
       IF( l_trdtra )   THEN                    
          CALL wrk_alloc( jpi, jpj, jpk, ztrdt, ztrds )
-         ztrdt(:,:,jk) = 0._wp
-         ztrds(:,:,jk) = 0._wp
+         ztrdt(:,:,jpk) = 0._wp
+         ztrds(:,:,jpk) = 0._wp
          IF( ln_traldf_iso ) THEN              ! diagnose the "pure" Kz diffusive trend 
             CALL trd_tra( kt, 'TRA', jp_tem, jptra_zdfp, ztrdt )
             CALL trd_tra( kt, 'TRA', jp_sal, jptra_zdfp, ztrds )
          ENDIF
-         ! total trend for the non-time-filtered variables. 
-         DO jk = 1, jpkm1
-            zfact = 1.0 / rdttra(jk)
-            ztrdt(:,:,jk) = ( tsa(:,:,jk,jp_tem) - tsn(:,:,jk,jp_tem) ) * zfact 
-            ztrds(:,:,jk) = ( tsa(:,:,jk,jp_sal) - tsn(:,:,jk,jp_sal) ) * zfact 
-         END DO
+         ! total trend for the non-time-filtered variables.
+         ! G Nurser 23 Mar 2017. Recalculate trend as Delta(e3t*T)/e3tn; e3tn cancel from tsn terms
+         IF( lk_vvl ) THEN
+            DO jk = 1, jpkm1
+               zfact = 1.0 / rdttra(jk)
+               ztrdt(:,:,jk) = ( tsa(:,:,jk,jp_tem)*fse3t_a(:,:,jk) / fse3t_n(:,:,jk) - tsn(:,:,jk,jp_tem)) * zfact
+               ztrds(:,:,jk) = ( tsa(:,:,jk,jp_sal)*fse3t_a(:,:,jk) / fse3t_n(:,:,jk) - tsn(:,:,jk,jp_sal)) * zfact
+            END DO
+         ELSE
+            DO jk = 1, jpkm1
+               zfact = 1.0 / rdttra(jk)
+               ztrdt(:,:,jk) = ( tsa(:,:,jk,jp_tem) - tsn(:,:,jk,jp_tem) ) * zfact 
+               ztrds(:,:,jk) = ( tsa(:,:,jk,jp_sal) - tsn(:,:,jk,jp_sal) ) * zfact 
+            END DO
+         END IF
          CALL trd_tra( kt, 'TRA', jp_tem, jptra_tot, ztrdt )
          CALL trd_tra( kt, 'TRA', jp_sal, jptra_tot, ztrds )
-         ! Store now fields before applying the Asselin filter 
-         ! in order to calculate Asselin filter trend later.
-         ztrdt(:,:,:) = tsn(:,:,:,jp_tem) 
-         ztrds(:,:,:) = tsn(:,:,:,jp_sal)
+         IF( .NOT.lk_vvl )  THEN
+            ! Store now fields before applying the Asselin filter 
+            ! in order to calculate Asselin filter trend later.
+            ztrdt(:,:,:) = tsn(:,:,:,jp_tem) 
+            ztrds(:,:,:) = tsn(:,:,:,jp_sal)
+         END IF
       ENDIF
 
       IF( neuler == 0 .AND. kt == nit000 ) THEN       ! Euler time-stepping at first time-step (only swap)
@@ -154,6 +165,13 @@ CONTAINS
                tsn(:,:,jk,jn) = tsa(:,:,jk,jn)    
             END DO
          END DO
+         IF (l_trdtra.AND.lk_vvl) THEN      ! Zero Asselin filter contribution must be explicitly written out since for vvl
+                                            ! Asselin filter is output by tra_nxt_vvl that is not called on this time step
+            ztrdt(:,:,:) = 0._wp
+            ztrds(:,:,:) = 0._wp
+            CALL trd_tra( kt, 'TRA', jp_tem, jptra_atf, ztrdt )
+            CALL trd_tra( kt, 'TRA', jp_sal, jptra_atf, ztrds )
+         END IF
       ELSE                                            ! Leap-Frog + Asselin filter time stepping
          !
          IF( lk_vvl )  THEN   ;   CALL tra_nxt_vvl( kt, nit000, rdttra, 'TRA', tsb, tsn, tsa,   &
@@ -163,7 +181,7 @@ CONTAINS
       ENDIF     
       !
      ! trends computation
-      IF( l_trdtra ) THEN      ! trend of the Asselin filter (tb filtered - tb)/dt     
+      IF( l_trdtra.AND..NOT.lk_vvl) THEN      ! trend of the Asselin filter (tb filtered - tb)/dt     
          DO jk = 1, jpkm1
             zfact = 1._wp / r2dtra(jk)             
             ztrdt(:,:,jk) = ( tsb(:,:,jk,jp_tem) - ztrdt(:,:,jk) ) * zfact
@@ -171,8 +189,8 @@ CONTAINS
          END DO
          CALL trd_tra( kt, 'TRA', jp_tem, jptra_atf, ztrdt )
          CALL trd_tra( kt, 'TRA', jp_sal, jptra_atf, ztrds )
-         CALL wrk_dealloc( jpi, jpj, jpk, ztrdt, ztrds )
       END IF
+      IF( l_trdtra) CALL wrk_dealloc( jpi, jpj, jpk, ztrdt, ztrds )
       !
       !                        ! control print
       IF(ln_ctl)   CALL prt_ctl( tab3d_1=tsn(:,:,:,jp_tem), clinfo1=' nxt  - Tn: ', mask1=tmask,   &
@@ -288,8 +306,9 @@ CONTAINS
       !!     
       LOGICAL  ::   ll_tra_hpg, ll_traqsr, ll_rnf, ll_isf   ! local logical
       INTEGER  ::   ji, jj, jk, jn              ! dummy loop indices
-      REAL(wp) ::   zfact1, ztc_a , ztc_n , ztc_b , ztc_f , ztc_d    ! local scalar
+      REAL(wp) ::   zfact, zfact1, ztc_a , ztc_n , ztc_b , ztc_f , ztc_d    ! local scalar
       REAL(wp) ::   zfact2, ze3t_b, ze3t_n, ze3t_a, ze3t_f, ze3t_d   !   -      -
+      REAL(wp), POINTER, DIMENSION(:,:,:,:) :: ztrd_atf
       !!----------------------------------------------------------------------
       !
       IF( kt == kit000 )  THEN
@@ -314,8 +333,13 @@ CONTAINS
          ll_isf     = .FALSE.          ! passive tracers or NO ice shelf melting/freezing
       ENDIF
       !
+      IF( ( l_trdtra .and. cdtype == 'TRA' ) .OR. ( l_trdtrc .and. cdtype == 'TRC' ) )   THEN
+         CALL wrk_alloc( jpi, jpj, jpk, kjpt, ztrd_atf )
+         ztrd_atf(:,:,:,:) = 0.0_wp
+      ENDIF
       DO jn = 1, kjpt      
          DO jk = 1, jpkm1
+            zfact = 1._wp / r2dtra(jk)
             zfact1 = atfp * p2dt(jk)
             zfact2 = zfact1 / rau0
             DO jj = 1, jpj
@@ -370,12 +394,27 @@ CONTAINS
                      ze3t_d           = 1.e0   / ( ze3t_n + rbcp * ze3t_d )
                      pta(ji,jj,jk,jn) = ze3t_d * ( ztc_n  + rbcp * ztc_d  )   ! ta <-- Brown & Campana average
                   ENDIF
+                  IF( ( l_trdtra .and. cdtype == 'TRA' ) .OR. ( l_trdtrc .and. cdtype == 'TRC' ) ) THEN
+                     ztrd_atf(ji,jj,jk,jn) = (ztc_f - ztc_n) * zfact/ze3t_n
+                  ENDIF
                END DO
             END DO
          END DO
          ! 
       END DO
       !
+      IF( l_trdtra .and. cdtype == 'TRA' ) THEN 
+         CALL trd_tra( kt, cdtype, jp_tem, jptra_atf, ztrd_atf(:,:,:,jp_tem) )
+         CALL trd_tra( kt, cdtype, jp_sal, jptra_atf, ztrd_atf(:,:,:,jp_sal) )
+         CALL wrk_dealloc( jpi, jpj, jpk, kjpt, ztrd_atf )
+      ENDIF
+      IF( l_trdtrc .and. cdtype == 'TRC' ) THEN
+         DO jn = 1, kjpt
+            CALL trd_tra( kt, cdtype, jn, jptra_atf, ztrd_atf(:,:,:,jn) )
+         END DO
+         CALL wrk_dealloc( jpi, jpj, jpk, kjpt, ztrd_atf )
+      ENDIF
+
    END SUBROUTINE tra_nxt_vvl
 
    !!======================================================================

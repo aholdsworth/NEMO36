@@ -43,7 +43,7 @@ MODULE trcbc
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: trcbc.F90 5215 2015-04-15 16:11:56Z nicolasmartin $ 
+   !! $Id: trcbc.F90 8511 2017-09-07 15:53:42Z lovato $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -276,20 +276,20 @@ CONTAINS
 
       ! OPEN boundary conditions: DOES NOT WORK. Waiting for stable BDY
       IF( nb_trcobc > 0 ) THEN
-        if (lwp) write(numout,'(a,i5,a,i5)') '   reading OBC data for ', nb_trcobc ,' variables at step ', kt
+        if (lwp) write(numout,'(a,i5,a,i12)') '   reading OBC data for ', nb_trcobc ,' variables at step ', kt
         CALL fld_read(kt,1,sf_trcobc)
         ! vertical interpolation on s-grid and partial step to be added
       ENDIF
 
       ! SURFACE boundary conditions       
       IF( nb_trcsbc > 0 ) THEN
-        if (lwp) write(numout,'(a,i5,a,i5)') '   reading SBC data for ', nb_trcsbc ,' variables at step ', kt
+        if (lwp) write(numout,'(a,i5,a,i12)') '   reading SBC data for ', nb_trcsbc ,' variables at step ', kt
         CALL fld_read(kt,1,sf_trcsbc)
       ENDIF
 
       ! COASTAL boundary conditions       
       IF( nb_trccbc > 0 ) THEN
-        if (lwp) write(numout,'(a,i5,a,i5)') '   reading CBC data for ', nb_trccbc ,' variables at step ', kt
+        if (lwp) write(numout,'(a,i5,a,i12)') '   reading CBC data for ', nb_trccbc ,' variables at step ', kt
         CALL fld_read(kt,1,sf_trccbc)
       ENDIF   
       !

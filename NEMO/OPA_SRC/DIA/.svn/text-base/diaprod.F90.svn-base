@@ -237,11 +237,13 @@ CONTAINS
    !!----------------------------------------------------------------------
    !!   Default option :                                         NO diaprod
    !!----------------------------------------------------------------------
+   USE in_out_manager  ! I/O manager
    LOGICAL, PUBLIC, PARAMETER :: lk_diaprod = .FALSE.   ! coupled flag
 CONTAINS
    SUBROUTINE dia_prod( kt )   ! Empty routine
       INTEGER ::   kt
-      WRITE(*,*) 'dia_prod: You should not have seen this print! error?', kt
+      IF( kt == nit000 .AND. lwp ) &
+         WRITE(*,*) 'dia_prod: You should not have seen this print! error?', kt
    END SUBROUTINE dia_prod
 #endif
    !!======================================================================

@@ -49,7 +49,7 @@ MODULE dommsk
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.2 , LODYC-IPSL  (2009)
-   !! $Id: dommsk.F90 5551 2015-07-06 16:38:51Z acc $ 
+   !! $Id: dommsk.F90 8664 2017-10-27 12:33:43Z jchanut $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -372,6 +372,14 @@ CONTAINS
                fmask(ji,jpj,jk) = rn_shlat * MIN( 1._wp , MAX( zwf(ji+1,jpj), zwf(ji-1,jpj), zwf(ji,jpjm1) ) )
             ENDIF
          END DO
+#if defined key_agrif
+         IF( .NOT. AGRIF_Root() ) THEN
+            IF ((nbondi ==  1).OR.(nbondi == 2)) fmask(nlci-1 , :     ,jk) = 0.e0      ! east
+            IF ((nbondi == -1).OR.(nbondi == 2)) fmask(1      , :     ,jk) = 0.e0      ! west
+            IF ((nbondj ==  1).OR.(nbondj == 2)) fmask(:      ,nlcj-1 ,jk) = 0.e0      ! north
+            IF ((nbondj == -1).OR.(nbondj == 2)) fmask(:      ,1      ,jk) = 0.e0      ! south
+         ENDIF
+#endif
       END DO
       !
       IF( cp_cfg == "orca" .AND. jp_cfg == 2 ) THEN   ! ORCA_R2 configuration

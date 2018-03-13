@@ -13,6 +13,7 @@ MODULE trcnam_age
    !!----------------------------------------------------------------------
    USE oce_trc         ! Ocean variables
    USE trcsms_age      ! AGE specific variable
+   USE trc
 
    IMPLICIT NONE
    PRIVATE
@@ -21,7 +22,7 @@ MODULE trcnam_age
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcnam_age.F90 7491 2016-12-12 16:44:27Z timgraham $
+   !! $Id: trcnam_age.F90 8353 2017-07-19 14:41:00Z lovato $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -43,6 +44,11 @@ CONTAINS
       !!
       NAMELIST/namage/ rn_age_depth, rn_age_kill_rate 
       !!----------------------------------------------------------------------
+      ! Variable setting
+      ctrcnm    (jp_age0) = 'Age'
+      ctrcln    (jp_age0) = 'Sea water age since surface contact'
+      ctrcun    (jp_age0) = 'year'
+      ln_trc_ini(jp_age0) = .false.
       !                             ! Open namelist files
       CALL ctl_opn( numnatg_ref, 'namelist_age_ref'   ,     'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )
       CALL ctl_opn( numnatg_cfg, 'namelist_age_cfg'   ,     'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )

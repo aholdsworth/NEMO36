@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00
+END
+iodef_oldstyle.xml
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/iodef_oldstyle.xml
+END
+AGRIF_FixedGrids.in
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/AGRIF_FixedGrids.in
+END
+namelist_ref
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/namelist_ref
+END
+namelist_ice_cfg
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/namelist_ice_cfg
+END
+AA_job
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/AA_job
+END
+1_namelist_cfg
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/1_namelist_cfg
+END
+EMPave_old.dat
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/EMPave_old.dat
+END
+domain_def.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/domain_def.xml
+END
+iodef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/iodef.xml
+END
+namelist_ice_ref
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/namelist_ice_ref
+END
+1_namelist_ref
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/1_namelist_ref
+END
+iodef_demo.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/iodef_demo.xml
+END
+namelist_cfg
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/namelist_cfg
+END
+1_namelist_ice_cfg
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/1_namelist_ice_cfg
+END
+iodef_crs.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/iodef_crs.xml
+END
+iodef_ar5.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/iodef_ar5.xml
+END
+field_def.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/EXP00/field_def.xml
+END

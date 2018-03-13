@@ -46,7 +46,7 @@ MODULE trdken
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 3.3 , NEMO Consortium (2010)
-   !! $Id: trdken.F90 7564 2017-01-16 16:41:35Z timgraham $
+   !! $Id: trdken.F90 8627 2017-10-16 14:19:11Z gm $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -194,29 +194,31 @@ CONTAINS
                     !
                     CALL ken_p2k( kt , zke )
                       CALL iom_put( "ketrd_convP2K", zke )     ! conversion -rau*g*w
-        CASE( jpdyn_eivke )
-            ! CMIP6 diagnostic tknebto = tendency of KE from
-            ! parameterized mesoscale eddy advection
-            ! = vertical_integral( k (N S)^2 ) rho dz
-            ! rho = reference density
-            ! S = isoneutral slope.
-            ! Most terms are on W grid so work on this grid
-#ifdef key_traldf_eiv
-            CALL wrk_alloc( jpi, jpj, zke2d )
-            zke2d(:,:) = 0._wp
-            DO jk = 1,jpk
-               DO ji = 1,jpi
-                  DO jj = 1,jpj
-                     zke2d(ji,jj) = zke2d(ji,jj) +  rau0 * fsaeiw(ji, jj, jk)               &
-                          &                      * ( wslpi(ji, jj, jk) * wslpi(ji,jj,jk)    &
-                          &                      +   wslpj(ji, jj, jk) * wslpj(ji,jj,jk) )  &
-                          &                      *   rn2(ji,jj,jk) * fse3w(ji, jj, jk)
-                  ENDDO
-               ENDDO
-            ENDDO
-            CALL iom_put("ketrd_eiv", zke2d)
-            CALL wrk_dealloc( jpi, jpj, zke2d )
-#endif
+!!gm moved in traadv_eiv ===>>> diag becomes accessible without ln_trdtra=T
+!        CASE( jpdyn_eivke )
+!            ! CMIP6 diagnostic tknebto = tendency of EKE from
+!            ! parameterized mesoscale eddy advection
+!            ! = vertical_integral( k (N S)^2 ) rho dz
+!            ! rho = reference density
+!            ! S = isoneutral slope.
+!            ! Most terms are on W grid so work on this grid
+!#ifdef key_traldf_eiv
+!            CALL wrk_alloc( jpi, jpj, zke2d )
+!            zke2d(:,:) = 0._wp
+!            DO jk = 1,jpk
+!               DO ji = 1,jpi
+!                  DO jj = 1,jpj
+!                     zke2d(ji,jj) = zke2d(ji,jj) +  rau0 * fsaeiw(ji, jj, jk)               &
+!                          &                      * ( wslpi(ji, jj, jk) * wslpi(ji,jj,jk)    &
+!                          &                      +   wslpj(ji, jj, jk) * wslpj(ji,jj,jk) )  &
+!                          &                      *   rn2(ji,jj,jk) * fse3w(ji, jj, jk)
+!                  ENDDO
+!               ENDDO
+!            ENDDO
+!            CALL iom_put("ketrd_eiv", zke2d)
+!            CALL wrk_dealloc( jpi, jpj, zke2d )
+!#endif
+!!gm end
          !
       END SELECT
       !

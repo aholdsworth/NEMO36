@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/nemo/svn/!svn/ver/6384/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/DMP_TOOLS/src
+END
+zoom.F90
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/6384/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/DMP_TOOLS/src/zoom.F90
+END
+custom.F90
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/DMP_TOOLS/src/custom.F90
+END
+med_red_seas.F90
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/DMP_TOOLS/src/med_red_seas.F90
+END
+coast_dist.F90
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/DMP_TOOLS/src/coast_dist.F90
+END
+make_dmp_file.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/DMP_TOOLS/src/make_dmp_file.F90
+END
+utils.F90
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/DMP_TOOLS/src/utils.F90
+END

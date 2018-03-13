@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot
+END
+dataplot_txttimeseries.pro
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/dataplot_txttimeseries.pro
+END
+nice_contourlevels.pro
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/nice_contourlevels.pro
+END
+pr2.pro
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/pr2.pro
+END
+eos_nemo.pro
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/eos_nemo.pro
+END
+read_seaice.pro
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/read_seaice.pro
+END
+read_sst.pro
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/read_sst.pro
+END
+read_enact.pro
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/read_enact.pro
+END
+dataplot.pro
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/dataplot.pro
+END
+prend2.pro
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/prend2.pro
+END
+read_sla.pro
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/read_sla.pro
+END
+colorbar_idl.pro
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/colorbar_idl.pro
+END
+read_cdfobs.pro
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/read_cdfobs.pro
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/README
+END
+read_feedback.pro
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/TOOLS/OBSTOOLS/dataplot/read_feedback.pro
+END

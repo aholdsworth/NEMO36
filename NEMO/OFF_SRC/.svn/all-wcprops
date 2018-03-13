@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 75
-/nemo/svn/!svn/ver/7523/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OFF_SRC
+/nemo/svn/!svn/ver/8617/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OFF_SRC
 END
 dtadyn.F90
 K 25
@@ -19,5 +19,5 @@ domrea.F90
 K 25
 svn:wc:ra_dav:version-url
 V 86
-/nemo/svn/!svn/ver/7522/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OFF_SRC/domrea.F90
+/nemo/svn/!svn/ver/8617/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/OFF_SRC/domrea.F90
 END

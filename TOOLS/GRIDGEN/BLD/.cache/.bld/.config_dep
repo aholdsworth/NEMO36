@@ -1,0 +1,8 @@
+DEP::nemo__cfg_tools.f90          cfg_tools::projection::USE::readwrite::USE
+DEP::nemo__create_coordinates.f90 create_coordinates::cfg_tools::USE::domain::USE::mixed_grid::USE
+DEP::nemo__domain.f90             domain::mixed_grid::USE::readwrite::USE
+DEP::nemo__io_netcdf.f90          io_netcdf::types::USE
+DEP::nemo__mixed_grid.f90         mixed_grid::readwrite::USE
+DEP::nemo__projection.f90         projection::readwrite::USE
+DEP::nemo__readwrite.f90          readwrite::io_netcdf::USE::types::USE
+DEP::nemo__types.f90              types

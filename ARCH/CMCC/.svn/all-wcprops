@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/nemo/svn/!svn/ver/6521/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/CMCC
+END
+arch-ifort_athena.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/CMCC/arch-ifort_athena.fcm
+END
+arch-ifort_athena_tools.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/CMCC/arch-ifort_athena_tools.fcm
+END
+arch-gfortran_athena_xios.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/CMCC/arch-gfortran_athena_xios.fcm
+END
+arch-ifort_athena_xios.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/nemo/svn/!svn/ver/6521/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/CMCC/arch-ifort_athena_xios.fcm
+END
+arch-ifort_athena_debug.fcm
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/6204/branches/2015/nemo_v3_6_STABLE/NEMOGCM/ARCH/CMCC/arch-ifort_athena_debug.fcm
+END

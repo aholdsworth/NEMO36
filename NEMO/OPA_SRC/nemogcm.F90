@@ -96,7 +96,7 @@ MODULE nemogcm
 
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
-   !! $Id: nemogcm.F90 7515 2016-12-21 10:14:38Z timgraham $
+   !! $Id: nemogcm.F90 8566 2017-09-27 13:15:25Z mchekki $
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -190,12 +190,10 @@ CONTAINS
       ENDIF
       !
 #if defined key_agrif
-      IF( .NOT. Agrif_Root() ) THEN
-         CALL Agrif_ParentGrid_To_ChildGrid()
-         IF( lk_diaobs ) CALL dia_obs_wri
-         IF( nn_timing == 1 )   CALL timing_finalize
-         CALL Agrif_ChildGrid_To_ParentGrid()
-      ENDIF
+      CALL Agrif_ParentGrid_To_ChildGrid()
+      IF( lk_diaobs ) CALL dia_obs_wri
+      IF( nn_timing == 1 )   CALL timing_finalize
+      CALL Agrif_ChildGrid_To_ParentGrid()
 #endif
       IF( nn_timing == 1 )   CALL timing_finalize
       !
@@ -724,9 +722,6 @@ CONTAINS
       INTEGER, PARAMETER :: ntest = 14
       INTEGER, DIMENSION(ntest) :: ilfax
       !
-      ! ilfax contains the set of allowed factors.
-      ilfax(:) = (/(2**jl,jl=ntest,1,-1)/)
-      !!----------------------------------------------------------------------
       ! ilfax contains the set of allowed factors.
       ilfax(:) = (/(2**jl,jl=ntest,1,-1)/)
 

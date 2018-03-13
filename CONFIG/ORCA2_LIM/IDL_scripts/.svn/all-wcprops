@@ -1,0 +1,425 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts
+END
+std_main.sh
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_main.sh
+END
+std_plot_all_last_year_5D.pro
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_all_last_year_5D.pro
+END
+std_plot_ArcSal.pro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_ArcSal.pro
+END
+std_ts_SSH.pro
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_SSH.pro
+END
+std_plot_IceVel.pro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_IceVel.pro
+END
+std_main.sav
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_main.sav
+END
+std_main_last_year_5D.pro
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_main_last_year_5D.pro
+END
+std_plot_IceThick.pro
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_IceThick.pro
+END
+std_ts_vardef.sh_example_old_names
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh_example_old_names
+END
+std_plot_msf.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_msf.pro
+END
+std_ts_AMOC.pro
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_AMOC.pro
+END
+std_plot_EqS.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_EqS.pro
+END
+std_plot_EqT.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_EqT.pro
+END
+std_plot_EqU.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_EqU.pro
+END
+std_ts_vardef.sh.new_names
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh.new_names
+END
+std_plot_zonal_S.pro
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_zonal_S.pro
+END
+std_plot_zonal_T.pro
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_zonal_T.pro
+END
+std_plot_vardef.sh.pstar4-testht
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_vardef.sh.pstar4-testht
+END
+std_plot_sss.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_sss.pro
+END
+std_plot_all.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_all.pro
+END
+std_plot_sst.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_sst.pro
+END
+std_plot_Med_Sdepth.pro
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_Med_Sdepth.pro
+END
+std_plot_mld.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_mld.pro
+END
+std_ts_ICE_Vel.pro
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_ICE_Vel.pro
+END
+std_ts_vardef.sh.500yfwb0_500y
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh.500yfwb0_500y
+END
+std_plot_vardef.sh
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_vardef.sh
+END
+std_plot_vardef.sh.old_names
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_vardef.sh.old_names
+END
+std_ts_read.pro
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_read.pro
+END
+std_ts_vardef.sh_example1
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh_example1
+END
+std_ts_vardef.sh_example2
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh_example2
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/README
+END
+std_plot_Med_Sspread.pro
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_Med_Sspread.pro
+END
+std_plot_MLD_ortho.pro
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_MLD_ortho.pro
+END
+std_plot_mht.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_mht.pro
+END
+std_ts_EMP.pro
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_EMP.pro
+END
+std_plot_IceFrac.pro
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_IceFrac.pro
+END
+std_ts_Drake.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_Drake.pro
+END
+std_plot_IceSal.pro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_IceSal.pro
+END
+std_ts_vardef.sh_example_ipcc
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh_example_ipcc
+END
+std_plot_ZonMld.pro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_ZonMld.pro
+END
+initenv.pro
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/initenv.pro
+END
+std_ts_Q.pro
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_Q.pro
+END
+std_main_1Y.sh
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_main_1Y.sh
+END
+std_plot_SnowThick.pro
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_SnowThick.pro
+END
+std_ts_S.pro
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_S.pro
+END
+std_plot_bsf.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_bsf.pro
+END
+std_ts_T.pro
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_T.pro
+END
+std_plot_emp.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_emp.pro
+END
+std_plot_max_mld.pro
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_max_mld.pro
+END
+std_plot_all_1Y.pro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_all_1Y.pro
+END
+std_main_5D.sh
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_main_5D.sh
+END
+std_plot_vardef.sh.last_year_5D
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_vardef.sh.last_year_5D
+END
+std_plot_GlobMeanTS.pro
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_GlobMeanTS.pro
+END
+std_plot_vardef.sh.new_names
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_vardef.sh.new_names
+END
+std_plot_S100m.pro
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_S100m.pro
+END
+std_plot_T100m.pro
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_T100m.pro
+END
+std_ts_vardef.sh.500yfwb0
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh.500yfwb0
+END
+std_ts_vardef.sh.500yfwb2
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh.500yfwb2
+END
+std_plot_qnet.pro
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_qnet.pro
+END
+std_ts_ICE.pro
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_ICE.pro
+END
+std_plot_vardef.sh_example1
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_vardef.sh_example1
+END
+std_ts_ICE_FRAM.pro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_ICE_FRAM.pro
+END
+std_plot_IceAge.pro
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_IceAge.pro
+END
+std_plot_vardef.sh_example2
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_vardef.sh_example2
+END
+std_ts_all.pro
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_all.pro
+END
+std_main.pro
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_main.pro
+END
+std_plot_erp.pro
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_plot_erp.pro
+END
+std_ts_ICE_Vol.pro
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_ICE_Vol.pro
+END
+std_ts_vardef.sh
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_ts_vardef.sh
+END
+std_common.pro
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/CONFIG/ORCA2_LIM/IDL_scripts/std_common.pro
+END
