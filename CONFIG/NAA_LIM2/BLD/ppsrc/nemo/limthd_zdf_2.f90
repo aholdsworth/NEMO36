@@ -257,8 +257,10 @@ CONTAINS
           zind   = MAX( zzero , SIGN (zone , hicdif - h_ice_1d(ji) ) )
           !--Computation of the fraction of the net shortwave radiation which
           !--penetrates inside the ice cover ( See Forcat)
-          zi0(ji)  = zihsn * ( fr1_i0_1d(ji) + zihic * fr2_i0_1d(ji) )
-          zexp     = MIN( zone , EXP( -1.5 * ( h_ice_1d(ji) - zhsu ) ) )
+          zi0(ji)  = MAX( 0.15, zihsn * ( fr1_i0_1d(ji) + zihic * fr2_i0_1d(ji)) )
+          !zi0(ji)  = zihsn * ( fr1_i0_1d(ji) + zihic * fr2_i0_1d(ji) )
+   !       zexp     = MIN( zone , EXP( -1.5 * ( h_ice_1d(ji) - zhsu ) ) )
+          zexp     = MIN( zone , EXP( -10.0 * max(zzero,h_snow_1d(ji)-zhsu) -1.5 * (h_ice_1d(ji) - max(zzero,zhsu-h_snow_1d(ji)) ) ) )
           fstbif_1d(ji) = zi0(ji) * qsr_ice_1d(ji) * zexp
           !--Computation of maximum energy stored in brine pockets zqmax and update
           !--the total energy stored in brine pockets, if less than zqmax

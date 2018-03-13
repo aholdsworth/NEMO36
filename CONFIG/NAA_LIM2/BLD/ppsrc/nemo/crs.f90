@@ -154,7 +154,7 @@ MODULE crs
       ! Vertical diffusion
       REAL(wp), PUBLIC, ALLOCATABLE, DIMENSION(:,:,:)  ::  avt_crs           !: vert. diffusivity coef. [m2/s] at w-point for temp  
 
-
+      REAL(wp), PUBLIC, ALLOCATABLE, DIMENSION(:,:,:)  ::  avs_crs           !: salinity vertical diffusivity coeff. [m2/s] at w-point
 
 
       ! Mixing and Mixed Layer Depth
@@ -241,7 +241,7 @@ CONTAINS
 
      ALLOCATE( tsn_crs(jpi_crs,jpj_crs,jpk,jpts), avt_crs(jpi_crs,jpj_crs,jpk),    &
 
-
+         &      avs_crs(jpi_crs,jpj_crs,jpk),    &
 
          &      STAT=ierr(13) )
 

@@ -62,7 +62,7 @@ MODULE dynbfr
    !! ** purpose :   substitute fsaht. the eddy diffusivity coeff.
    !!      with a constant or 1D or 2D or 3D array, using CPP macro.
    !!----------------------------------------------------------------------
-!   Defautl option :                     avs = avt
+!   'key_zdfddm' :                      avs: 3D array defined in zdfddm module
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
    !! $Id: zdfddm_substitute.h90 8026 2017-05-15 15:54:57Z lovato $ 

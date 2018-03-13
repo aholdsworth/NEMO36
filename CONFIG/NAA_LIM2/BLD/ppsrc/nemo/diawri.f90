@@ -80,7 +80,7 @@ MODULE diawri
    !! ** purpose :   substitute fsaht. the eddy diffusivity coeff.
    !!      with a constant or 1D or 2D or 3D array, using CPP macro.
    !!----------------------------------------------------------------------
-!   Defautl option :                     avs = avt
+!   'key_zdfddm' :                      avs: 3D array defined in zdfddm module
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
    !! $Id: zdfddm_substitute.h90 8026 2017-05-15 15:54:57Z lovato $ 
@@ -286,10 +286,10 @@ CONTAINS
 
       CALL iom_put( "avt" , avt                        )    ! T vert. eddy diff. coef.
       CALL iom_put( "avm" , avmu                       )    ! T vert. eddy visc. coef.
-      CALL iom_put( "avs" , avt(:,:,:)               )    ! S vert. eddy diff. coef. (useful only with key_zdfddm)
+      CALL iom_put( "avs" , avs(:,:,:)               )    ! S vert. eddy diff. coef. (useful only with 1)
                                                             ! Log of eddy diff coef
       IF( iom_use('logavt') )   CALL iom_put( "logavt", LOG( MAX( 1.e-20_wp, avt  (:,:,:) ) ) )
-      IF( iom_use('logavs') )   CALL iom_put( "logavs", LOG( MAX( 1.e-20_wp, avt(:,:,:) ) ) )
+      IF( iom_use('logavs') )   CALL iom_put( "logavs", LOG( MAX( 1.e-20_wp, avs(:,:,:) ) ) )
 
       IF ( iom_use("sstgrad") .OR. iom_use("sstgrad2") ) THEN
          DO jj = 2, jpjm1                                    ! sst gradient
