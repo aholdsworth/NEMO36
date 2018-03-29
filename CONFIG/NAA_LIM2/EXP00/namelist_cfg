@@ -5,20 +5,52 @@
 !-----------------------------------------------------------------------
 &namrun        !   parameters of the run
 !-----------------------------------------------------------------------
+   nn_no       =       0   !  job number (no more used...)
+   cn_exp      =  "NAA_LIM2-VAH001"  !  experience name
+   nn_it000    =       1   !  first time step
+   nn_itend    =  29200   !  last  time step (std 5475)
+   nn_date0    =  20070201   !  date at nit_0000 (format yyyymmdd) used if ln_rstart=F or (ln_rstart=T and nn_rstctl=0 or 1)
+   nn_leapy    =       0   !  Leap year calendar (1) or not (0)
+   ln_rstart   = .false.   !  start from rest (F) or from a restart file (T)
+   nn_euler    =       1   !  = 0 : start with forward time step if ln_rstart=T
+   nn_rstctl   =       0   !  restart control ==> activated only if ln_rstart=T
+                           !    = 0 nn_date0 read in namelist ; nn_it000 : read in namelist
+                           !    = 1 nn_date0 read in namelist ; nn_it000 : check consistancy between namelist and restart
+                           !    = 2 nn_date0 read in restart  ; nn_it000 : check consistancy between namelist and restart
+   cn_ocerst_in  = "restart"   !  suffix of ocean restart name (input)
+   cn_ocerst_indir = "."       !  directory from which to read input ocean restarts
+   cn_ocerst_out = "restart"   !  suffix of ocean restart name (output)
+   cn_ocerst_outdir = "."      !  directory in which to write output ocean restarts
+   nn_istate   =       0   !  output the initial state (1) or not (0)
+   ln_rst_list = .false.   !  output restarts at list of times using nn_stocklist (T) or at set frequency with nn_stock (F)
+   nn_stock    =    300   !  frequency of creation of a restart file (modulo referenced to 1)
+   nn_stocklist = 0,0,0,0,0,0,0,0,0,0 ! List of timesteps when a restart file is to be written
+   nn_write    =    300   !  frequency of write in the output file   (modulo referenced to nn_it000)
+   ln_dimgnnn  = .false.   !  DIMG file format: 1 file for all processors (F) or by processor (T)
+   ln_mskland  = .false.   !  mask land points in NetCDF outputs (costly: + ~15%)
+   ln_cfmeta   = .false.   !  output additional data to netCDF files required for compliance with the CF metadata standard
+   ln_clobber  = .true.   !  clobber (overwrite) an existing file
+   nn_chunksz  =       0   !  chunksize (bytes) for NetCDF file (works only with iom_nf90 routines)
 /
 !-----------------------------------------------------------------------
 &namcfg        !   parameters of the configuration
 !-----------------------------------------------------------------------
-   cp_cfg      =  "orca"               !  name of the configuration
-   jp_cfg      =       2               !  resolution of the configuration
-   jpidta      =     182               !  1st lateral dimension ( >= jpi )
-   jpjdta      =     149               !  2nd    "         "    ( >= jpj )
-   jpkdta      =      31               !  number of levels      ( >= jpk )
-   jpiglo      =     182               !  1st dimension of global domain --> i =jpidta
-   jpjglo      =     149               !  2nd    -                  -    --> j  =jpjdta
+   cp_cfg      =  "naa"            !  name of the configuration
+   cp_cfz      =  ""            !  name of the zoom of configuration
+   jp_cfg      =       25               !  resolution of the configuration
+   jpidta      =      542               !  1st lateral dimension ( >= jpi )
+   jpjdta      =      400               !  2nd    "         "    ( >= jpj )
+   jpkdta      =      46               !  number of levels      ( >= jpk )
+   jpiglo      =      542               !  1st dimension of global domain --> i =jpidta
+   jpjglo      =      400               !  2nd    -                  -    --> j =jpjdta
    jpizoom     =       1               !  left bottom (i,j) indices of the zoom
    jpjzoom     =       1               !  in data domain indices
-   jperio      =       4               !  lateral cond. type (between 0 and 6)
+   jperio      =       0               !  lateral cond. type (between 0 and 6)
+                                       !  = 0 closed                 ;   = 1 cyclic East-West
+                                       !  = 2 equatorial symmetric   ;   = 3 North fold T-point pivot
+                                       !  = 4 cyclic East-West AND North fold T-point pivot
+                                       !  = 5 North fold F-point pivot
+                                       !  = 6 cyclic East-West AND North fold F-point pivot
 /
 !-----------------------------------------------------------------------
 &namzgr        !   vertical coordinate
@@ -27,24 +59,24 @@
 !-----------------------------------------------------------------------
 &namdom        !   space and time domain (bathymetry, mesh, timestep)
 !-----------------------------------------------------------------------
-   jphgr_msh   =       0               !  type of horizontal mesh
-   ppglam0     =  999999.0             !  longitude of first raw and column T-point (jphgr_msh = 1)
-   ppgphi0     =  999999.0             ! latitude  of first raw and column T-point (jphgr_msh = 1)
-   ppe1_deg    =  999999.0             !  zonal      grid-spacing (degrees)
-   ppe2_deg    =  999999.0             !  meridional grid-spacing (degrees)
-   ppe1_m      =  999999.0             !  zonal      grid-spacing (degrees)
-   ppe2_m      =  999999.0             !  meridional grid-spacing (degrees)
-   ppsur       =   -4762.96143546300   !  ORCA r4, r2 and r05 coefficients
-   ppa0        =     255.58049070440   ! (default coefficients)
-   ppa1        =     245.58132232490   !
-   ppkth       =      21.43336197938   !
-   ppacr       =       3.0             !
-   ppdzmin     =  999999.              !  Minimum vertical spacing
-   pphmax      =  999999.              !  Maximum depth
-   ldbletanh   =  .FALSE.              !  Use/do not use double tanf function for vertical coordinates
-   ppa2        =  999999.              !  Double tanh function parameters
-   ppkth2      =  999999.              !
-   ppacr2      =  999999.              !
+!   jphgr_msh   =       1               !  type of horizontal mesh
+!   ppglam0     =  999999.0             !  longitude of first raw and column T-point (jphgr_msh = 1)
+!   ppgphi0     =  999999.0             ! latitude  of first raw and column T-point (jphgr_msh = 1)
+!   ppe1_deg    =  999999.0             !  zonal      grid-spacing (degrees)
+!   ppe2_deg    =  999999.0             !  meridional grid-spacing (degrees)
+!   ppe1_m      =  999999.0             !  zonal      grid-spacing (degrees)
+!   ppe2_m      =  999999.0             !  meridional grid-spacing (degrees)
+!   ppsur       =   -4762.96143546300   !  ORCA r4, r2 and r05 coefficients
+!   ppa0        =     255.58049070440   ! (default coefficients)
+!   ppa1        =     245.58132232490   !
+!   ppkth       =      23.563   !
+!   ppacr       =       9.0             !
+    ppdzmin     =  1.              !  Minimum vertical spacing
+!   pphmax      =  999999.              !  Maximum depth
+!   ldbletanh   =  .FALSE.              !  Use/do not use double tanf function for vertical coordinates
+!   ppa2        =  999999.              !  Double tanh function parameters
+!   ppkth2      =  999999.              !
+!   ppacr2      =  999999.              !
 /
 !-----------------------------------------------------------------------
 &namsplit      !   time splitting parameters                            ("key_dynspg_ts")
@@ -164,6 +196,21 @@
 !-----------------------------------------------------------------------
 /
 !-----------------------------------------------------------------------
+&namzdf_tmx_new !  new tidal mixing parameterization                    ("key_zdftmx_new")
+!-----------------------------------------------------------------------
+/
+!-----------------------------------------------------------------------
+&namsto       ! Stochastic parametrization of EOS
+!-----------------------------------------------------------------------
+/
+
+
+!-----------------------------------------------------------------------
+&namtrd      ! Stochastic parametrization of EOS
+!-----------------------------------------------------------------------
+/
+
+!-----------------------------------------------------------------------
 &namsol        !   elliptic solver / island / free surface
 !-----------------------------------------------------------------------
 /
@@ -184,14 +231,135 @@
 !-----------------------------------------------------------------------
 /
 !-----------------------------------------------------------------------
+!-----------------------------------------------------------------------
 &namdyn_nept  !   Neptune effect (simplified: lateral and vertical diffusions removed)
 !-----------------------------------------------------------------------
 /
 !-----------------------------------------------------------------------
-&namobs       !  observation usage                                      ('key_diaobs')
+&namagrif      !  AGRIF zoom                                            ("key_agrif")
 !-----------------------------------------------------------------------
 /
 !-----------------------------------------------------------------------
-&nam_asminc   !   assimilation increments                               ('key_asminc')
+&nam_tide      !   tide parameters (#ifdef key_tide)
 !-----------------------------------------------------------------------
+   ln_tide_pot   = .false.   !  use tidal potential forcing
+   ln_tide_ramp  = .false. !Peng .false.  ! #luo
+   rdttideramp   =    1.    !
+   clname(1)     =   'M2' !  name of constituent #luo
+   clname(2)     =   'K1'
+   clname(3)     =   'S2'
+   clname(4)     =   'N2'
+   clname(5)     =   'O1' !  name of constituent
+   clname(6)     =   'P1'
+   clname(7)     =   'Q1'
+   clname(8)     =   'K2'
+
 /
+!-----------------------------------------------------------------------
+&nambdy        !  unstructured open boundaries                          ("key_bdy")
+!-----------------------------------------------------------------------
+    nb_bdy         = 2                    !  number of open boundary sets
+    ln_coords_file = .false.     !  =T : read bdy coordinates from file
+    cn_coords_file = ''         !  bdy coordinates files
+    ln_mask_file   = .false.       !  =T : read mask from file
+    cn_mask_file   = ''            !  name of mask file (if ln_mask_file=.TRUE.)
+    cn_dyn2d       = 'flather','flather'  !'flather'     !
+    nn_dyn2d_dta   = 1,1                 !  = 0, bdy data are equal to the initial state
+                                          !  = 1, bdy data are read in 'bdydata   .nc' files
+                                          !  = 2, use tidal harmonic forcing data from files
+                                          !  = 3, use external data AND tidal harmonic forcing
+    cn_dyn3d      = 'zerograd', 'zerograd' !specifiedfrs','frs'               
+    nn_dyn3d_dta  =  1,1                 !  = 0, bdy data are equal to the initial state
+                                          !  = 1, bdy data are read in 'bdydata   .nc' files
+    cn_tra        =  'specified', 'specified'!'frs','frs'!'specified'  !
+    nn_tra_dta    =  1,1 !0,0                 ! = 0, bdy data are equal to the initial state
+                                          !  = 1, bdy data are read in 'bdydata   .nc' files
+    cn_ice_lim      = 'none','none'     !
+    nn_ice_lim_dta  =  0,0               !  = 0, bdy data are equal to the initial state
+                                          !  = 1, bdy data are read in 'bdydata   .nc' files
+    rn_ice_tem      = 270.,270         !  lim3 only: arbitrary temperature of incoming sea ice
+    rn_ice_sal      =  6.,6.       !  lim3 only:      --   salinity           --
+    rn_ice_age      = 30.,30         !  lim3 only:      --   age                --
+
+    ln_tra_dmp    =.false.,.false. !.true.,.true.         !  open boudaries conditions for tracers
+    ln_dyn3d_dmp  =.false.,.false.  !.true., .true. !.false.,.false.          !  open boundary condition for baroclinic velocities
+    rn_time_dmp   = 3.,3.               ! Damping time scale in days
+    rn_time_dmp_out= 30.,30.           ! Outflow damping time scale
+    nn_rimwidth   = 1,1                 !  width of the relaxation zone
+    ln_vol        = .false.       !  total volume correction (see nn_volctl parameter)
+    nn_volctl     =1                    !  = 0, the total water flux across open boundaries is zero
+/
+!-----------------------------------------------------------------------
+&nambdy_index    !  open boundaries - definition ("key_bdy")
+!-----------------------------------------------------------------------
+    ctypebdy ='W'
+    nbdyind  = -1! i-index for segment
+    nbdybeg  =2    ! j-index for segment beginning
+    nbdyend  =399 ! j-index for segment end
+/
+!!-----------------------------------------------------------------------
+&nambdy_dta      !  open boundaries - external data           ("key_bdy")
+!-----------------------------------------------------------------------
+!              !  file name      ! frequency (hours) ! variable   ! time interp.   !  clim   ! 'yearly'/ ! weights  ! rotation ! land/sea mask !
+!              !                 !  (if <0  months)  !   name     !   (logical)    !  (T/F ) ! 'monthly' ! filename ! pairing  ! filename      !
+   bn_ssh =     'bdy_WEST' ,         -1        , 'sossheig' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_u3d  =    'bdy_WEST' ,         -1        , 'vozocrtx' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_v3d  =    'bdy_WEST' ,         -1        , 'vomecrty' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_tem  =    'bdy_WEST' ,         -1        , 'votemper' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_sal  =    'bdy_WEST' ,         -1        , 'vosaline' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   cn_dir  =    'OBCDATA/'
+   ln_full_vel = .true.
+/
+!-----------------------------------------------------------------------
+&nambdy_index    !  open boundaries - definition ("key_bdy")
+!-----------------------------------------------------------------------
+    ctypebdy ='E'
+    nbdyind  = -1! i-index for segment
+    nbdybeg  = 2    ! j-index for segment beginning
+    nbdyend  =399 ! j-index for segment end
+/
+!!-----------------------------------------------------------------------
+&nambdy_dta      !  open boundaries - external data           ("key_bdy")
+!-----------------------------------------------------------------------
+!              !  file name      ! frequency (hours) ! variable   ! time interp.   !  clim   ! 'yearly'/ ! weights  ! rotation ! land/sea mask !
+!              !                 !  (if <0  months)  !   name     !   (logical)    !  (T/F ) ! 'monthly' ! filename ! pairing  ! filename      !
+   bn_ssh =     'bdy_EAST' ,         -1        , 'sossheig' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_u3d  =    'bdy_EAST' ,         -1        , 'vozocrtx' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_v3d  =    'bdy_EAST' ,         -1        , 'vomecrty' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_tem  =    'bdy_EAST' ,         -1        , 'votemper' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   bn_sal  =    'bdy_EAST' ,         -1        , 'vosaline' ,     .true.     , .false. ,  'yearly'  ,    ''    ,   ''     , ''
+   cn_dir  =    'OBCDATA/'
+   ln_full_vel = .true.
+/
+!-----------------------------------------------------------------------
+&nambdy_tide     ! tidal forcing at open boundaries
+!-----------------------------------------------------------------------
+   filtide      = 'OBCDATA/tide'         !  file name root of tidal forcing files
+   ln_bdytide_2ddta = .true.
+   ln_bdytide_conj  = .true.
+/
+!-----------------------------------------------------------------------
+&nambdy_tide     ! tidal forcing at open boundaries
+!-----------------------------------------------------------------------
+   filtide      = 'OBCDATA/tide'         !  file name root of tidal forcing files
+   ln_bdytide_2ddta = .true.
+   ln_bdytide_conj  = .true.
+
+/
+
+!-----------------------------------------------------------------------
+&nam_diaharm   !   Harmonic analysis of tidal constituents ('key_diaharm')
+!-----------------------------------------------------------------------
+    nit000_han = 1         ! First time step used for harmonic analysis
+    nitend_han = 29200       ! Last time step used for harmonic analysis
+    nstep_han  = 20        ! Time step frequency for harmonic analysis
+    tname(1)   = 'M2'      ! Name of tidal constituents
+    tname(2)   = 'K1'
+    tname(3)   = 'S2'
+    tname(4)   = 'N2'
+    tname(5)   = 'O1'
+    tname(6)   = 'P1'
+    tname(7)   = 'Q1'
+    tname(8)   = 'K2'
+/
+

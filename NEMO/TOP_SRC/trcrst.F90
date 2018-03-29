@@ -303,7 +303,7 @@ CONTAINS
          zdrift = ( ( ztraf - trai(jn) ) / ( trai(jn) + 1.e-12 )  ) * 100._wp
          IF(lwp) WRITE(numout,9000) jn, TRIM( ctrcnm(jn) ), zmean, zmin, zmax, zdrift
       END DO
-      IF(lwp) WRITE(numout,*) 
+      WRITE(numout,*) 
 9000  FORMAT(' tracer nb :',i2,'    name :',a10,'    mean :',e18.10,'    min :',e18.10, &
       &      '    max :',e18.10,'    drift :',e18.10, ' %')
       !
@@ -324,7 +324,7 @@ CONTAINS
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcrst.F90 7052 2016-10-20 10:23:27Z acc $
+   !! $Id: trcrst.F90 5513 2015-06-30 09:59:46Z cetlod $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!======================================================================
 END MODULE trcrst

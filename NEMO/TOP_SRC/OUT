@@ -1,0 +1,535 @@
+MODULE trcbc							MODULE trcbc
+   !!========================================================	   !!========================================================
+   !!                     ***  MODULE  trcdta  ***		   !!                     ***  MODULE  trcdta  ***
+   !! TOP :  module for passive tracer boundary conditions	   !! TOP :  module for passive tracer boundary conditions
+   !!========================================================	   !!========================================================
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+#if  defined key_top 						#if  defined key_top 
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+   !!   'key_top'                                            	   !!   'key_top'                                            
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+   !!   trc_dta    : read and time interpolated passive trace	   !!   trc_dta    : read and time interpolated passive trace
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+   USE par_trc       !  passive tracers parameters		   USE par_trc       !  passive tracers parameters
+   USE oce_trc       !  shared variables between ocean and pa	   USE oce_trc       !  shared variables between ocean and pa
+   USE trc           !  passive tracers common variables	   USE trc           !  passive tracers common variables
+   USE iom           !  I/O manager				   USE iom           !  I/O manager
+   USE lib_mpp       !  MPP library				   USE lib_mpp       !  MPP library
+   USE fldread       !  read input fields			   USE fldread       !  read input fields
+							      |	#if defined key_bdy
+							      >	   USE bdy_oce, only: nb_bdy , idx_bdy, ln_coords_file, rn_ti
+							      >	#endif
+   IMPLICIT NONE						   IMPLICIT NONE
+   PRIVATE							   PRIVATE
+
+   PUBLIC   trc_bc_init    ! called in trcini.F90 		   PUBLIC   trc_bc_init    ! called in trcini.F90 
+   PUBLIC   trc_bc_read    ! called in trcstp.F90 or within	   PUBLIC   trc_bc_read    ! called in trcstp.F90 or within
+
+   INTEGER  , SAVE, PUBLIC                             :: nb_	   INTEGER  , SAVE, PUBLIC                             :: nb_
+   INTEGER  , SAVE, PUBLIC                             :: nb_	   INTEGER  , SAVE, PUBLIC                             :: nb_
+   INTEGER  , SAVE, PUBLIC                             :: nb_	   INTEGER  , SAVE, PUBLIC                             :: nb_
+   INTEGER  , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: n_t	   INTEGER  , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: n_t
+   INTEGER  , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: n_t	   INTEGER  , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: n_t
+   INTEGER  , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: n_t	   INTEGER  , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: n_t
+   INTEGER  , SAVE, PUBLIC                             :: ntr |	   !INTEGER  , SAVE, PUBLIC                             :: nt
+   INTEGER  , SAVE, PUBLIC                             :: ntr |	   !INTEGER  , SAVE, PUBLIC                             :: nt
+   INTEGER  , SAVE, PUBLIC                             :: ntr |	   !INTEGER  , SAVE, PUBLIC                             :: nt
+   REAL(wp) , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: rf_	   REAL(wp) , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: rf_
+   TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: sf_ |	   TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:), TARGET
+   REAL(wp) , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: rf_	   REAL(wp) , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: rf_
+   TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: sf_	   TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: sf_
+   REAL(wp) , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: rf_	   REAL(wp) , SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: rf_
+   TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: sf_	   TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: sf_
+							      >	   TYPE(MAP_POINTER), ALLOCATABLE, DIMENSION(:) :: nbmap_ptr 
+								   
+   !! * Substitutions						   !! * Substitutions
+#  include "domzgr_substitute.h90"				#  include "domzgr_substitute.h90"
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+   !! NEMO/OPA 3.3 , NEMO Consortium (2010)			   !! NEMO/OPA 3.3 , NEMO Consortium (2010)
+   !! $Id: trcbc.F90 8511 2017-09-07 15:53:42Z lovato $       |	   !! $Id: trcbc.F90 5215 2015-04-15 16:11:56Z nicolasmartin 
+   !! Software governed by the CeCILL licence     (NEMOGCM/NE	   !! Software governed by the CeCILL licence     (NEMOGCM/NE
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+CONTAINS							CONTAINS
+
+   SUBROUTINE trc_bc_init(ntrc)					   SUBROUTINE trc_bc_init(ntrc)
+      !!-----------------------------------------------------	      !!-----------------------------------------------------
+      !!                   ***  ROUTINE trc_bc_init  ***	      !!                   ***  ROUTINE trc_bc_init  ***
+      !!                    					      !!                    
+      !! ** Purpose :   initialisation of passive tracer BC d	      !! ** Purpose :   initialisation of passive tracer BC d
+      !! 							      !! 
+      !! ** Method  : - Read namtsd namelist			      !! ** Method  : - Read namtsd namelist
+      !!              - allocates passive tracer BC data stru	      !!              - allocates passive tracer BC data stru
+      !!-----------------------------------------------------	      !!-----------------------------------------------------
+      !								      !
+      INTEGER,INTENT(IN) :: ntrc                           ! 	      INTEGER,INTENT(IN) :: ntrc                           ! 
+      INTEGER            :: jl, jn                         !  |	      INTEGER            :: jl, jn, ib, ibd, ii, ij, ik    ! 
+      INTEGER            :: ierr0, ierr1, ierr2, ierr3     ! 	      INTEGER            :: ierr0, ierr1, ierr2, ierr3     ! 
+      INTEGER            ::  ios                           ! 	      INTEGER            ::  ios                           ! 
+							      >	      INTEGER            :: nblen, igrd                    ! 
+      CHARACTER(len=100) :: clndta, clntrc			      CHARACTER(len=100) :: clndta, clntrc
+      !								      !
+      CHARACTER(len=100) :: cn_dir			      |	      CHARACTER(len=100) :: cn_dir_sbc, cn_dir_cbc, cn_dir_ob
+      TYPE(FLD_N), ALLOCATABLE, DIMENSION(:) :: slf_i  ! loca	      TYPE(FLD_N), ALLOCATABLE, DIMENSION(:) :: slf_i  ! loca
+      TYPE(FLD_N), DIMENSION(jpmaxtrc) :: sn_trcobc    ! open	      TYPE(FLD_N), DIMENSION(jpmaxtrc) :: sn_trcobc    ! open
+      TYPE(FLD_N), DIMENSION(jpmaxtrc) :: sn_trcsbc    ! surf	      TYPE(FLD_N), DIMENSION(jpmaxtrc) :: sn_trcsbc    ! surf
+      TYPE(FLD_N), DIMENSION(jpmaxtrc) :: sn_trccbc    ! coas	      TYPE(FLD_N), DIMENSION(jpmaxtrc) :: sn_trccbc    ! coas
+      REAL(wp)   , DIMENSION(jpmaxtrc) :: rn_trofac    ! mult	      REAL(wp)   , DIMENSION(jpmaxtrc) :: rn_trofac    ! mult
+      REAL(wp)   , DIMENSION(jpmaxtrc) :: rn_trsfac    ! mult	      REAL(wp)   , DIMENSION(jpmaxtrc) :: rn_trsfac    ! mult
+      REAL(wp)   , DIMENSION(jpmaxtrc) :: rn_trcfac    ! mult	      REAL(wp)   , DIMENSION(jpmaxtrc) :: rn_trcfac    ! mult
+      !!							      !!
+      NAMELIST/namtrc_bc/ cn_dir, sn_trcobc, rn_trofac, sn_tr |	      NAMELIST/namtrc_bc/ cn_dir_sbc, cn_dir_cbc, sn_trcsbc, 
+							      >	#if defined key_bdy
+							      >	      NAMELIST/namtrc_bdy/ cn_trc_dflt, cn_trc, nn_trcdmp_bdy
+							      >	      NAMELIST/nambdy_bc/ cn_dir_obc, sn_trcobc, rn_trofac
+							      >	#endif
+      !!-----------------------------------------------------	      !!-----------------------------------------------------
+      IF( nn_timing == 1 )  CALL timing_start('trc_bc_init')	      IF( nn_timing == 1 )  CALL timing_start('trc_bc_init')
+      !								      !
+							      >	      IF( lwp ) THEN
+							      >	         WRITE(numout,*) ' '
+							      >	         WRITE(numout,*) 'trc_bc_init : Tracers Boundary Cond
+							      >	         WRITE(numout,*) '~~~~~~~~~~~ '
+							      >	         
+							      >	         !WRITE(numout,*) "In trc_bc_init at A: nstop=", nsto
+							      >	      ENDIF
+							      >	      !
+      !  Initialisation and local array allocation		      !  Initialisation and local array allocation
+      ierr0 = 0  ;  ierr1 = 0  ;  ierr2 = 0  ;  ierr3 = 0  	      ierr0 = 0  ;  ierr1 = 0  ;  ierr2 = 0  ;  ierr3 = 0  
+      ALLOCATE( slf_i(ntrc), STAT=ierr0 )			      ALLOCATE( slf_i(ntrc), STAT=ierr0 )
+      IF( ierr0 > 0 ) THEN					      IF( ierr0 > 0 ) THEN
+         CALL ctl_stop( 'trc_bc_init: unable to allocate loca	         CALL ctl_stop( 'trc_bc_init: unable to allocate loca
+      ENDIF							      ENDIF
+
+      ! Compute the number of tracers to be initialised with 	      ! Compute the number of tracers to be initialised with 
+      ALLOCATE( n_trc_indobc(ntrc), STAT=ierr0 )		      ALLOCATE( n_trc_indobc(ntrc), STAT=ierr0 )
+      IF( ierr0 > 0 ) THEN					      IF( ierr0 > 0 ) THEN
+         CALL ctl_stop( 'trc_bc_init: unable to allocate n_tr	         CALL ctl_stop( 'trc_bc_init: unable to allocate n_tr
+      ENDIF							     ENDIF
+      nb_trcobc      = 0					      nb_trcobc      = 0
+      n_trc_indobc(:) = 0					      n_trc_indobc(:) = 0
+      !								      !
+      ALLOCATE( n_trc_indsbc(ntrc), STAT=ierr0 )		      ALLOCATE( n_trc_indsbc(ntrc), STAT=ierr0 )
+      IF( ierr0 > 0 ) THEN					      IF( ierr0 > 0 ) THEN
+         CALL ctl_stop( 'trc_bc_init: unable to allocate n_tr	         CALL ctl_stop( 'trc_bc_init: unable to allocate n_tr
+      ENDIF							      ENDIF
+      nb_trcsbc      = 0					      nb_trcsbc      = 0
+      n_trc_indsbc(:) = 0					      n_trc_indsbc(:) = 0
+      !								      !
+      ALLOCATE( n_trc_indcbc(ntrc), STAT=ierr0 )		      ALLOCATE( n_trc_indcbc(ntrc), STAT=ierr0 )
+      IF( ierr0 > 0 ) THEN					      IF( ierr0 > 0 ) THEN
+         CALL ctl_stop( 'trc_bc_init: unable to allocate n_tr	         CALL ctl_stop( 'trc_bc_init: unable to allocate n_tr
+      ENDIF							      ENDIF
+      nb_trccbc      = 0					      nb_trccbc      = 0
+      n_trc_indcbc(:) = 0					      n_trc_indcbc(:) = 0
+      !								      !
+      DO jn = 1, ntrc					      |	      !DO jn = 1, ntrc
+         IF( ln_trc_obc(jn) ) THEN			      |	      !   IF( ln_trc_obc(jn) ) THEN
+             nb_trcobc       = nb_trcobc + 1 		      |	      !       nb_trcobc       = nb_trcobc + 1 
+             n_trc_indobc(jn) = nb_trcobc 		      |	      !       n_trc_indobc(jn) = nb_trcobc 
+         ENDIF						      |	      !   ENDIF
+         IF( ln_trc_sbc(jn) ) THEN			      |	      !   IF( ln_trc_sbc(jn) ) THEN
+             nb_trcsbc       = nb_trcsbc + 1		      |	      !       nb_trcsbc       = nb_trcsbc + 1
+             n_trc_indsbc(jn) = nb_trcsbc		      |	      !       n_trc_indsbc(jn) = nb_trcsbc
+         ENDIF						      |	      !   ENDIF
+         IF( ln_trc_cbc(jn) ) THEN			      |	      !   IF( ln_trc_cbc(jn) ) THEN
+             nb_trccbc       = nb_trccbc + 1		      |	      !       nb_trccbc       = nb_trccbc + 1
+             n_trc_indcbc(jn) = nb_trccbc		      |	      !       n_trc_indcbc(jn) = nb_trccbc
+         ENDIF						      |	      !   ENDIF
+      ENDDO						      |	      !ENDDO
+      ntra_obc = MAX( 1, nb_trcobc )   ! To avoid compilation |	      !ntra_obc = MAX( 1, nb_trcobc )   ! To avoid compilatio
+      IF( lwp ) WRITE(numout,*) ' '			      |	      !IF( lwp ) WRITE(numout,*) ' '
+      IF( lwp ) WRITE(numout,*) ' Number of passive tracers t |	      !IF( lwp ) WRITE(numout,*) ' Number of passive tracers 
+      IF( lwp ) WRITE(numout,*) ' '			      |	      !IF( lwp ) WRITE(numout,*) ' '
+      ntra_sbc = MAX( 1, nb_trcsbc )   ! To avoid compilation |	      !ntra_sbc = MAX( 1, nb_trcsbc )   ! To avoid compilatio
+      IF( lwp ) WRITE(numout,*) ' '			      |	      !IF( lwp ) WRITE(numout,*) ' '
+      IF( lwp ) WRITE(numout,*) ' Number of passive tracers t |	      !IF( lwp ) WRITE(numout,*) ' Number of passive tracers 
+      IF( lwp ) WRITE(numout,*) ' '			      |	      !IF( lwp ) WRITE(numout,*) ' '
+      ntra_cbc = MAX( 1, nb_trccbc )   ! To avoid compilation |	      !ntra_cbc = MAX( 1, nb_trccbc )   ! To avoid compilatio
+      IF( lwp ) WRITE(numout,*) ' '			      |	      !IF( lwp ) WRITE(numout,*) ' '
+      IF( lwp ) WRITE(numout,*) ' Number of passive tracers t |	      !IF( lwp ) WRITE(numout,*) ' Number of passive tracers 
+      IF( lwp ) WRITE(numout,*) ' '			      |	      !IF( lwp ) WRITE(numout,*) ' '
+
+							      >	      ! Read Boundary Conditions Namelists
+      REWIND( numnat_ref )              ! Namelist namtrc_bc 	      REWIND( numnat_ref )              ! Namelist namtrc_bc 
+      READ  ( numnat_ref, namtrc_bc, IOSTAT = ios, ERR = 901)	      READ  ( numnat_ref, namtrc_bc, IOSTAT = ios, ERR = 901)
+901   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bc in refer	901   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bc in refer
+
+      REWIND( numnat_cfg )              ! Namelist namtrc_bc 	      REWIND( numnat_cfg )              ! Namelist namtrc_bc 
+      READ  ( numnat_cfg, namtrc_bc, IOSTAT = ios, ERR = 902 	      READ  ( numnat_cfg, namtrc_bc, IOSTAT = ios, ERR = 902 
+902   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bc in confi	902   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bc in confi
+      IF(lwm) WRITE ( numont, namtrc_bc )			      IF(lwm) WRITE ( numont, namtrc_bc )
+
+      ! print some information for each 		      |	#if defined key_bdy
+							      >	      REWIND( numnat_ref )              ! Namelist namtrc_bc 
+							      >	      READ  ( numnat_ref, namtrc_bdy, IOSTAT = ios, ERR = 903
+							      >	903   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bdy in refe
+							      >
+							      >	      REWIND( numnat_cfg )              ! Namelist namtrc_bc 
+							      >	      READ  ( numnat_cfg, namtrc_bdy, IOSTAT = ios, ERR = 904
+							      >	904   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bdy in conf
+							      >	      IF(lwm) WRITE ( numont, namtrc_bdy )
+							      >	      ! setup up preliminary informations for BDY structure
+							      >	      REWIND( numnat_ref )
+							      >	      REWIND( numnat_cfg )
+							      >	      DO ib = 1, nb_bdy
+							      >	         DO jn = 1, ntrc
+							      >	            ! Set type of obc in BDY data structure (around h
+							      >	           ! WRITE(numout,*) "ln_trc_obc(jn)=", ln_trc_obc(jn
+							      >	           ! WRITE(numout,*) "jn=", jn, " ib=", ib, "cn_trc(i
+							      >	           ! WRITE(numout,*) "jn=", jn, " ib=", ib, "cn_trc_d
+							      >	            IF ( ln_trc_obc(jn)) THEN
+							      >	               trcdta_bdy(jn,ib)%cn_obc = TRIM( cn_trc(ib) )
+							      >	            ELSE
+							      >	               trcdta_bdy(jn,ib)%cn_obc = TRIM( cn_trc_dflt(i
+							      >	            ENDIF
+							      >	            ! set damping use in BDY data structure
+							      >	            trcdta_bdy(jn,ib)%dmp = .false.
+							      >	            IF(nn_trcdmp_bdy(ib) .EQ. 1 .AND. ln_trc_obc(jn) 
+							      >	            IF(nn_trcdmp_bdy(ib) .EQ. 2 ) trcdta_bdy(jn,ib)%d
+							      >	            IF(trcdta_bdy(jn,ib)%cn_obc == 'frs' .AND. nn_trc
+							      >	                & CALL ctl_stop( 'Use FRS OR relaxation' )
+							      >	            IF (nn_trcdmp_bdy(ib) .LT. 0 .OR. nn_trcdmp_bdy(i
+							      >	                 WRITE(numout,*) "nn_trcdmp_bdy=", nn_trcdmp_
+							      >	                 CALL ctl_stop( 'Not a valid option for nn_tr
+							      >	            ENDIF
+							      >	         ENDDO
+							      >	      ENDDO
+							      >
+							      >	#else
+							      >	      ! Force all tracers OBC to false if bdy not used
+							      >	      ln_trc_obc = .false.
+							      >	#endif
+							      >	      ! compose BC data indexes
+							      >	      DO jn = 1, ntrc
+							      >	         IF( ln_trc_obc(jn) ) THEN
+							      >	             nb_trcobc       = nb_trcobc + 1  ; n_trc_indobc(
+							      >	         ENDIF
+							      >	         IF( ln_trc_sbc(jn) ) THEN
+							      >	             nb_trcsbc       = nb_trcsbc + 1  ; n_trc_indsbc(
+							      >	         ENDIF
+							      >	         IF( ln_trc_cbc(jn) ) THEN
+							      >	             nb_trccbc       = nb_trccbc + 1  ; n_trc_indcbc(
+							      >	         ENDIF
+							      >	      ENDDO
+							      >	       !print some information for each 
+      IF( lwp ) THEN						      IF( lwp ) THEN
+         DO jn = 1, ntrc					         DO jn = 1, ntrc
+            IF( ln_trc_obc(jn) )  THEN    			            IF( ln_trc_obc(jn) )  THEN    
+               clndta = TRIM( sn_trcobc(jn)%clvar ) 		               clndta = TRIM( sn_trcobc(jn)%clvar ) 
+               IF(lwp) WRITE(numout,*) 'Preparing to read OBC	               IF(lwp) WRITE(numout,*) 'Preparing to read OBC
+               &               ' multiplicative factor : ', r	               &               ' multiplicative factor : ', r
+            ENDIF						            ENDIF
+            IF( ln_trc_sbc(jn) )  THEN    			            IF( ln_trc_sbc(jn) )  THEN    
+               clndta = TRIM( sn_trcsbc(jn)%clvar ) 		               clndta = TRIM( sn_trcsbc(jn)%clvar ) 
+               IF(lwp) WRITE(numout,*) 'Preparing to read SBC	               IF(lwp) WRITE(numout,*) 'Preparing to read SBC
+               &               ' multiplicative factor : ', r	               &               ' multiplicative factor : ', r
+            ENDIF						            ENDIF
+            IF( ln_trc_cbc(jn) )  THEN    			            IF( ln_trc_cbc(jn) )  THEN    
+               clndta = TRIM( sn_trccbc(jn)%clvar ) 		               clndta = TRIM( sn_trccbc(jn)%clvar ) 
+               IF(lwp) WRITE(numout,*) 'Preparing to read CBC	               IF(lwp) WRITE(numout,*) 'Preparing to read CBC
+               &               ' multiplicative factor : ', r	               &               ' multiplicative factor : ', r
+            ENDIF						            ENDIF
+         END DO							         END DO
+      ENDIF							      ENDIF
+      !								      !
+      ! The following code is written this way to reduce memo	      ! The following code is written this way to reduce memo
+      ! MAV: note that this is just a placeholder and the dim	      ! MAV: note that this is just a placeholder and the dim
+      !      what will be done with BDY. A new structure will	      !      what will be done with BDY. A new structure will
+      !								      !
+      ! OPEN Lateral boundary conditions			      ! OPEN Lateral boundary conditions
+      IF( nb_trcobc > 0 ) THEN       !  allocate only if the  |	            ! Print summmary of Boundary Conditions
+         ALLOCATE( sf_trcobc(nb_trcobc), rf_trofac(nb_trcobc) |	      IF( lwp ) THEN
+							      >	         WRITE(numout,*) ' '
+							      >	         WRITE(numout,'(a,i3)') '   Total tracers to be initi
+							      >	         IF ( nb_trcsbc > 0 ) THEN
+							      >	            WRITE(numout,*) '   #trc        NAME        Bound
+							      >	            DO jn = 1, ntrc
+							      >	               IF ( ln_trc_sbc(jn) ) WRITE(numout,9001) jn, T
+							      >	            ENDDO
+							      >	         ENDIF
+							      >	         WRITE(numout,'(2a)') '   SURFACE BC data repository 
+							      >
+							      >	         WRITE(numout,*) ' '
+							      >	         WRITE(numout,'(a,i3)') '   Total tracers to be initi
+							      >	         IF ( nb_trccbc > 0 ) THEN
+							      >	            WRITE(numout,*) '   #trc        NAME        Bound
+							      >	            DO jn = 1, ntrc
+							      >	               IF ( ln_trc_cbc(jn) ) WRITE(numout, 9001) jn, 
+							      >	            ENDDO
+							      >	         ENDIF
+							      >	         WRITE(numout,'(2a)') '   COASTAL BC data repository 
+							      >
+							      >	         WRITE(numout,*) ' '
+							      >	         WRITE(numout,'(a,i3)') '   Total tracers to be initi
+							      >	#if defined key_bdy
+							      >	         IF ( nb_trcobc > 0 ) THEN
+							      >	            WRITE(numout,*) '   #trc        NAME        Bound
+							      >	            DO jn = 1, ntrc
+							      >	               IF ( ln_trc_obc(jn) )  WRITE(numout, 9001) jn,
+							      >	               IF ( .NOT. ln_trc_obc(jn) )  WRITE(numout, 900
+							      >	            ENDDO
+							      >	            WRITE(numout,*) ' '
+							      >	            DO ib = 1, nb_bdy
+							      >	                IF (nn_trcdmp_bdy(ib) .EQ. 0) WRITE(numout,90
+							      >	                IF (nn_trcdmp_bdy(ib) .EQ. 1) WRITE(numout,90
+							      >	                IF (nn_trcdmp_bdy(ib) .EQ. 2) WRITE(numout,90
+							      >	                IF (nn_trcdmp_bdy(ib) .GT. 0) THEN
+							      >	                   WRITE(numout,9003) '     USE damping param
+							      >	                   WRITE(numout,'(a,f10.2,a)') '     - Inflow
+							      >	                   WRITE(numout,'(a,f10.2,a)') '     - Outflo
+							      >	                ENDIF
+							      >	            ENDDO
+							      >	         ENDIF
+							      >	#endif
+							      >	         WRITE(numout,'(2a)') '   OPEN BC data repository : '
+							      >	      ENDIF
+							      >	9001  FORMAT(2x,i5, 3x, a15, 3x, a5, 6x, e11.3, 4x, 10a13)
+							      >	9002  FORMAT(2x,i5, 3x, a41, 3x, 10a13)
+							      >	9003  FORMAT(a, i5, a)
+							      >	#if defined key_bdy
+							      >	      ! OPEN Lateral boundary conditions
+							      >	      IF( nb_trcobc > 0 ) THEN 
+							      >	         ALLOCATE ( sf_trcobc(nb_trcobc*nb_bdy), rf_trofac(nb
+         IF( ierr1 > 0 ) THEN					         IF( ierr1 > 0 ) THEN
+            CALL ctl_stop( 'trc_bc_init: unable to allocate  	            CALL ctl_stop( 'trc_bc_init: unable to allocate s
+         ENDIF							         ENDIF
+         !						      |
+							      >	         igrd = 1                       ! Everything is at T-
+							      >
+							      >	         DO ib = 1, nb_bdy
+							      >	            READ  ( numnat_ref, nambdy_bc, IOSTAT = ios, ERR 
+							      >	905         IF( ios /= 0 ) CALL ctl_nam ( ios , 'nambdy_bc in
+							      >
+							      >	            READ  ( numnat_cfg, nambdy_bc, IOSTAT = ios, ERR 
+							      >	906         IF( ios /= 0 ) CALL ctl_nam ( ios , 'nambdy_bc in
+							      >	            IF(lwm) WRITE ( numont, nambdy_bc )
+							      >
+							      >	            nblen = idx_bdy(ib)%nblen(igrd)
+							      >	            !WRITE(numout,*) 'nblen=', nblen
+							      >	            
+         DO jn = 1, ntrc					            DO jn = 1, ntrc
+            IF( ln_trc_obc(jn) ) THEN      ! update passive t |	               IF ( ln_trc_obc(jn)) THEN
+							      >	               ! Initialise from external data
+               jl = n_trc_indobc(jn)				                  jl = n_trc_indobc(jn)
+               slf_i(jl)    = sn_trcobc(jn)			                  slf_i(jl)    = sn_trcobc(jn)
+               rf_trofac(jl) = rn_trofac(jn)		      |	                  rf_trofac(jl+(ib-1)*nb_trcobc) = rn_trofac(
+                                            ALLOCATE( sf_trco |	                                               ALLOCATE( sf_t
+               IF( sn_trcobc(jn)%ln_tint )  ALLOCATE( sf_trco |	                  IF( sn_trcobc(jn)%ln_tint )  ALLOCATE( sf_t
+               IF( ierr2 + ierr3 > 0 ) THEN			                  IF( ierr2 + ierr3 > 0 ) THEN
+                 CALL ctl_stop( 'trc_bc_init : unable to allo	                    CALL ctl_stop( 'trc_bc_init : unable to a
+               ENDIF						                  ENDIF
+							      >	                  trcdta_bdy(jn,ib)%trc => sf_trcobc(jl+(ib-1
+							      >	                  trcdta_bdy(jn,ib)%rn_fac = rf_trofac(jl+(ib
+							      >	                  ! create OBC mapping array
+							      >	                  nbmap_ptr(jl+(ib-1)*nb_trcobc)%ptr => idx_b
+							      >	                  nbmap_ptr(jl+(ib-1)*nb_trcobc)%ll_unstruc =
+							      >	               ELSE
+							      >	               ! Initialise obc arrays from initial condition
+							      >	                  ALLOCATE ( trcdta_bdy(jn,ib)%trc(nblen,jpk)
+							      >	                  DO ibd = 1, nblen
+							      >	                     DO ik = 1, jpkm1
+							      >	                        ii = idx_bdy(ib)%nbi(ibd,igrd)
+							      >	                        ij = idx_bdy(ib)%nbj(ibd,igrd)
+							      >	                        trcdta_bdy(jn,ib)%trc(ibd,ik) = trn(i
+							      >	                     END DO
+							      >	                  END DO
+							      >	                  trcdta_bdy(jn,ib)%rn_fac = 1._wp
+            ENDIF						               ENDIF
+            !   					      <
+         ENDDO							            ENDDO
+         !                         ! fill sf_trcdta with slf_ |	            CALL fld_fill( sf_trcobc((1+(ib-1)*nb_trcobc):(nb
+         CALL fld_fill( sf_trcobc, slf_i, cn_dir, 'trc_bc_ini |	            &             'trc_bc_init', 'Passive tracer OBC 
+         !						      |	         ENDDO
+							      >	          
+							      >
+      ENDIF							         ENDIF
+							      >	#endif
+							      >	      !IF( nb_trcobc > 0 ) THEN       !  allocate only if the
+							      >	      !   ALLOCATE( sf_trcobc(nb_trcobc), rf_trofac(nb_trcobc
+							      >	      !   IF( ierr1 > 0 ) THEN
+							      >	      !      CALL ctl_stop( 'trc_bc_init: unable to allocate 
+							      >	      !   ENDIF
+							      >	      !   !
+							      >	      !   DO jn = 1, ntrc
+							      >	      !      IF( ln_trc_obc(jn) ) THEN      ! update passive 
+							      >	      !         jl = n_trc_indobc(jn)
+							      >	      !         slf_i(jl)    = sn_trcobc(jn)
+							      >	      !         rf_trofac(jl) = rn_trofac(jn)
+							      >	      !                                      ALLOCATE( sf_trc
+							      >	      !         IF( sn_trcobc(jn)%ln_tint )  ALLOCATE( sf_trc
+							      >	      !         IF( ierr2 + ierr3 > 0 ) THEN
+							      >	      !           CALL ctl_stop( 'trc_bc_init : unable to all
+							      >	      !         ENDIF
+							      >	      !      ENDIF
+							      >	      !      !   
+							      >	      !   ENDDO
+							      >	      !   !                         ! fill sf_trcdta with slf
+							      >	      !   CALL fld_fill( sf_trcobc, slf_i, cn_dir, 'trc_bc_in
+							      >	      !   !
+							      >	      !ENDIF
+      !								      !
+      ! SURFACE Boundary conditions				      ! SURFACE Boundary conditions
+      IF( nb_trcsbc > 0 ) THEN       !  allocate only if the 	      IF( nb_trcsbc > 0 ) THEN       !  allocate only if the 
+         ALLOCATE( sf_trcsbc(nb_trcsbc), rf_trsfac(nb_trcsbc)	         ALLOCATE( sf_trcsbc(nb_trcsbc), rf_trsfac(nb_trcsbc)
+         IF( ierr1 > 0 ) THEN					         IF( ierr1 > 0 ) THEN
+            CALL ctl_stop( 'trc_bc_init: unable to allocate  	            CALL ctl_stop( 'trc_bc_init: unable to allocate  
+         ENDIF							         ENDIF
+         !							         !
+         DO jn = 1, ntrc					         DO jn = 1, ntrc
+            IF( ln_trc_sbc(jn) ) THEN      ! update passive t	            IF( ln_trc_sbc(jn) ) THEN      ! update passive t
+               jl = n_trc_indsbc(jn)				               jl = n_trc_indsbc(jn)
+               slf_i(jl)    = sn_trcsbc(jn)			               slf_i(jl)    = sn_trcsbc(jn)
+               rf_trsfac(jl) = rn_trsfac(jn)			               rf_trsfac(jl) = rn_trsfac(jn)
+                                            ALLOCATE( sf_trcs	                                            ALLOCATE( sf_trcs
+               IF( sn_trcsbc(jn)%ln_tint )  ALLOCATE( sf_trcs	               IF( sn_trcsbc(jn)%ln_tint )  ALLOCATE( sf_trcs
+               IF( ierr2 + ierr3 > 0 ) THEN			               IF( ierr2 + ierr3 > 0 ) THEN
+                 CALL ctl_stop( 'trc_bc_init : unable to allo	                 CALL ctl_stop( 'trc_bc_init : unable to allo
+               ENDIF						               ENDIF
+            ENDIF						            ENDIF
+            !   						            !   
+         ENDDO							         ENDDO
+         !                         ! fill sf_trcsbc with slf_	         !                         ! fill sf_trcsbc with slf_
+         CALL fld_fill( sf_trcsbc, slf_i, cn_dir, 'trc_bc_ini |	         CALL fld_fill( sf_trcsbc, slf_i, cn_dir_sbc, 'trc_bc
+         !							         !
+      ENDIF							      ENDIF
+      !							      |	      
+      ! COSTAL Boundary conditions			      |	      !COASTAL Boundary conditions
+      IF( nb_trccbc > 0 ) THEN       !  allocate only if the 	      IF( nb_trccbc > 0 ) THEN       !  allocate only if the 
+         ALLOCATE( sf_trccbc(nb_trccbc), rf_trcfac(nb_trccbc)	         ALLOCATE( sf_trccbc(nb_trccbc), rf_trcfac(nb_trccbc)
+         IF( ierr1 > 0 ) THEN					         IF( ierr1 > 0 ) THEN
+            CALL ctl_stop( 'trc_bc_ini: unable to allocate  s	            CALL ctl_stop( 'trc_bc_ini: unable to allocate  s
+         ENDIF							         ENDIF
+         !							         !
+         DO jn = 1, ntrc					         DO jn = 1, ntrc
+            IF( ln_trc_cbc(jn) ) THEN      ! update passive t	            IF( ln_trc_cbc(jn) ) THEN      ! update passive t
+               jl = n_trc_indcbc(jn)				               jl = n_trc_indcbc(jn)
+               slf_i(jl)    = sn_trccbc(jn)			               slf_i(jl)    = sn_trccbc(jn)
+               rf_trcfac(jl) = rn_trcfac(jn)			               rf_trcfac(jl) = rn_trcfac(jn)
+                                            ALLOCATE( sf_trcc	                                            ALLOCATE( sf_trcc
+               IF( sn_trccbc(jn)%ln_tint )  ALLOCATE( sf_trcc	               IF( sn_trccbc(jn)%ln_tint )  ALLOCATE( sf_trcc
+               IF( ierr2 + ierr3 > 0 ) THEN			               IF( ierr2 + ierr3 > 0 ) THEN
+                 CALL ctl_stop( 'trc_bc_ini : unable to alloc	                 CALL ctl_stop( 'trc_bc_ini : unable to alloc
+               ENDIF						               ENDIF
+            ENDIF						            ENDIF
+            !   						            !   
+         ENDDO							         ENDDO
+         !                         ! fill sf_trccbc with slf_	         !                         ! fill sf_trccbc with slf_
+         CALL fld_fill( sf_trccbc, slf_i, cn_dir, 'trc_bc_ini |	         CALL fld_fill( sf_trccbc, slf_i, cn_dir_cbc, 'trc_bc
+         !							         !
+      ENDIF							      ENDIF
+ 								 
+      DEALLOCATE( slf_i )          ! deallocate local field s	      DEALLOCATE( slf_i )          ! deallocate local field s
+							      >	      
+							      >	      !WRITE(numout,*) "In trc_bc_init at B: nstop=", nstop
+      IF( nn_timing == 1 )  CALL timing_stop('trc_bc_init')	      IF( nn_timing == 1 )  CALL timing_stop('trc_bc_init')
+
+   END SUBROUTINE trc_bc_init					   END SUBROUTINE trc_bc_init
+
+
+   SUBROUTINE trc_bc_read(kt)				      |	   SUBROUTINE trc_bc_read(kt, jit)
+      !!-----------------------------------------------------	      !!-----------------------------------------------------
+      !!                   ***  ROUTINE trc_bc_init  ***	      !!                   ***  ROUTINE trc_bc_init  ***
+      !!							      !!
+      !! ** Purpose :  Read passive tracer Boundary Condition	      !! ** Purpose :  Read passive tracer Boundary Condition
+      !!							      !!
+      !! ** Method  :  Read BC inputs and update data structu	      !! ** Method  :  Read BC inputs and update data structu
+      !!              						      !!              
+      !!-----------------------------------------------------	      !!-----------------------------------------------------
+   								   
+      ! NEMO							      ! NEMO
+      USE fldread						      USE fldread
+      								      
+      !! * Arguments						      !! * Arguments
+      INTEGER, INTENT( in ) ::   kt      ! ocean time-step in	      INTEGER, INTENT( in ) ::   kt      ! ocean time-step in
+							      |	      INTEGER, INTENT( in ), OPTIONAL ::   jit   ! subcycle t
+							      >	      INTEGER            ::  ib
+      !!-----------------------------------------------------	      !!-----------------------------------------------------
+      !								      !
+      IF( nn_timing == 1 )  CALL timing_start('trc_bc_read')	      IF( nn_timing == 1 )  CALL timing_start('trc_bc_read')
+
+      IF( kt == nit000 ) THEN					      IF( kt == nit000 ) THEN
+         IF(lwp) WRITE(numout,*)				         IF(lwp) WRITE(numout,*)
+         IF(lwp) WRITE(numout,*) 'trc_bc_read : Surface bound	         IF(lwp) WRITE(numout,*) 'trc_bc_read : Surface bound
+         IF(lwp) WRITE(numout,*) '~~~~~~~ '			         IF(lwp) WRITE(numout,*) '~~~~~~~ '
+      ENDIF							      ENDIF
+							      >	      !WRITE(numout,*) "In trc_bc_read at A1: nstop=", nstop
+							      >	      IF ( PRESENT(jit) ) THEN 
+								      
+      ! OPEN boundary conditions: DOES NOT WORK. Waiting for  |	#if defined key_bdy
+							      >	         ! OPEN boundary conditions (use time_offset=+1 as th
+      IF( nb_trcobc > 0 ) THEN					         IF( nb_trcobc > 0 ) THEN
+        if (lwp) write(numout,'(a,i5,a,i12)') '   reading OBC |	           if (lwp) write(numout,'(a,i5,a,i10)') '   reading 
+        CALL fld_read(kt,1,sf_trcobc)			      |	           DO ib = 1, nb_bdy
+        ! vertical interpolation on s-grid and partial step t |	             CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcobc((1+
+							      >	             &             map=nbmap_ptr((1+(ib-1)*nb_trcobc)
+							      >	           END DO
+      ENDIF							         ENDIF
+							      >	#endif
+
+      ! SURFACE boundary conditions       			         ! SURFACE boundary conditions
+      IF( nb_trcsbc > 0 ) THEN					         IF( nb_trcsbc > 0 ) THEN
+        if (lwp) write(numout,'(a,i5,a,i12)') '   reading SBC |	           if (lwp) write(numout,'(a,i5,a,i10)') '   reading 
+        CALL fld_read(kt,1,sf_trcsbc)			      |	           CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcsbc, kit=
+      ENDIF							         ENDIF
+
+      ! COASTAL boundary conditions       			         ! COASTAL boundary conditions
+      IF( nb_trccbc > 0 ) THEN					         IF( nb_trccbc > 0 ) THEN
+        if (lwp) write(numout,'(a,i5,a,i12)') '   reading CBC |	           if (lwp) write(numout,'(a,i5,a,i10)') '   reading 
+        CALL fld_read(kt,1,sf_trccbc)			      |	           CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trccbc, kit=
+							      >	         ENDIF
+							      >
+							      >	      ELSE
+							      >	      
+							      >	#if defined key_bdy
+							      >	         ! OPEN boundary conditions (use time_offset=+1 as th
+							      >	         IF( nb_trcobc > 0 ) THEN
+							      >	           if (lwp) write(numout,'(a,i5,a,i10)') '   reading 
+							      >	           DO ib = 1, nb_bdy
+							      >	             CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcobc((1+
+							      >	             &             map=nbmap_ptr((1+(ib-1)*nb_trcobc)
+							      >	           END DO
+							      >	         ENDIF
+							      >	#endif
+							      >
+							      >	         ! SURFACE boundary conditions
+							      >	         IF( nb_trcsbc > 0 ) THEN
+							      >	           if (lwp) write(numout,'(a,i5,a,i10)') '   reading 
+							      >	           CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcsbc)
+							      >	         ENDIF
+							      >
+							      >	         ! COASTAL boundary conditions
+							      >	         IF( nb_trccbc > 0 ) THEN
+							      >	           if (lwp) write(numout,'(a,i5,a,i10)') '   reading 
+							      >	           CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trccbc)
+							      >	         ENDIF
+							      >
+      ENDIF   							      ENDIF 
+      !								      !
+							      >	     !IF(lwp) THEN
+							      >	     !    WRITE(numout,*) 'LuoXIAOFAN TEST dic BOUNDDARY in t
+							      >	     !ENDIF
+							      >	      !WRITE(numout,*) "In trc_bc_read at A: nstop=", nstop
+      IF( nn_timing == 1 )  CALL timing_stop('trc_bc_read')	      IF( nn_timing == 1 )  CALL timing_stop('trc_bc_read')
+      !       							      !       
+
+   END SUBROUTINE trc_bc_read					   END SUBROUTINE trc_bc_read
+#else								#else
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+   !!   Dummy module                              NO 3D passi	   !!   Dummy module                              NO 3D passi
+   !!--------------------------------------------------------	   !!--------------------------------------------------------
+CONTAINS							CONTAINS
+   SUBROUTINE trc_bc_read( kt )        ! Empty routine		   SUBROUTINE trc_bc_read( kt )        ! Empty routine
+      WRITE(*,*) 'trc_bc_read: You should not have seen this 	      WRITE(*,*) 'trc_bc_read: You should not have seen this 
+   END SUBROUTINE trc_bc_read					   END SUBROUTINE trc_bc_read
+#endif								#endif
+
+   !!========================================================	   !!========================================================
+							      >
+							      >	      
+							      >	    
+							      >	  
+							      >
+							      >
+							      >
+END MODULE trcbc						END MODULE trcbc
+							      )

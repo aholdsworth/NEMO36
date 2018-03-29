@@ -15,6 +15,12 @@ MODULE trcsub
    USE iom
    USE in_out_manager
    USE lbclnk
+#if defined key_zdftke
+   USE zdftke          ! twice TKE (en)
+#endif
+#if defined key_zdfgls
+   USE zdfgls, ONLY: en
+#endif
    USE trabbl
    USE zdf_oce
    USE domvvl
@@ -41,7 +47,7 @@ MODULE trcsub
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcsub.F90 7088 2016-10-25 14:35:26Z lovato $ 
+   !! $Id: trcsub.F90 5215 2015-04-15 16:11:56Z nicolasmartin $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS

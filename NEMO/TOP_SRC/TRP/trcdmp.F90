@@ -34,7 +34,7 @@ MODULE trcdmp
 
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   restotr   ! restoring coeff. on tracers (s-1)
 
-   INTEGER, PARAMETER           ::   npncts   = 8        ! number of closed sea
+   INTEGER, PARAMETER           ::   npncts   = 5        ! number of closed sea
    INTEGER, DIMENSION(npncts)   ::   nctsi1, nctsj1      ! south-west closed sea limits (i,j)
    INTEGER, DIMENSION(npncts)   ::   nctsi2, nctsj2      ! north-east closed sea limits (i,j)
 
@@ -42,7 +42,7 @@ MODULE trcdmp
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcdmp.F90 6688 2016-06-13 12:50:45Z lovato $ 
+   !! $Id: trcdmp.F90 5506 2015-06-29 15:19:38Z clevy $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -106,7 +106,8 @@ CONTAINS
             IF( ln_trc_ini(jn) ) THEN      ! update passive tracers arrays with input data read from file
                
                jl = n_trc_index(jn) 
-               CALL trc_dta( kt, sf_trcdta(jl), rf_trfac(jl), ztrcdta )   ! read tracer data at nit000
+               CALL trc_dta( kt, sf_trcdta(jl),rf_trfac(jl) )   ! read tracer data at nit000
+               ztrcdta(:,:,:) = sf_trcdta(jl)%fnow(:,:,:)
 
                SELECT CASE ( nn_zdmp_tr )
                !
@@ -206,29 +207,8 @@ CONTAINS
             isrow = 332 - jpjglo
             !
                                                         ! Caspian Sea
-            nctsi1(1)   = 333  ; nctsj1(1)   = 243 - isrow
-            nctsi2(1)   = 342  ; nctsj2(1)   = 274 - isrow
-            !                                           ! Lake Superior
-            nctsi1(2)   = 198  ; nctsj1(2)   = 258 - isrow
-            nctsi2(2)   = 204  ; nctsj2(2)   = 262 - isrow
-            !                                           ! Lake Michigan
-            nctsi1(3)   = 201  ; nctsj1(3)   = 250 - isrow
-            nctsi2(3)   = 203  ; nctsj2(3)   = 256 - isrow
-            !                                           ! Lake Huron
-            nctsi1(4)   = 204  ; nctsj1(4)   = 252 - isrow
-            nctsi2(4)   = 209  ; nctsj2(4)   = 256 - isrow
-            !                                           ! Lake Erie
-            nctsi1(5)   = 206  ; nctsj1(5)   = 249 - isrow
-            nctsi2(5)   = 209  ; nctsj2(5)   = 251 - isrow
-            !                                           ! Lake Ontario
-            nctsi1(6)   = 210  ; nctsj1(6)   = 252 - isrow
-            nctsi2(6)   = 212  ; nctsj2(6)   = 252 - isrow
-            !                                           ! Victoria Lake
-            nctsi1(7)   = 321  ; nctsj1(7)   = 180 - isrow
-            nctsi2(7)   = 322  ; nctsj2(7)   = 189 - isrow
-            !                                           ! Baltic Sea
-            nctsi1(8)   = 297  ; nctsj1(8)   = 270 - isrow
-            nctsi2(8)   = 308  ; nctsj2(8)   = 293 - isrow
+            nctsi1(1)   = 332  ; nctsj1(1)   = 243 - isrow
+            nctsi2(1)   = 344  ; nctsj2(1)   = 275 - isrow
             !                                        
             !                                           ! =======================
             CASE ( 2 )                                  !  ORCA_R2 configuration
@@ -302,12 +282,13 @@ CONTAINS
          DO jn = 1, jptra
             IF( ln_trc_ini(jn) ) THEN      ! update passive tracers arrays with input data read from file
                 jl = n_trc_index(jn)
-                CALL trc_dta( kt, sf_trcdta(jl), rf_trfac(jl), ztrcdta )   ! read tracer data at nit000
+                CALL trc_dta( kt, sf_trcdta(jl),rf_trfac(jl) )   ! read tracer data at nit000
+                ztrcdta(:,:,:) = sf_trcdta(jl)%fnow(:,:,:)
                 DO jc = 1, npncts
                    DO jk = 1, jpkm1
                       DO jj = nctsj1(jc), nctsj2(jc)
                          DO ji = nctsi1(jc), nctsi2(jc)
-                            trn(ji,jj,jk,jn) = ztrcdta(ji,jj,jk)
+                            trn(ji,jj,jk,jn) = ztrcdta(ji,jj,jk) * tmask(ji,jj,jk)
                             trb(ji,jj,jk,jn) = trn(ji,jj,jk,jn)
                          ENDDO
                       ENDDO
@@ -335,8 +316,6 @@ CONTAINS
 
       IF( nn_timing == 1 )  CALL timing_start('trc_dmp_init')
       !
-      !Allocate arrays
-      IF( trc_dmp_alloc() /= 0 )   CALL ctl_stop( 'STOP', 'trc_dmp_init: unable to allocate arrays' )
 
       IF( lzoom )   nn_zdmp_tr = 0           ! restoring to climatology at closed north or south boundaries
       SELECT CASE ( nn_zdmp_tr )

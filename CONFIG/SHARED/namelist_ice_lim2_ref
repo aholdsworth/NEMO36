@@ -12,10 +12,8 @@
 !-----------------------------------------------------------------------
 &namicerun     !   Share parameters for dynamics/advection/thermo
 !-----------------------------------------------------------------------
-   cn_icerst_in  = "restart_ice_in"   !  suffix of ice restart name (input)
-   cn_icerst_indir = "."              !  directory from which to read input ice restarts
+   cn_icerst_in  = "restart_ice"   !  suffix of ice restart name (input)
    cn_icerst_out = "restart_ice"      !  suffix of ice restart name (output)
-   cn_icerst_outdir = "."             !  directory in which to write output ice restarts
    ln_limdyn     = .true.             !  ice dynamics (T) or thermodynamics only (F)
    ln_limdmp     = .false.            !  restoring ice thickness and fraction leads   (T => fill  namice_dmp)
    acrit         = 1.0e-06 , 1.0e-06  !  minimum lead fraction in the Northern & Southern Hemispheres
@@ -27,8 +25,8 @@
 !-----------------------------------------------------------------------
    ln_limini   = .false.   !  read the initial state in 'Ice_initialization.nc' (T) or not (F)
    ttest       =  2.0      !  threshold water temperature for initial sea ice
-   hninn       =  0.5      !  initial snow thickness in the north
-   hginn       =  3.0      !  initial ice  thickness in the north
+   hninn       =  0.1      !  initial snow thickness in the north
+   hginn       =  2.5      !  initial ice  thickness in the north
    alinn       =  0.05     !  initial leads area     in the north
    hnins       =  0.1      !  same  three parameter  in the south
    hgins       =  1.0      !        "                 "     south   
@@ -46,26 +44,26 @@
    resl        =   5.0e-05 !  maximum value for the residual of relaxation
    cw          =   5.0e-03 !  drag coefficient for oceanic stress
    angvg       =   0.0     !  turning angle for oceanic stress
-   pstar       =   1.0e+04 !  1st bulk-rheology parameter
+   pstar       =   2.3e+04 !t 1.0e+04 !  1st bulk-rheology parameter
    c_rhg       =  20.0     !  2nd bulk-rhelogy parameter
    etamn       =   0.0e+07 !  minimun value for viscosity
-   rn_creepl   =   1.0e-08 !  creep limit
-   rn_ecc      =   2.0     !  eccentricity of the elliptical yield curve
-   ahi0        = 350.e0    !  horizontal eddy diffusivity coefficient for sea-ice [m2/s]
-   nn_nevp     =   120     !  number of EVP subcycling iterations
-   telast      =   9600    !  timescale for EVP elastic waves
+   rn_creepl      =   2.0e-08 !  creep limit
+   rn_ecc         =   2.0     !  eccentricity of the elliptical yield curve
+   ahi0        = 5.    !  horizontal eddy diffusivity coefficient for sea-ice [m2/s]
+   nn_nevp        =   120     !  number of EVP subcycling iterations
+   telast      =   600     !t 9600    !  timescale for EVP elastic waves
    alphaevp    =   1.0     !  coefficient for the solution of EVP int. stresses
 /
 !-----------------------------------------------------------------------
 &namicetrp     !   ice transport
 !-----------------------------------------------------------------------
-   bound       =   0.0     !  boundary conditions (=0. no-slip, =1. free-slip)
+   bound       =   1.0     !  boundary conditions (=0. no-slip, =1. free-slip)
 /
 !-----------------------------------------------------------------------
 &namicethd     !   ice thermodynamic
 !-----------------------------------------------------------------------
    hmelt       = -0.15     !  maximum melting at the bottom
-   hiccrit     = 0.3 , 0.3 !  ice thickness for lateral accretion in the Northern (Southern) Hemisphere
+   hiccrit     = 0.6 , 0.3 !  ice thickness for lateral accretion in the Northern (Southern) Hemisphere
    !                       !  (caution 1.0, 1.0 best value to be used!!! (gilles G.))
    hicmin      = 0.2       !  ice thickness corr. to max. energy stored in brine pocket
    hiclim      = 0.05      !  minimum ice thickness
@@ -87,10 +85,10 @@
 &namice_dmp    !   damping of sea ice alone open boundaries
 !              !   (hard coded damping area: check if it fit your config)
 !-----------------------------------------------------------------------
-!              !  file name     ! frequency (hours) ! variable ! time interp. !  clim  ! 'yearly'/ ! weights  ! rotation ! land/sea mask !
-!              !                !  (if <0  months)  !   name   !   (logical)  !  (T/F) ! 'monthly' ! filename ! pairing  ! filename      !
-   sn_hicif    = 'ice_damping'  ,  -1.              , 'hicif'  ,   .true.     , .true. , 'yearly'  , ''       , ''       ,    ''
-   sn_frld     = 'ice_damping'  ,  -1.              , 'frld'   ,   .true.     , .true. , 'yearly'  , ''       , ''       ,    ''
+!              !  file name   ! frequency (hours) ! variable ! time interp. !  clim  ! 'yearly'/ ! weights  ! rotation !
+!              !              !  (if <0  months)  !   name   !  (logical)   !  (T/F) ! 'monthly' ! filename ! pairing  !
+   sn_hicif    = 'ice_damping',  -1.              , 'hicif'  ,   .true.     , .true. , 'yearly'  , ''       , ''
+   sn_frld      = 'ice_damping',  -1.              , 'frld'   ,   .true.     , .true. , 'yearly'  , ''       , ''
 !
    cn_dir      = './'      !  root directory for the location of the runoff files
 /

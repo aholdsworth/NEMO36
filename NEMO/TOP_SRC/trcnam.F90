@@ -21,9 +21,10 @@ MODULE trcnam
    USE trc               ! passive tracers common variables
    USE trcnam_trp        ! Transport namelist
    USE trcnam_pisces     ! PISCES namelist
+   USE trcnam_canoe     ! CanOE namelist
+   USE trcnam_cmoc     ! CMOC namelist
    USE trcnam_cfc        ! CFC SMS namelist
    USE trcnam_c14b       ! C14 SMS namelist
-   USE trcnam_age        ! AGE SMS namelist
    USE trcnam_my_trc     ! MY_TRC SMS namelist
    USE trd_oce       
    USE trdtrc_oce
@@ -39,7 +40,7 @@ MODULE trcnam
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcnam.F90 8353 2017-07-19 14:41:00Z lovato $
+   !! $Id: trcnam.F90 5411 2015-06-12 17:39:14Z cetlod $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -61,13 +62,13 @@ CONTAINS
       IF( .NOT. lk_offline ) CALL trc_nam_run
       
       !                                        !  passive tracer informations
-                             CALL trc_nam_trc
+      CALL trc_nam_trc
       
       !                                        !   Parameters of additional diagnostics
-      IF( .NOT. lk_iomput)   CALL trc_nam_dia
+      CALL trc_nam_dia
 
       !                                        !   namelist of transport
-                             CALL trc_nam_trp
+      CALL trc_nam_trp
 
 
       IF( ln_rsttr )                      ln_trcdta = .FALSE.   ! restart : no need of clim data
@@ -76,32 +77,6 @@ CONTAINS
       !
       IF( .NOT.ln_trcdta ) THEN
          ln_trc_ini(:) = .FALSE.
-      ENDIF
-
-      ! Call the ice module for tracers
-      ! -------------------------------
-      CALL trc_nam_ice
-
-      ! namelist of SMS
-      ! ---------------
-      IF( lk_pisces  ) THEN   ;   CALL trc_nam_pisces      ! PISCES  bio-model
-      ELSE                    ;   IF(lwp) WRITE(numout,*) '          PISCES not used'
-      ENDIF
-
-      IF( lk_my_trc  ) THEN  ;   CALL trc_nam_my_trc       ! MY_TRC  tracers
-      ELSE                   ;   IF(lwp) WRITE(numout,*)  '          MY_TRC not used'
-      ENDIF
-
-      IF( lk_cfc     ) THEN   ;   CALL trc_nam_cfc         ! CFC     tracers
-      ELSE                    ;   IF(lwp) WRITE(numout,*) '          CFC not used'
-      ENDIF
-
-      IF( lk_c14b    ) THEN  ;   CALL trc_nam_c14b         ! C14 bomb     tracers
-      ELSE                   ;   IF(lwp) WRITE(numout,*)  '          C14 not used'
-      ENDIF
-
-      IF( lk_age     ) THEN  ;   CALL trc_nam_age         ! AGE     tracer
-      ELSE                   ;   IF(lwp) WRITE(numout,*)  '          AGE not used'
       ENDIF
 
      IF(lwp) THEN                   ! control print
@@ -144,6 +119,64 @@ CONTAINS
         WRITE(numout,*) 
       ENDIF
 
+
+#if defined key_trdmxl_trc || defined key_trdtrc
+
+         REWIND( numnat_ref )              ! Namelist namtrc_trd in reference namelist : Passive tracer trends
+         READ  ( numnat_ref, namtrc_trd, IOSTAT = ios, ERR = 905)
+905      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in reference namelist', lwp )
+
+         REWIND( numnat_cfg )              ! Namelist namtrc_trd in configuration namelist : Passive tracer trends
+         READ  ( numnat_cfg, namtrc_trd, IOSTAT = ios, ERR = 906 )
+906      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in configuration namelist', lwp )
+         IF(lwm) WRITE ( numont, namtrc_trd )
+
+         IF(lwp) THEN
+            WRITE(numout,*)
+            WRITE(numout,*) ' trd_mxl_trc_init : read namelist namtrc_trd                    '
+            WRITE(numout,*) ' ~~~~~~~~~~~~~~~~                                               '
+            WRITE(numout,*) '   * frequency of trends diagnostics   nn_trd_trc             = ', nn_trd_trc
+            WRITE(numout,*) '   * control surface type              nn_ctls_trc            = ', nn_ctls_trc
+            WRITE(numout,*) '   * restart for ML diagnostics        ln_trdmxl_trc_restart  = ', ln_trdmxl_trc_restart
+            WRITE(numout,*) '   * flag to diagnose trends of                                 '
+            WRITE(numout,*) '     instantantaneous or mean ML T/S   ln_trdmxl_trc_instant  = ', ln_trdmxl_trc_instant
+            WRITE(numout,*) '   * unit conversion factor            rn_ucf_trc             = ', rn_ucf_trc
+            DO jn = 1, jptra
+               IF( ln_trdtrc(jn) ) WRITE(numout,*) '    compute ML trends for tracer number :', jn
+            END DO
+         ENDIF
+#endif
+
+
+      ! Call the ice module for tracers
+      ! -------------------------------
+      CALL trc_nam_ice
+
+      ! namelist of SMS
+      ! ---------------      
+      IF( lk_pisces  ) THEN   ;   CALL trc_nam_pisces      ! PISCES  bio-model
+      ELSE                    ;   IF(lwp) WRITE(numout,*) '          PISCES not used'
+      ENDIF
+      
+      IF( lk_canoe  ) THEN   ;   CALL trc_nam_canoe      ! CanOE  bio-model
+      ELSE                    ;   IF(lwp) WRITE(numout,*) '          CanOE not used'
+      ENDIF
+      
+      IF( lk_cmoc  ) THEN   ;   CALL trc_nam_cmoc      ! CMOC  bio-model
+      ELSE                    ;   IF(lwp) WRITE(numout,*) '          CMOC not used'
+      ENDIF
+
+      IF( lk_cfc     ) THEN   ;   CALL trc_nam_cfc         ! CFC     tracers
+      ELSE                    ;   IF(lwp) WRITE(numout,*) '          CFC not used'
+      ENDIF
+
+      IF( lk_c14b     ) THEN   ;   CALL trc_nam_c14b         ! C14 bomb     tracers
+      ELSE                    ;   IF(lwp) WRITE(numout,*) '          C14 not used'
+      ENDIF
+
+      IF( lk_my_trc  ) THEN   ;   CALL trc_nam_my_trc      ! MY_TRC  tracers
+      ELSE                    ;   IF(lwp) WRITE(numout,*) '          MY_TRC not used'
+      ENDIF
       !
    END SUBROUTINE trc_nam
 
@@ -280,9 +313,19 @@ CONTAINS
          ctrcln    (jn) = TRIM( sn_tracer(jn)%cllname )
          ctrcun    (jn) = TRIM( sn_tracer(jn)%clunit  )
          ln_trc_ini(jn) =       sn_tracer(jn)%llinit
-         ln_trc_wri(jn) =       sn_tracer(jn)%llsave
+!! FROM Elise 20170316---------------xiaofanLuo
+!#if defined key_bdy
+          ln_trc_sbc(jn) =       sn_tracer(jn)%llsbc
+          ln_trc_cbc(jn) =       sn_tracer(jn)%llcbc
+          ln_trc_obc(jn) =       sn_tracer(jn)%llobc
+!#endif
+!----------------------xiaofanLuo
+        ln_trc_wri(jn) =       sn_tracer(jn)%llsave
+       
+
       END DO
-      
+      IF(lwp) WRITE(numout,*) 'trc_nam : read the passive tracer namelists-LuoTEST'
+
     END SUBROUTINE trc_nam_trc
 
 
@@ -304,7 +347,6 @@ CONTAINS
 #endif
       NAMELIST/namtrc_dia/ ln_diatrc, ln_diabio, nn_writedia, nn_writebio
 
-      INTEGER  ::   jn        
       INTEGER  ::   ios                 ! Local integer output status for namelist read
       !!---------------------------------------------------------------------
 
@@ -336,7 +378,7 @@ CONTAINS
          WRITE(numout,*) ' '
       ENDIF
 
-      IF( ln_diatrc ) THEN 
+      IF( ln_diatrc .AND. .NOT. lk_iomput ) THEN 
          ALLOCATE( trc2d(jpi,jpj,jpdia2d), trc3d(jpi,jpj,jpk,jpdia3d),  &
            &       ctrc2d(jpdia2d), ctrc2l(jpdia2d), ctrc2u(jpdia2d) ,  & 
            &       ctrc3d(jpdia3d), ctrc3l(jpdia3d), ctrc3u(jpdia3d) ,  STAT = ierr ) 
@@ -347,7 +389,7 @@ CONTAINS
          !
       ENDIF
 
-      IF( ln_diabio .OR. l_trdtrc ) THEN
+      IF( ( ln_diabio .AND. .NOT. lk_iomput ) .OR. l_trdtrc ) THEN
          ALLOCATE( trbio (jpi,jpj,jpk,jpdiabio) , &
            &       ctrbio(jpdiabio), ctrbil(jpdiabio), ctrbiu(jpdiabio), STAT = ierr ) 
          IF( ierr > 0 )   CALL ctl_stop( 'STOP', 'trcnam: unable to allocate bio. diag. array' )
@@ -355,33 +397,6 @@ CONTAINS
          trbio(:,:,:,:) = 0._wp  ;   ctrbio(:) = ' '   ;   ctrbil(:) = ' '    ;    ctrbiu(:) = ' ' 
          !
       ENDIF
-
-#if defined key_trdmxl_trc || defined key_trdtrc
-
-         REWIND( numnat_ref )              ! Namelist namtrc_trd in reference namelist : Passive tracer trends
-         READ  ( numnat_ref, namtrc_trd, IOSTAT = ios, ERR = 905)
-905      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in reference namelist', lwp )
-
-         REWIND( numnat_cfg )              ! Namelist namtrc_trd in configuration namelist : Passive tracer trends
-         READ  ( numnat_cfg, namtrc_trd, IOSTAT = ios, ERR = 906 )
-906      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in configuration namelist', lwp )
-         IF(lwm) WRITE ( numont, namtrc_trd )
-
-         IF(lwp) THEN
-            WRITE(numout,*)
-            WRITE(numout,*) ' trd_mxl_trc_init : read namelist namtrc_trd                    '
-            WRITE(numout,*) ' ~~~~~~~~~~~~~~~~                                               '
-            WRITE(numout,*) '   * frequency of trends diagnostics   nn_trd_trc             = ', nn_trd_trc
-            WRITE(numout,*) '   * control surface type              nn_ctls_trc            = ', nn_ctls_trc
-            WRITE(numout,*) '   * restart for ML diagnostics        ln_trdmxl_trc_restart  = ', ln_trdmxl_trc_restart
-            WRITE(numout,*) '   * flag to diagnose trends of                                 '
-            WRITE(numout,*) '     instantantaneous or mean ML T/S   ln_trdmxl_trc_instant  = ', ln_trdmxl_trc_instant
-            WRITE(numout,*) '   * unit conversion factor            rn_ucf_trc             = ', rn_ucf_trc
-            DO jn = 1, jptra
-               IF( ln_trdtrc(jn) ) WRITE(numout,*) '    compute ML trends for tracer number :', jn
-            END DO
-         ENDIF
-#endif
       !
    END SUBROUTINE trc_nam_dia
 
@@ -398,7 +413,7 @@ CONTAINS
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcnam.F90 8353 2017-07-19 14:41:00Z lovato $
+   !! $Id: trcnam.F90 5411 2015-06-12 17:39:14Z cetlod $
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!======================================================================
-END MODULE trcnam
+END MODULE  trcnam

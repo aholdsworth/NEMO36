@@ -51,9 +51,9 @@ CONTAINS
 
       IF ( nn_ice_tr == 1 ) THEN
          IF( lk_pisces  )    CALL trc_ice_ini_pisces       ! PISCES  bio-model
-         IF( lk_my_trc  )    CALL trc_ice_ini_my_trc       ! MY_TRC  tracers
          IF( lk_cfc     )    CALL trc_ice_ini_cfc          ! CFC     tracers
          IF( lk_c14b    )    CALL trc_ice_ini_c14b         ! C14 bomb  tracer
+         IF( lk_my_trc  )    CALL trc_ice_ini_my_trc       ! MY_TRC  tracers
       ENDIF
 
       IF( nn_timing == 1 )   CALL timing_stop('trc_ice_ini')

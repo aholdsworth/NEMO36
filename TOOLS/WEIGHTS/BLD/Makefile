@@ -1,9 +1,9 @@
 # Automatic Makefile
 
-FCM_BLD_CFG = /home/amber/NEMOGCM/TOOLS/COMPILE/bld_tools.cfg
+FCM_BLD_CFG = /home/amh001/NAA_NEMO/TOOLS/COMPILE/bld_tools.cfg
 export FCM_VERBOSE ?= 1
 
-export FCM_ROOTDIR := /home/amber/NEMOGCM/TOOLS/WEIGHTS/BLD
+export FCM_ROOTDIR := /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/BLD
 export FCM_CACHEDIR := $(FCM_ROOTDIR)/.cache/.bld
 export FCM_CFGDIR := $(FCM_ROOTDIR)/cfg
 export FCM_SRCDIR := $(FCM_ROOTDIR)/src
@@ -30,10 +30,10 @@ export FCM_INCPATH := $(FCM_INCDIR)
 export FCM_PPSRCPATH := $(FCM_PPSRCDIR)
 export FCM_OBJPATH := $(FCM_OBJDIR)
 
-export PERL5LIB := /home/amber/NEMOGCM/EXTERNAL/fcm/bin/../lib:$(PERL5LIB)
+export PERL5LIB := /fs/vnas_Hdfo/odis/amh001/NAA_NEMO/EXTERNAL/fcm/bin/../lib
 
 export AR = ar
-export ARFLAGS = rcs
+export ARFLAGS = -r
 export CC = cc
 export CC_COMPILE = -c
 export CC_DEFINE = -D
@@ -48,10 +48,10 @@ export FC_DEFINE = -D
 export FC_INCLUDE = -I
 export FC_MODSEARCH = 
 export FC_OUTPUT = -o
-export FFLAGS = -c -fpp -r8 -O3 -assume byterecl -heap-arrays -diag-disable 10010 -xSSE4.1 -axSSE4.2 -I/home/amber/XIOS/inc
+export FFLAGS = -O2 -fp-model source  -traceback -r8  -convert big_endian -assume byterecl -I/home/amh001/XIOS2/include -I/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/include -I/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/include
 export FPPKEYS = 
 export LD = mpif90
-export LDFLAGS = -lstdc++ -shared-intel -diag-disable 10010 -L/home/amber/XIOS/lib -lxios -lnetcdf -lnetcdff -lpnetcdf -lhdf5 -lhdf5_hl
+export LDFLAGS = -O2 -L/home/amh001/XIOS2/lib -lxios -L/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/lib -L/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz -lstdc++
 export LD_LIBLINK = -l
 export LD_LIBSEARCH = -L
 export LD_OUTPUT = -o
@@ -98,7 +98,7 @@ OBJECTS__nemo = constants.o grids.o iounits.o kinds_mod.o netcdf_mod.o remap_mod
 libnemo.a: $(OBJECTS__nemo)
 	fcm_internal archive $@ $^
 
-nemo.etc: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/CHANGES_BY_NOCS /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/copyright $(FCM_DONEDIR)/FCM_CP.dummy
+nemo.etc: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/CHANGES_BY_NOCS /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/copyright $(FCM_DONEDIR)/FCM_CP.dummy
 	cp $^ $(FCM_ETCDIR)
 	touch $(FCM_ETCDIR)/$@
 
@@ -137,7 +137,7 @@ FFLAGS__nemo__constants.flags: FFLAGS__nemo.flags
 constants.done: constants.o kinds_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-constants.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/constants.f90 FFLAGS__nemo__constants.flags kinds_mod.o
+constants.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/constants.f90 FFLAGS__nemo__constants.flags kinds_mod.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__grids.flags: FFLAGS__nemo.flags
@@ -146,7 +146,7 @@ FFLAGS__nemo__grids.flags: FFLAGS__nemo.flags
 grids.done: grids.o constants.done iounits.done kinds_mod.done netcdf_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-grids.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/grids.f90 FFLAGS__nemo__grids.flags constants.o iounits.o kinds_mod.o netcdf_mod.o
+grids.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/grids.f90 FFLAGS__nemo__grids.flags constants.o iounits.o kinds_mod.o netcdf_mod.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__iounits.flags: FFLAGS__nemo.flags
@@ -155,7 +155,7 @@ FFLAGS__nemo__iounits.flags: FFLAGS__nemo.flags
 iounits.done: iounits.o kinds_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-iounits.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/iounits.f90 FFLAGS__nemo__iounits.flags kinds_mod.o
+iounits.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/iounits.f90 FFLAGS__nemo__iounits.flags kinds_mod.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__kinds_mod.flags: FFLAGS__nemo.flags
@@ -164,7 +164,7 @@ FFLAGS__nemo__kinds_mod.flags: FFLAGS__nemo.flags
 kinds_mod.done: kinds_mod.o
 	touch $(FCM_DONEDIR)/$@
 
-kinds_mod.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/kinds_mod.f90 FFLAGS__nemo__kinds_mod.flags
+kinds_mod.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/kinds_mod.f90 FFLAGS__nemo__kinds_mod.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__netcdf_mod.flags: FFLAGS__nemo.flags
@@ -173,7 +173,7 @@ FFLAGS__nemo__netcdf_mod.flags: FFLAGS__nemo.flags
 netcdf_mod.done: netcdf_mod.o constants.done kinds_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-netcdf_mod.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/netcdf_mod.f90 FFLAGS__nemo__netcdf_mod.flags constants.o kinds_mod.o
+netcdf_mod.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/netcdf_mod.f90 FFLAGS__nemo__netcdf_mod.flags constants.o kinds_mod.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap.flags: FFLAGS__nemo.flags
@@ -182,7 +182,7 @@ FFLAGS__nemo__remap.flags: FFLAGS__nemo.flags
 remap_mod.done: remap_mod.o constants.done kinds_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_mod.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap.f90 FFLAGS__nemo__remap.flags constants.o kinds_mod.o
+remap_mod.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap.f90 FFLAGS__nemo__remap.flags constants.o kinds_mod.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap_bicubic.flags: FFLAGS__nemo.flags
@@ -191,7 +191,7 @@ FFLAGS__nemo__remap_bicubic.flags: FFLAGS__nemo.flags
 remap_bicubic.done: remap_bicubic.o constants.done grids.done kinds_mod.done remap_vars.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_bicubic.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap_bicubic.f90 FFLAGS__nemo__remap_bicubic.flags constants.o grids.o kinds_mod.o remap_vars.o
+remap_bicubic.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap_bicubic.f90 FFLAGS__nemo__remap_bicubic.flags constants.o grids.o kinds_mod.o remap_vars.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap_bilinear.flags: FFLAGS__nemo.flags
@@ -200,7 +200,7 @@ FFLAGS__nemo__remap_bilinear.flags: FFLAGS__nemo.flags
 remap_bilinear.done: remap_bilinear.o constants.done grids.done kinds_mod.done remap_vars.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_bilinear.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap_bilinear.f90 FFLAGS__nemo__remap_bilinear.flags constants.o grids.o kinds_mod.o remap_vars.o
+remap_bilinear.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap_bilinear.f90 FFLAGS__nemo__remap_bilinear.flags constants.o grids.o kinds_mod.o remap_vars.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap_conserv.flags: FFLAGS__nemo.flags
@@ -209,7 +209,7 @@ FFLAGS__nemo__remap_conserv.flags: FFLAGS__nemo.flags
 remap_conservative.done: remap_conservative.o constants.done grids.done kinds_mod.done remap_vars.done timers.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_conservative.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap_conserv.f90 FFLAGS__nemo__remap_conserv.flags constants.o grids.o kinds_mod.o remap_vars.o timers.o
+remap_conservative.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap_conserv.f90 FFLAGS__nemo__remap_conserv.flags constants.o grids.o kinds_mod.o remap_vars.o timers.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap_distwgt.flags: FFLAGS__nemo.flags
@@ -218,7 +218,7 @@ FFLAGS__nemo__remap_distwgt.flags: FFLAGS__nemo.flags
 remap_distance_weight.done: remap_distance_weight.o constants.done grids.done kinds_mod.done remap_vars.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_distance_weight.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap_distwgt.f90 FFLAGS__nemo__remap_distwgt.flags constants.o grids.o kinds_mod.o remap_vars.o
+remap_distance_weight.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap_distwgt.f90 FFLAGS__nemo__remap_distwgt.flags constants.o grids.o kinds_mod.o remap_vars.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap_read.flags: FFLAGS__nemo.flags
@@ -227,7 +227,7 @@ FFLAGS__nemo__remap_read.flags: FFLAGS__nemo.flags
 remap_read.done: remap_read.o constants.done grids.done kinds_mod.done netcdf_mod.done remap_vars.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_read.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap_read.f90 FFLAGS__nemo__remap_read.flags constants.o grids.o kinds_mod.o netcdf_mod.o remap_vars.o
+remap_read.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap_read.f90 FFLAGS__nemo__remap_read.flags constants.o grids.o kinds_mod.o netcdf_mod.o remap_vars.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap_vars.flags: FFLAGS__nemo.flags
@@ -236,7 +236,7 @@ FFLAGS__nemo__remap_vars.flags: FFLAGS__nemo.flags
 remap_vars.done: remap_vars.o constants.done grids.done kinds_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_vars.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap_vars.f90 FFLAGS__nemo__remap_vars.flags constants.o grids.o kinds_mod.o
+remap_vars.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap_vars.f90 FFLAGS__nemo__remap_vars.flags constants.o grids.o kinds_mod.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__remap_write.flags: FFLAGS__nemo.flags
@@ -245,7 +245,7 @@ FFLAGS__nemo__remap_write.flags: FFLAGS__nemo.flags
 remap_write.done: remap_write.o constants.done grids.done kinds_mod.done netcdf_mod.done remap_vars.done
 	touch $(FCM_DONEDIR)/$@
 
-remap_write.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/remap_write.f90 FFLAGS__nemo__remap_write.flags constants.o grids.o kinds_mod.o netcdf_mod.o remap_vars.o
+remap_write.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/remap_write.f90 FFLAGS__nemo__remap_write.flags constants.o grids.o kinds_mod.o netcdf_mod.o remap_vars.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__scrip.flags: FFLAGS__nemo.flags
@@ -263,7 +263,7 @@ LD__nemo__scrip.flags: LD__nemo.flags
 scrip.exe: scrip.o LD__nemo__scrip.flags LDFLAGS__nemo__scrip.flags constants.done grids.done iounits.done kinds_mod.done remap_bicubic.done remap_bilinear.done remap_conservative.done remap_distance_weight.done remap_vars.done remap_write.done timers.done
 	fcm_internal load:F nemo $< $@
 
-scrip.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/scrip.F90 FFLAGS__nemo__scrip.flags FPPKEYS__nemo__scrip.flags constants.o grids.o iounits.o kinds_mod.o remap_bicubic.o remap_bilinear.o remap_conservative.o remap_distance_weight.o remap_vars.o remap_write.o timers.o
+scrip.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/scrip.F90 FFLAGS__nemo__scrip.flags FPPKEYS__nemo__scrip.flags constants.o grids.o iounits.o kinds_mod.o remap_bicubic.o remap_bilinear.o remap_conservative.o remap_distance_weight.o remap_vars.o remap_write.o timers.o
 	fcm_internal compile:F nemo $< $@ 1
 
 FFLAGS__nemo__scripgrid.flags: FFLAGS__nemo.flags
@@ -281,7 +281,7 @@ LD__nemo__scripgrid.flags: LD__nemo.flags
 scripgrid.exe: scripgrid.o LD__nemo__scripgrid.flags LDFLAGS__nemo__scripgrid.flags scripgrid_mod.done
 	fcm_internal load:F nemo $< $@
 
-scripgrid.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/scripgrid.F90 FFLAGS__nemo__scripgrid.flags FPPKEYS__nemo__scripgrid.flags scripgrid_mod.o
+scripgrid.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/scripgrid.F90 FFLAGS__nemo__scripgrid.flags FPPKEYS__nemo__scripgrid.flags scripgrid_mod.o
 	fcm_internal compile:F nemo $< $@ 1
 
 FFLAGS__nemo__scripgrid_mod.flags: FFLAGS__nemo.flags
@@ -293,7 +293,7 @@ FPPKEYS__nemo__scripgrid_mod.flags: FPPKEYS__nemo.flags
 scripgrid_mod.done: scripgrid_mod.o constants.done iounits.done kinds_mod.done netcdf_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-scripgrid_mod.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/scripgrid_mod.F90 FFLAGS__nemo__scripgrid_mod.flags FPPKEYS__nemo__scripgrid_mod.flags constants.o iounits.o kinds_mod.o netcdf_mod.o
+scripgrid_mod.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/scripgrid_mod.F90 FFLAGS__nemo__scripgrid_mod.flags FPPKEYS__nemo__scripgrid_mod.flags constants.o iounits.o kinds_mod.o netcdf_mod.o
 	fcm_internal compile:F nemo $< $@ 1
 
 FFLAGS__nemo__scripinterp.flags: FFLAGS__nemo.flags
@@ -311,7 +311,7 @@ LD__nemo__scripinterp.flags: LD__nemo.flags
 scripinterp.exe: scripinterp.o LD__nemo__scripinterp.flags LDFLAGS__nemo__scripinterp.flags scripinterp_mod.done
 	fcm_internal load:F nemo $< $@
 
-scripinterp.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/scripinterp.F90 FFLAGS__nemo__scripinterp.flags FPPKEYS__nemo__scripinterp.flags scripinterp_mod.o
+scripinterp.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/scripinterp.F90 FFLAGS__nemo__scripinterp.flags FPPKEYS__nemo__scripinterp.flags scripinterp_mod.o
 	fcm_internal compile:F nemo $< $@ 1
 
 FFLAGS__nemo__scripinterp_mod.flags: FFLAGS__nemo.flags
@@ -323,7 +323,7 @@ FPPKEYS__nemo__scripinterp_mod.flags: FPPKEYS__nemo.flags
 scripinterp_mod.done: scripinterp_mod.o constants.done grids.done iounits.done kinds_mod.done netcdf_mod.done remap_mod.done remap_read.done remap_vars.done
 	touch $(FCM_DONEDIR)/$@
 
-scripinterp_mod.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/scripinterp_mod.F90 FFLAGS__nemo__scripinterp_mod.flags FPPKEYS__nemo__scripinterp_mod.flags constants.o grids.o iounits.o kinds_mod.o netcdf_mod.o remap_mod.o remap_read.o remap_vars.o
+scripinterp_mod.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/scripinterp_mod.F90 FFLAGS__nemo__scripinterp_mod.flags FPPKEYS__nemo__scripinterp_mod.flags constants.o grids.o iounits.o kinds_mod.o netcdf_mod.o remap_mod.o remap_read.o remap_vars.o
 	fcm_internal compile:F nemo $< $@ 1
 
 FFLAGS__nemo__scripshape.flags: FFLAGS__nemo.flags
@@ -341,7 +341,7 @@ LD__nemo__scripshape.flags: LD__nemo.flags
 scripshape.exe: scripshape.o LD__nemo__scripshape.flags LDFLAGS__nemo__scripshape.flags
 	fcm_internal load:F nemo $< $@
 
-scripshape.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/scripshape.F90 FFLAGS__nemo__scripshape.flags FPPKEYS__nemo__scripshape.flags
+scripshape.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/scripshape.F90 FFLAGS__nemo__scripshape.flags FPPKEYS__nemo__scripshape.flags
 	fcm_internal compile:F nemo $< $@ 1
 
 FFLAGS__nemo__timers.flags: FFLAGS__nemo.flags
@@ -350,7 +350,7 @@ FFLAGS__nemo__timers.flags: FFLAGS__nemo.flags
 timers.done: timers.o kinds_mod.done
 	touch $(FCM_DONEDIR)/$@
 
-timers.o: /home/amber/NEMOGCM/TOOLS/WEIGHTS/src/timers.f90 FFLAGS__nemo__timers.flags kinds_mod.o
+timers.o: /home/amh001/NAA_NEMO/TOOLS/WEIGHTS/src/timers.f90 FFLAGS__nemo__timers.flags kinds_mod.o
 	fcm_internal compile:F nemo $< $@
 
 # EOF

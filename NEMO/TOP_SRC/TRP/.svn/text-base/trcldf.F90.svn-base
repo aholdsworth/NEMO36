@@ -55,8 +55,7 @@ CONTAINS
       !!----------------------------------------------------------------------
       INTEGER, INTENT( in ) ::   kt   ! ocean time-step index
       !!
-      INTEGER            :: ji, jj, jk, jn
-      REAL(wp)           :: zdep
+      INTEGER            :: jn
       CHARACTER (len=22) :: charout
       REAL(wp), POINTER, DIMENSION(:,:,:,:) ::   ztrtrd
       !!----------------------------------------------------------------------
@@ -66,19 +65,7 @@ CONTAINS
       IF( kt == nittrc000 )   CALL ldf_ctl          ! initialisation & control of options
 
       rldf = rldf_rat
-      !
-      r_fact_lap(:,:,:) = 1.
-      DO jk= 1, jpk
-         DO jj = 1, jpj
-            DO ji = 1, jpi
-               IF( fsdept(ji,jj,jk) > 200. .AND. gphit(ji,jj) < 5. .AND. gphit(ji,jj) > -5. ) THEN
-                  zdep = MAX( fsdept(ji,jj,jk) - 1000., 0. ) / 1000.
-                  r_fact_lap(ji,jj,jk) = MAX( 1., rn_fact_lap * EXP( -zdep ) )
-               ENDIF
-            END DO
-         END DO
-      END DO
-      !
+
       IF( l_trdtrc )  THEN
          CALL wrk_alloc( jpi, jpj, jpk, jptra, ztrtrd )
          ztrtrd(:,:,:,:)  = tra(:,:,:,:)

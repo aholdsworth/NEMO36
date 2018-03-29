@@ -1,3 +1,3 @@
 #!/bin/sh
-PATH=/home/amber/NEMOGCM/TOOLS/WEIGHTS/BLD/bin:$PATH
+PATH=/home/amh001/NAA_NEMO/TOOLS/WEIGHTS/BLD/bin:$PATH
 export PATH

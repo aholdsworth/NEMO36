@@ -39,7 +39,6 @@ MODULE trcnam_trp
    LOGICAL , PUBLIC ::   ln_trcldf_iso       !: iso-neutral direction
    REAL(wp), PUBLIC ::   rn_ahtrc_0          !: diffusivity coefficient for passive tracer (m2/s)
    REAL(wp), PUBLIC ::   rn_ahtrb_0          !: background diffusivity coefficient for passive tracer (m2/s)
-   REAL(wp), PUBLIC ::   rn_fact_lap         !: Enhanced zonal diffusivity coefficent in the equatorial domain
 
    !                                        !!: ** Treatment of Negative concentrations ( nam_trcrad )
    LOGICAL , PUBLIC ::   ln_trcrad           !: flag to artificially correct negative concentrations
@@ -74,9 +73,7 @@ CONTAINS
 
       NAMELIST/namtrc_ldf/ ln_trcldf_lap  ,     &
          &                 ln_trcldf_bilap, ln_trcldf_level,     &
-         &                 ln_trcldf_hor  , ln_trcldf_iso  , rn_ahtrc_0, rn_ahtrb_0,   &
-         &                 rn_fact_lap
-
+         &                 ln_trcldf_hor  , ln_trcldf_iso  , rn_ahtrc_0, rn_ahtrb_0
       NAMELIST/namtrc_zdf/ ln_trczdf_exp  , nn_trczdf_exp
       NAMELIST/namtrc_rad/ ln_trcrad
       NAMELIST/namtrc_dmp/ nn_zdmp_tr , cn_resto_tr
@@ -129,7 +126,6 @@ CONTAINS
          WRITE(numout,*) '      iso-neutral                                        ln_trcldf_iso   = ', ln_trcldf_iso
          WRITE(numout,*) '      diffusivity coefficient                                 rn_ahtrc_0 = ', rn_ahtrc_0
          WRITE(numout,*) '      background hor. diffusivity                             rn_ahtrb_0 = ', rn_ahtrb_0
-         WRITE(numout,*) '      enhanced zonal diffusivity                             rn_fact_lap = ', rn_fact_lap
       ENDIF
 
       !                                ! Vertical mixing

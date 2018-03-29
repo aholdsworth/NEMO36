@@ -21,13 +21,13 @@ MODULE trcrad
    IMPLICIT NONE
    PRIVATE
 
-   PUBLIC trc_rad, trc_rad_sms        ! routine called by trcstp.F90
+   PUBLIC trc_rad         ! routine called by trcstp.F90
 
    !! * Substitutions
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcrad.F90 8398 2017-08-01 13:15:00Z lovato $
+   !! $Id: trcrad.F90 4990 2014-12-15 16:42:49Z timgraham $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
    
@@ -60,11 +60,11 @@ CONTAINS
          IF(lwp) WRITE(numout,*) '~~~~~~~ '
       ENDIF
 
-      IF( lk_age     )   CALL trc_rad_sms( kt, trb, trn, jp_age0 , jp_age1               )  ! AGE tracer
       IF( lk_cfc     )   CALL trc_rad_sms( kt, trb, trn, jp_cfc0 , jp_cfc1               )  ! CFC model
       IF( lk_c14b    )   CALL trc_rad_sms( kt, trb, trn, jp_c14b0, jp_c14b1              )  ! bomb C14
       IF( lk_pisces  )   CALL trc_rad_sms( kt, trb, trn, jp_pcs0 , jp_pcs1, cpreserv='Y' )  ! PISCES model
-      IF( lk_my_trc  )   CALL trc_rad_sms( kt, trb, trn, jp_myt0 , jp_myt1, cpreserv='Y' )  ! MY_TRC model
+      IF( lk_canoe  )   CALL trc_rad_sms( kt, trb, trn, jp_can0 , jp_can1, cpreserv='Y' )  ! PISCES model
+      IF( lk_my_trc  )   CALL trc_rad_sms( kt, trb, trn, jp_myt0 , jp_myt1               )  ! MY_TRC model
 
       !
       IF(ln_ctl) THEN      ! print mean trends (used for debugging)

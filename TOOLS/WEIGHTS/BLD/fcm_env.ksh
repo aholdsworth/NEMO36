@@ -1,1 +1,1 @@
-/home/amber/NEMOGCM/TOOLS/WEIGHTS/BLD/fcm_env.sh
+/home/amh001/NAA_NEMO/TOOLS/WEIGHTS/BLD/fcm_env.sh

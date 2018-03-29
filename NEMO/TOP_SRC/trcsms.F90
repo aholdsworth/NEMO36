@@ -15,9 +15,10 @@ MODULE trcsms
    USE oce_trc            !
    USE trc                !
    USE trcsms_pisces      ! PISCES biogeo-model
+   USE trcsms_canoe      ! PISCES biogeo-model
+   USE trcsms_cmoc      !CMOC biogeo-model
    USE trcsms_cfc         ! CFC 11 & 12
    USE trcsms_c14b        ! C14b tracer 
-   USE trcsms_age         ! AGE tracer 
    USE trcsms_my_trc      ! MY_TRC  tracers
    USE prtctl_trc         ! Print control for debbuging
 
@@ -28,7 +29,7 @@ MODULE trcsms
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcsms.F90 8353 2017-07-19 14:41:00Z lovato $
+   !! $Id: trcsms.F90 3680 2012-11-27 14:42:24Z rblod $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -49,10 +50,11 @@ CONTAINS
       IF( nn_timing == 1 )   CALL timing_start('trc_sms')
       !
       IF( lk_pisces  )   CALL trc_sms_pisces ( kt )    ! main program of PISCES 
-      IF( lk_my_trc  )   CALL trc_sms_my_trc ( kt )    ! MY_TRC  tracers
+      IF( lk_canoe  )   CALL trc_sms_canoe ( kt )    ! main program of CanOE 
+      IF( lk_cmoc  )     CALL trc_sms_cmoc ( kt )    ! main program of CMOC 
       IF( lk_cfc     )   CALL trc_sms_cfc    ( kt )    ! surface fluxes of CFC
       IF( lk_c14b    )   CALL trc_sms_c14b   ( kt )    ! surface fluxes of C14
-      IF( lk_age     )   CALL trc_sms_age    ( kt )    ! AGE tracer
+      IF( lk_my_trc  )   CALL trc_sms_my_trc ( kt )    ! MY_TRC  tracers
 
       IF(ln_ctl) THEN      ! print mean trends (used for debugging)
          WRITE(charout, FMT="('sms ')")
@@ -76,4 +78,4 @@ CONTAINS
 #endif 
 
    !!======================================================================
-END MODULE trcsms
+END MODULE  trcsms
