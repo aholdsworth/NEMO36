@@ -14,6 +14,11 @@ MODULE par_my_trc
    USE par_pisces , ONLY : jp_pisces_3d    !: number of 3D diag in PISCES
    USE par_pisces , ONLY : jp_pisces_trd   !: number of biological diag in PISCES
 
+   USE par_canoe , ONLY : jp_canoe       !: number of tracers in PISCES
+   USE par_canoe , ONLY : jp_canoe_2d    !: number of 2D diag in PISCES
+   USE par_canoe , ONLY : jp_canoe_3d    !: number of 3D diag in PISCES
+   USE par_canoe , ONLY : jp_canoe_trd   !: number of biological diag in PISCES
+
    USE par_cfc    , ONLY : jp_cfc          !: number of tracers in CFC
    USE par_cfc    , ONLY : jp_cfc_2d       !: number of tracers in CFC
    USE par_cfc    , ONLY : jp_cfc_3d       !: number of tracers in CFC
@@ -26,10 +31,10 @@ MODULE par_my_trc
 
    IMPLICIT NONE
 
-   INTEGER, PARAMETER ::   jp_lm      =  jp_pisces     + jp_cfc     + jp_c14b     !: 
-   INTEGER, PARAMETER ::   jp_lm_2d   =  jp_pisces_2d  + jp_cfc_2d  + jp_c14b_2d  !:
-   INTEGER, PARAMETER ::   jp_lm_3d   =  jp_pisces_3d  + jp_cfc_3d  + jp_c14b_3d  !:
-   INTEGER, PARAMETER ::   jp_lm_trd  =  jp_pisces_trd + jp_cfc_trd + jp_c14b_trd !:
+   INTEGER, PARAMETER ::   jp_lm      =  jp_canoe + jp_pisces     + jp_cfc     + jp_c14b     !: 
+   INTEGER, PARAMETER ::   jp_lm_2d   =  jp_canoe_2d + jp_pisces_2d  + jp_cfc_2d  + jp_c14b_2d  !:
+   INTEGER, PARAMETER ::   jp_lm_3d   =  jp_canoe_3d +jp_pisces_3d  + jp_cfc_3d  + jp_c14b_3d  !:
+   INTEGER, PARAMETER ::   jp_lm_trd  =  jp_canoe_trd + jp_pisces_trd + jp_cfc_trd + jp_c14b_trd !:
 
    !!---------------------------------------------------------------------
    !!   Default                           No user defined tracers (MY_TRC)

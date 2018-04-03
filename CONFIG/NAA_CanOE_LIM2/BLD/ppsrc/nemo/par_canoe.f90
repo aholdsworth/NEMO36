@@ -12,41 +12,15 @@ MODULE par_canoe
    !!----------------------------------------------------------------------
 
    IMPLICIT NONE
-
    !!---------------------------------------------------------------------
-   !!   'key_canoe'   :                         standard CanOE bio-model
+   !!   Default                                   No CFC geochemical model
    !!---------------------------------------------------------------------
-   LOGICAL, PUBLIC, PARAMETER ::   lk_canoe     = .TRUE.  !: CanOE flag 
-   LOGICAL, PUBLIC, PARAMETER ::   lk_kriest     = .FALSE. !: Kriest flag 
-   INTEGER, PUBLIC, PARAMETER ::   jp_canoe     = 19      !: number of CanOE passive tracers
-   INTEGER, PUBLIC, PARAMETER ::   jp_canoe_2d  = 13      !: additional 2d output 
-   INTEGER, PUBLIC, PARAMETER ::   jp_canoe_3d  = 11      !: additional 3d output 
-   INTEGER, PUBLIC, PARAMETER ::   jp_canoe_trd =  1      !: number of sms trends for CanOE
-
-   INTEGER, PUBLIC, PARAMETER ::   jpdic =  1    !: dissolved inoganic carbon concentration 
-   INTEGER, PUBLIC, PARAMETER ::   jptal =  2    !: total alkalinity 
-   INTEGER, PUBLIC, PARAMETER ::   jpoxy =  3    !: oxygen carbon concentration 
-   INTEGER, PUBLIC, PARAMETER ::   jpcal =  4    !: calcite  concentration 
-   INTEGER, PUBLIC, PARAMETER ::   jppoc =  5    !: small particulate organic phosphate concentration
-   
-   INTEGER, PUBLIC, PARAMETER ::   jpphy =  6    !: phytoplancton concentration 
-   INTEGER, PUBLIC, PARAMETER ::   jpnn  =  7    !: Nanophytoplankton N concentration 
-   INTEGER, PUBLIC, PARAMETER ::   jpnfe =  8    !: Nano iron Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpnch =  9   !: Nano Chlorophyll Concentration
-   
-   INTEGER, PUBLIC, PARAMETER ::   jpdia = 10    !: Diatoms Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpdn =  11    !: Big iron particles Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpdfe = 12    !: Diatoms iron Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpdch = 13    !: Diatoms Chlorophyll Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpzoo = 14    !: zooplancton concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpmes = 15    !: Mesozooplankton Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpfer = 16    !: dissolved Iron Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpgoc = 17    !: big organic carbon  Concentration
-   
-   
-   INTEGER, PUBLIC, PARAMETER ::   jpno3 = 18    !: Nitrates Concentration
-   INTEGER, PUBLIC, PARAMETER ::   jpnh4 = 19    !: Ammonium Concentration
-
+   LOGICAL, PUBLIC, PARAMETER ::   lk_canoe     = .FALSE.  !: CanOE flag 
+   LOGICAL, PUBLIC, PARAMETER ::   lk_can        = .FALSE.  !: can flag 
+   INTEGER, PUBLIC, PARAMETER ::   jp_canoe     =  0       !: No CFC tracers
+   INTEGER, PUBLIC, PARAMETER ::   jp_canoe_2d  =  0       !: No CFC additional 2d output arrays 
+   INTEGER, PUBLIC, PARAMETER ::   jp_canoe_3d  =  0       !: No CFC additional 3d output arrays 
+   INTEGER, PUBLIC, PARAMETER ::   jp_canoe_trd =  0       !: number of sms trends for CanOE
 
    ! Starting/ending CanOE do-loop indices (N.B. no PISCES : jpl_can < jpf_can the do-loop are never done)
    INTEGER, PUBLIC, PARAMETER ::   jp_can0     = 1                  !: First index of CanOE tracers

@@ -115,6 +115,7 @@ MODULE oce_trc
    USE ldftra_oce , ONLY :  aeiv     =>   aeiv        !: eddy induced velocity coef. at v-points (m2/s) 
    USE ldftra_oce , ONLY :  aeiw     =>   aeiw        !: eddy induced velocity coef. at w-points (m2/s) 
    USE ldftra_oce , ONLY :  lk_traldf_eiv  =>  lk_traldf_eiv     !: eddy induced velocity flag
+   USE ldftra_oce , ONLY :  r_fact_lap     =>  r_fact_lap        !: enhanced zonal diffusivity coefficient
 
    !* vertical diffusion *
    USE zdf_oce , ONLY :   avt        =>   avt         !: vert. diffusivity coef. at w-point for temp  

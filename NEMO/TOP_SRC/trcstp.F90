@@ -89,7 +89,7 @@ CONTAINS
          !
          tra(:,:,:,:) = 0.e0
          !
-                                   CALL trc_rst_opn  ( kt )       ! Open tracer restart file 
+         IF( .NOT.lk_offline )     CALL trc_rst_opn  ( kt )       ! Open tracer restart file 
          IF( lrst_trc )            CALL trc_rst_cal  ( kt, 'WRITE' )   ! calendar
          IF( lk_iomput ) THEN  ;   CALL trc_wri      ( kt )       ! output of passive tracers with iom I/O manager
          ELSE                  ;   CALL trc_dia      ( kt )       ! output of passive tracers with old I/O manager

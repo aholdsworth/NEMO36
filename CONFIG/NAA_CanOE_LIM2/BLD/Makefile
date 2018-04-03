@@ -49,7 +49,7 @@ export FC_INCLUDE = -I
 export FC_MODSEARCH = 
 export FC_OUTPUT = -o
 export FFLAGS = -O2 -fp-model source  -traceback -r8  -convert big_endian -assume byterecl -I/home/amh001/XIOS2/include -I/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/include -I/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/include
-export FPPKEYS = key_top key_canoe key_lim2 key_vectopt_loop key_dynspg_ts key_ldfslp key_traldf_c3d key_dynldf_c3d key_zdftke key_vvl key_zdfddm key_xios2 key_iomput key_mpp_mpi key_netcdf4 key_traldf_smag key_dynldf_smag key_bdy
+export FPPKEYS = key_top key_pisces key_lim2 key_vectopt_loop key_dynspg_ts key_ldfslp key_traldf_c3d key_dynldf_c3d key_zdftke key_vvl key_zdfddm key_xios2 key_iomput key_mpp_mpi key_netcdf4 key_traldf_smag key_dynldf_smag key_bdy
 export LD = mpif90
 export LDFLAGS = -O2 -L/home/amh001/XIOS2/lib -lxios -L/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/lib -L/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz -lstdc++
 export LD_LIBLINK = -l
@@ -414,127 +414,127 @@ c1d.o: $(FCM_PPSRCDIR)/nemo/c1d.f90 FFLAGS__nemo__c1d.flags par_kind.o
 FFLAGS__nemo__canbio.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canbio.done: canbio.o canmeso.done canmicro.done canmort.done canopt.done canprod.done canrem.done cansink.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canbio.done: canbio.o
 	touch $(FCM_DONEDIR)/$@
 
-canbio.o: $(FCM_PPSRCDIR)/nemo/canbio.f90 FFLAGS__nemo__canbio.flags canmeso.o canmicro.o canmort.o canopt.o canprod.o canrem.o cansink.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canbio.o: $(FCM_PPSRCDIR)/nemo/canbio.f90 FFLAGS__nemo__canbio.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canche.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canche.done: canche.o lib_mpp.done oce_trc.done sms_canoe.done trc.done
+canche.done: canche.o
 	touch $(FCM_DONEDIR)/$@
 
-canche.o: $(FCM_PPSRCDIR)/nemo/canche.f90 FFLAGS__nemo__canche.flags lib_mpp.o oce_trc.o sms_canoe.o trc.o
+canche.o: $(FCM_PPSRCDIR)/nemo/canche.f90 FFLAGS__nemo__canche.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canflx.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canflx.done: canflx.o canche.done fldread.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canflx.done: canflx.o
 	touch $(FCM_DONEDIR)/$@
 
-canflx.o: $(FCM_PPSRCDIR)/nemo/canflx.f90 FFLAGS__nemo__canflx.flags canche.o fldread.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canflx.o: $(FCM_PPSRCDIR)/nemo/canflx.f90 FFLAGS__nemo__canflx.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canint.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canint.done: canint.o iom.done oce_trc.done sms_canoe.done trc.done
+canint.done: canint.o
 	touch $(FCM_DONEDIR)/$@
 
-canint.o: $(FCM_PPSRCDIR)/nemo/canint.f90 FFLAGS__nemo__canint.flags iom.o oce_trc.o sms_canoe.o trc.o
+canint.o: $(FCM_PPSRCDIR)/nemo/canint.f90 FFLAGS__nemo__canint.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canlys.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canlys.done: canlys.o iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canlys.done: canlys.o
 	touch $(FCM_DONEDIR)/$@
 
-canlys.o: $(FCM_PPSRCDIR)/nemo/canlys.f90 FFLAGS__nemo__canlys.flags iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canlys.o: $(FCM_PPSRCDIR)/nemo/canlys.f90 FFLAGS__nemo__canlys.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canmeso.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canmeso.done: canmeso.o canint.done canprod.done cansink.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canmeso.done: canmeso.o
 	touch $(FCM_DONEDIR)/$@
 
-canmeso.o: $(FCM_PPSRCDIR)/nemo/canmeso.f90 FFLAGS__nemo__canmeso.flags canint.o canprod.o cansink.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canmeso.o: $(FCM_PPSRCDIR)/nemo/canmeso.f90 FFLAGS__nemo__canmeso.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canmicro.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canmicro.done: canmicro.o canint.done canprod.done cansink.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canmicro.done: canmicro.o
 	touch $(FCM_DONEDIR)/$@
 
-canmicro.o: $(FCM_PPSRCDIR)/nemo/canmicro.f90 FFLAGS__nemo__canmicro.flags canint.o canprod.o cansink.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canmicro.o: $(FCM_PPSRCDIR)/nemo/canmicro.f90 FFLAGS__nemo__canmicro.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canmort.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canmort.done: canmort.o canprod.done cansink.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canmort.done: canmort.o
 	touch $(FCM_DONEDIR)/$@
 
-canmort.o: $(FCM_PPSRCDIR)/nemo/canmort.f90 FFLAGS__nemo__canmort.flags canprod.o cansink.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canmort.o: $(FCM_PPSRCDIR)/nemo/canmort.f90 FFLAGS__nemo__canmort.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canopt.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canopt.done: canopt.o fldread.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canopt.done: canopt.o
 	touch $(FCM_DONEDIR)/$@
 
-canopt.o: $(FCM_PPSRCDIR)/nemo/canopt.f90 FFLAGS__nemo__canopt.flags fldread.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canopt.o: $(FCM_PPSRCDIR)/nemo/canopt.f90 FFLAGS__nemo__canopt.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canprod.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canprod.done: canprod.o canopt.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canprod.done: canprod.o
 	touch $(FCM_DONEDIR)/$@
 
-canprod.o: $(FCM_PPSRCDIR)/nemo/canprod.f90 FFLAGS__nemo__canprod.flags canopt.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canprod.o: $(FCM_PPSRCDIR)/nemo/canprod.f90 FFLAGS__nemo__canprod.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__canrem.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-canrem.done: canrem.o canche.done canint.done canmeso.done canopt.done canprod.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+canrem.done: canrem.o
 	touch $(FCM_DONEDIR)/$@
 
-canrem.o: $(FCM_PPSRCDIR)/nemo/canrem.f90 FFLAGS__nemo__canrem.flags canche.o canint.o canmeso.o canopt.o canprod.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+canrem.o: $(FCM_PPSRCDIR)/nemo/canrem.f90 FFLAGS__nemo__canrem.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__cansbc.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-cansbc.done: cansbc.o fldread.done iom.done oce_trc.done sms_canoe.done trc.done
+cansbc.done: cansbc.o
 	touch $(FCM_DONEDIR)/$@
 
-cansbc.o: $(FCM_PPSRCDIR)/nemo/cansbc.f90 FFLAGS__nemo__cansbc.flags fldread.o iom.o oce_trc.o sms_canoe.o trc.o
+cansbc.o: $(FCM_PPSRCDIR)/nemo/cansbc.f90 FFLAGS__nemo__cansbc.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__cansed.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-cansed.done: cansed.o canint.done canopt.done cansbc.done cansink.done iom.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+cansed.done: cansed.o
 	touch $(FCM_DONEDIR)/$@
 
-cansed.o: $(FCM_PPSRCDIR)/nemo/cansed.f90 FFLAGS__nemo__cansed.flags canint.o canopt.o cansbc.o cansink.o iom.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+cansed.o: $(FCM_PPSRCDIR)/nemo/cansed.f90 FFLAGS__nemo__cansed.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__cansink.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-cansink.done: cansink.o iom.done lib_mpp.done oce_trc.done prtctl_trc.done sms_canoe.done trc.done
+cansink.done: cansink.o
 	touch $(FCM_DONEDIR)/$@
 
-cansink.o: $(FCM_PPSRCDIR)/nemo/cansink.f90 FFLAGS__nemo__cansink.flags iom.o lib_mpp.o oce_trc.o prtctl_trc.o sms_canoe.o trc.o
+cansink.o: $(FCM_PPSRCDIR)/nemo/cansink.f90 FFLAGS__nemo__cansink.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__cla.flags: FFLAGS__nemo.flags
@@ -2309,154 +2309,154 @@ p2zsms.o: $(FCM_PPSRCDIR)/nemo/p2zsms.f90 FFLAGS__nemo__p2zsms.flags
 FFLAGS__nemo__p4zbio.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zbio.done: p4zbio.o
+p4zbio.done: p4zbio.o iom.done oce_trc.done p4zfechem.done p4zlim.done p4zmeso.done p4zmicro.done p4zmort.done p4zopt.done p4zprod.done p4zrem.done p4zsink.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zbio.o: $(FCM_PPSRCDIR)/nemo/p4zbio.f90 FFLAGS__nemo__p4zbio.flags
+p4zbio.o: $(FCM_PPSRCDIR)/nemo/p4zbio.f90 FFLAGS__nemo__p4zbio.flags iom.o oce_trc.o p4zfechem.o p4zlim.o p4zmeso.o p4zmicro.o p4zmort.o p4zopt.o p4zprod.o p4zrem.o p4zsink.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zche.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zche.done: p4zche.o
+p4zche.done: p4zche.o eosbn2.done lib_mpp.done oce_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zche.o: $(FCM_PPSRCDIR)/nemo/p4zche.f90 FFLAGS__nemo__p4zche.flags
+p4zche.o: $(FCM_PPSRCDIR)/nemo/p4zche.f90 FFLAGS__nemo__p4zche.flags eosbn2.o lib_mpp.o oce_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zfechem.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zfechem.done: p4zfechem.o
+p4zfechem.done: p4zfechem.o iom.done oce_trc.done p4zche.done p4zopt.done p4zsbc.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zfechem.o: $(FCM_PPSRCDIR)/nemo/p4zfechem.f90 FFLAGS__nemo__p4zfechem.flags
+p4zfechem.o: $(FCM_PPSRCDIR)/nemo/p4zfechem.f90 FFLAGS__nemo__p4zfechem.flags iom.o oce_trc.o p4zche.o p4zopt.o p4zsbc.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zflx.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zflx.done: p4zflx.o
+p4zflx.done: p4zflx.o fldread.done iom.done oce_trc.done p4zche.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zflx.o: $(FCM_PPSRCDIR)/nemo/p4zflx.f90 FFLAGS__nemo__p4zflx.flags
+p4zflx.o: $(FCM_PPSRCDIR)/nemo/p4zflx.f90 FFLAGS__nemo__p4zflx.flags fldread.o iom.o oce_trc.o p4zche.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zint.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zint.done: p4zint.o
+p4zint.done: p4zint.o iom.done oce_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zint.o: $(FCM_PPSRCDIR)/nemo/p4zint.f90 FFLAGS__nemo__p4zint.flags
+p4zint.o: $(FCM_PPSRCDIR)/nemo/p4zint.f90 FFLAGS__nemo__p4zint.flags iom.o oce_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zlim.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zlim.done: p4zlim.o
+p4zlim.done: p4zlim.o iom.done oce_trc.done p4zopt.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zlim.o: $(FCM_PPSRCDIR)/nemo/p4zlim.f90 FFLAGS__nemo__p4zlim.flags
+p4zlim.o: $(FCM_PPSRCDIR)/nemo/p4zlim.f90 FFLAGS__nemo__p4zlim.flags iom.o oce_trc.o p4zopt.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zlys.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zlys.done: p4zlys.o
+p4zlys.done: p4zlys.o iom.done oce_trc.done p4zche.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zlys.o: $(FCM_PPSRCDIR)/nemo/p4zlys.f90 FFLAGS__nemo__p4zlys.flags
+p4zlys.o: $(FCM_PPSRCDIR)/nemo/p4zlys.f90 FFLAGS__nemo__p4zlys.flags iom.o oce_trc.o p4zche.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zmeso.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zmeso.done: p4zmeso.o
+p4zmeso.done: p4zmeso.o iom.done oce_trc.done p4zint.done p4zprod.done p4zsink.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zmeso.o: $(FCM_PPSRCDIR)/nemo/p4zmeso.f90 FFLAGS__nemo__p4zmeso.flags
+p4zmeso.o: $(FCM_PPSRCDIR)/nemo/p4zmeso.f90 FFLAGS__nemo__p4zmeso.flags iom.o oce_trc.o p4zint.o p4zprod.o p4zsink.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zmicro.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zmicro.done: p4zmicro.o
+p4zmicro.done: p4zmicro.o iom.done oce_trc.done p4zint.done p4zlim.done p4zprod.done p4zsink.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zmicro.o: $(FCM_PPSRCDIR)/nemo/p4zmicro.f90 FFLAGS__nemo__p4zmicro.flags
+p4zmicro.o: $(FCM_PPSRCDIR)/nemo/p4zmicro.f90 FFLAGS__nemo__p4zmicro.flags iom.o oce_trc.o p4zint.o p4zlim.o p4zprod.o p4zsink.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zmort.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zmort.done: p4zmort.o
+p4zmort.done: p4zmort.o oce_trc.done p4zprod.done p4zsink.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zmort.o: $(FCM_PPSRCDIR)/nemo/p4zmort.f90 FFLAGS__nemo__p4zmort.flags
+p4zmort.o: $(FCM_PPSRCDIR)/nemo/p4zmort.f90 FFLAGS__nemo__p4zmort.flags oce_trc.o p4zprod.o p4zsink.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zopt.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zopt.done: p4zopt.o
+p4zopt.done: p4zopt.o fldread.done iom.done oce_trc.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zopt.o: $(FCM_PPSRCDIR)/nemo/p4zopt.f90 FFLAGS__nemo__p4zopt.flags
+p4zopt.o: $(FCM_PPSRCDIR)/nemo/p4zopt.f90 FFLAGS__nemo__p4zopt.flags fldread.o iom.o oce_trc.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zprod.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zprod.done: p4zprod.o
+p4zprod.done: p4zprod.o iom.done oce_trc.done p4zlim.done p4zopt.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zprod.o: $(FCM_PPSRCDIR)/nemo/p4zprod.f90 FFLAGS__nemo__p4zprod.flags
+p4zprod.o: $(FCM_PPSRCDIR)/nemo/p4zprod.f90 FFLAGS__nemo__p4zprod.flags iom.o oce_trc.o p4zlim.o p4zopt.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zrem.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zrem.done: p4zrem.o
+p4zrem.done: p4zrem.o iom.done oce_trc.done p4zche.done p4zint.done p4zlim.done p4zmeso.done p4zopt.done p4zprod.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zrem.o: $(FCM_PPSRCDIR)/nemo/p4zrem.f90 FFLAGS__nemo__p4zrem.flags
+p4zrem.o: $(FCM_PPSRCDIR)/nemo/p4zrem.f90 FFLAGS__nemo__p4zrem.flags iom.o oce_trc.o p4zche.o p4zint.o p4zlim.o p4zmeso.o p4zopt.o p4zprod.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zsbc.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zsbc.done: p4zsbc.o
+p4zsbc.done: p4zsbc.o fldread.done iom.done oce_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zsbc.o: $(FCM_PPSRCDIR)/nemo/p4zsbc.f90 FFLAGS__nemo__p4zsbc.flags
+p4zsbc.o: $(FCM_PPSRCDIR)/nemo/p4zsbc.f90 FFLAGS__nemo__p4zsbc.flags fldread.o iom.o oce_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zsed.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zsed.done: p4zsed.o
+p4zsed.done: p4zsed.o iom.done oce_trc.done p4zint.done p4zlim.done p4zopt.done p4zsbc.done p4zsink.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zsed.o: $(FCM_PPSRCDIR)/nemo/p4zsed.f90 FFLAGS__nemo__p4zsed.flags
+p4zsed.o: $(FCM_PPSRCDIR)/nemo/p4zsed.f90 FFLAGS__nemo__p4zsed.flags iom.o oce_trc.o p4zint.o p4zlim.o p4zopt.o p4zsbc.o p4zsink.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zsink.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zsink.done: p4zsink.o
+p4zsink.done: p4zsink.o iom.done lib_mpp.done oce_trc.done prtctl_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zsink.o: $(FCM_PPSRCDIR)/nemo/p4zsink.f90 FFLAGS__nemo__p4zsink.flags
+p4zsink.o: $(FCM_PPSRCDIR)/nemo/p4zsink.f90 FFLAGS__nemo__p4zsink.flags iom.o lib_mpp.o oce_trc.o prtctl_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__p4zsms.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-p4zsms.done: p4zsms.o
+p4zsms.done: p4zsms.o iom.done oce_trc.done p4zbio.done p4zche.done p4zflx.done p4zint.done p4zlys.done p4zrem.done p4zsbc.done p4zsed.done prtctl_trc.done sedmodel.done sms_pisces.done trc.done trcdta.done trd_oce.done trdtrc.done
 	touch $(FCM_DONEDIR)/$@
 
-p4zsms.o: $(FCM_PPSRCDIR)/nemo/p4zsms.f90 FFLAGS__nemo__p4zsms.flags
+p4zsms.o: $(FCM_PPSRCDIR)/nemo/p4zsms.f90 FFLAGS__nemo__p4zsms.flags iom.o oce_trc.o p4zbio.o p4zche.o p4zflx.o p4zint.o p4zlys.o p4zrem.o p4zsbc.o p4zsed.o prtctl_trc.o sedmodel.o sms_pisces.o trc.o trcdta.o trd_oce.o trdtrc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__par_age.flags: FFLAGS__nemo.flags
@@ -2489,10 +2489,10 @@ par_canoe.o: $(FCM_PPSRCDIR)/nemo/par_canoe.f90 FFLAGS__nemo__par_canoe.flags
 FFLAGS__nemo__par_cfc.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-par_cfc.done: par_cfc.o par_my_trc.done par_pisces.done
+par_cfc.done: par_cfc.o par_canoe.done par_my_trc.done par_pisces.done
 	touch $(FCM_DONEDIR)/$@
 
-par_cfc.o: $(FCM_PPSRCDIR)/nemo/par_cfc.f90 FFLAGS__nemo__par_cfc.flags par_my_trc.o par_pisces.o
+par_cfc.o: $(FCM_PPSRCDIR)/nemo/par_cfc.f90 FFLAGS__nemo__par_cfc.flags par_canoe.o par_my_trc.o par_pisces.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__par_ice_2.flags: FFLAGS__nemo.flags
@@ -2516,10 +2516,10 @@ par_kind.o: $(FCM_PPSRCDIR)/nemo/par_kind.f90 FFLAGS__nemo__par_kind.flags
 FFLAGS__nemo__par_my_trc.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-par_my_trc.done: par_my_trc.o par_c14b.done par_cfc.done par_pisces.done
+par_my_trc.done: par_my_trc.o par_c14b.done par_canoe.done par_cfc.done par_pisces.done
 	touch $(FCM_DONEDIR)/$@
 
-par_my_trc.o: $(FCM_PPSRCDIR)/nemo/par_my_trc.f90 FFLAGS__nemo__par_my_trc.flags par_c14b.o par_cfc.o par_pisces.o
+par_my_trc.o: $(FCM_PPSRCDIR)/nemo/par_my_trc.f90 FFLAGS__nemo__par_my_trc.flags par_c14b.o par_canoe.o par_cfc.o par_pisces.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__par_oce.flags: FFLAGS__nemo.flags
@@ -2552,10 +2552,10 @@ par_sed.o: $(FCM_PPSRCDIR)/nemo/par_sed.f90 FFLAGS__nemo__par_sed.flags
 FFLAGS__nemo__par_trc.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-par_trc.done: par_trc.o par_c14b.done par_canoe.done par_cfc.done par_kind.done par_my_trc.done par_pisces.done
+par_trc.done: par_trc.o par_age.done par_c14b.done par_canoe.done par_cfc.done par_kind.done par_my_trc.done par_pisces.done
 	touch $(FCM_DONEDIR)/$@
 
-par_trc.o: $(FCM_PPSRCDIR)/nemo/par_trc.f90 FFLAGS__nemo__par_trc.flags par_c14b.o par_canoe.o par_cfc.o par_kind.o par_my_trc.o par_pisces.o
+par_trc.o: $(FCM_PPSRCDIR)/nemo/par_trc.f90 FFLAGS__nemo__par_trc.flags par_age.o par_c14b.o par_canoe.o par_cfc.o par_kind.o par_my_trc.o par_pisces.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__phycst.flags: FFLAGS__nemo.flags
@@ -2939,19 +2939,19 @@ sedwri.o: $(FCM_PPSRCDIR)/nemo/sedwri.f90 FFLAGS__nemo__sedwri.flags
 FFLAGS__nemo__sms_canoe.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-sms_canoe.done: sms_canoe.o lib_mpp.done par_oce.done par_trc.done
+sms_canoe.done: sms_canoe.o
 	touch $(FCM_DONEDIR)/$@
 
-sms_canoe.o: $(FCM_PPSRCDIR)/nemo/sms_canoe.f90 FFLAGS__nemo__sms_canoe.flags lib_mpp.o par_oce.o par_trc.o
+sms_canoe.o: $(FCM_PPSRCDIR)/nemo/sms_canoe.f90 FFLAGS__nemo__sms_canoe.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__sms_pisces.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-sms_pisces.done: sms_pisces.o
+sms_pisces.done: sms_pisces.o lib_mpp.done par_oce.done par_trc.done
 	touch $(FCM_DONEDIR)/$@
 
-sms_pisces.o: $(FCM_PPSRCDIR)/nemo/sms_pisces.f90 FFLAGS__nemo__sms_pisces.flags
+sms_pisces.o: $(FCM_PPSRCDIR)/nemo/sms_pisces.f90 FFLAGS__nemo__sms_pisces.flags lib_mpp.o par_oce.o par_trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__sol_oce.flags: FFLAGS__nemo.flags
@@ -3473,10 +3473,10 @@ trcice_my_trc.o: $(FCM_PPSRCDIR)/nemo/trcice_my_trc.f90 FFLAGS__nemo__trcice_my_
 FFLAGS__nemo__trcice_pisces.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcice_pisces.done: trcice_pisces.o
+trcice_pisces.done: trcice_pisces.o in_out_manager.done oce_trc.done par_pisces.done par_trc.done phycst.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-trcice_pisces.o: $(FCM_PPSRCDIR)/nemo/trcice_pisces.f90 FFLAGS__nemo__trcice_pisces.flags
+trcice_pisces.o: $(FCM_PPSRCDIR)/nemo/trcice_pisces.f90 FFLAGS__nemo__trcice_pisces.flags in_out_manager.o oce_trc.o par_pisces.o par_trc.o phycst.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcini.flags: FFLAGS__nemo.flags
@@ -3509,10 +3509,10 @@ trcini_c14b.o: $(FCM_PPSRCDIR)/nemo/trcini_c14b.f90 FFLAGS__nemo__trcini_c14b.fl
 FFLAGS__nemo__trcini_canoe.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcini_canoe.done: trcini_canoe.o canche.done canflx.done canint.done canlys.done canmeso.done canmicro.done canmort.done canopt.done canprod.done canrem.done cansbc.done cansed.done cansink.done oce_trc.done par_trc.done sms_canoe.done trc.done trcsms_canoe.done
+trcini_canoe.done: trcini_canoe.o
 	touch $(FCM_DONEDIR)/$@
 
-trcini_canoe.o: $(FCM_PPSRCDIR)/nemo/trcini_canoe.f90 FFLAGS__nemo__trcini_canoe.flags canche.o canflx.o canint.o canlys.o canmeso.o canmicro.o canmort.o canopt.o canprod.o canrem.o cansbc.o cansed.o cansink.o oce_trc.o par_trc.o sms_canoe.o trc.o trcsms_canoe.o
+trcini_canoe.o: $(FCM_PPSRCDIR)/nemo/trcini_canoe.f90 FFLAGS__nemo__trcini_canoe.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcini_cfc.flags: FFLAGS__nemo.flags
@@ -3536,10 +3536,10 @@ trcini_my_trc.o: $(FCM_PPSRCDIR)/nemo/trcini_my_trc.f90 FFLAGS__nemo__trcini_my_
 FFLAGS__nemo__trcini_pisces.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcini_pisces.done: trcini_pisces.o
+trcini_pisces.done: trcini_pisces.o oce_trc.done p4zche.done p4zfechem.done p4zflx.done p4zlim.done p4zlys.done p4zmeso.done p4zmicro.done p4zmort.done p4zopt.done p4zprod.done p4zrem.done p4zsbc.done p4zsed.done p4zsink.done p4zsms.done par_trc.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-trcini_pisces.o: $(FCM_PPSRCDIR)/nemo/trcini_pisces.f90 FFLAGS__nemo__trcini_pisces.flags
+trcini_pisces.o: $(FCM_PPSRCDIR)/nemo/trcini_pisces.f90 FFLAGS__nemo__trcini_pisces.flags oce_trc.o p4zche.o p4zfechem.o p4zflx.o p4zlim.o p4zlys.o p4zmeso.o p4zmicro.o p4zmort.o p4zopt.o p4zprod.o p4zrem.o p4zsbc.o p4zsed.o p4zsink.o p4zsms.o par_trc.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcldf.flags: FFLAGS__nemo.flags
@@ -3581,10 +3581,10 @@ trcnam_c14b.o: $(FCM_PPSRCDIR)/nemo/trcnam_c14b.f90 FFLAGS__nemo__trcnam_c14b.fl
 FFLAGS__nemo__trcnam_canoe.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcnam_canoe.done: trcnam_canoe.o iom.done oce_trc.done par_trc.done sms_canoe.done trc.done trdtrc_oce.done
+trcnam_canoe.done: trcnam_canoe.o
 	touch $(FCM_DONEDIR)/$@
 
-trcnam_canoe.o: $(FCM_PPSRCDIR)/nemo/trcnam_canoe.f90 FFLAGS__nemo__trcnam_canoe.flags iom.o oce_trc.o par_trc.o sms_canoe.o trc.o trdtrc_oce.o
+trcnam_canoe.o: $(FCM_PPSRCDIR)/nemo/trcnam_canoe.f90 FFLAGS__nemo__trcnam_canoe.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcnam_cfc.flags: FFLAGS__nemo.flags
@@ -3608,10 +3608,10 @@ trcnam_my_trc.o: $(FCM_PPSRCDIR)/nemo/trcnam_my_trc.f90 FFLAGS__nemo__trcnam_my_
 FFLAGS__nemo__trcnam_pisces.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcnam_pisces.done: trcnam_pisces.o
+trcnam_pisces.done: trcnam_pisces.o iom.done oce_trc.done par_trc.done sms_pisces.done trc.done trdtrc_oce.done
 	touch $(FCM_DONEDIR)/$@
 
-trcnam_pisces.o: $(FCM_PPSRCDIR)/nemo/trcnam_pisces.f90 FFLAGS__nemo__trcnam_pisces.flags
+trcnam_pisces.o: $(FCM_PPSRCDIR)/nemo/trcnam_pisces.f90 FFLAGS__nemo__trcnam_pisces.flags iom.o oce_trc.o par_trc.o sms_pisces.o trc.o trdtrc_oce.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcnam_trp.flags: FFLAGS__nemo.flags
@@ -3689,10 +3689,10 @@ trcsms_c14b.o: $(FCM_PPSRCDIR)/nemo/trcsms_c14b.f90 FFLAGS__nemo__trcsms_c14b.fl
 FFLAGS__nemo__trcsms_canoe.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcsms_canoe.done: trcsms_canoe.o canbio.done canche.done canflx.done canint.done canlys.done cansbc.done cansed.done iom.done oce_trc.done par_canoe.done prtctl_trc.done sedmodel.done sms_canoe.done trc.done trcdta.done trd_oce.done trdtrc.done
+trcsms_canoe.done: trcsms_canoe.o
 	touch $(FCM_DONEDIR)/$@
 
-trcsms_canoe.o: $(FCM_PPSRCDIR)/nemo/trcsms_canoe.f90 FFLAGS__nemo__trcsms_canoe.flags canbio.o canche.o canflx.o canint.o canlys.o cansbc.o cansed.o iom.o oce_trc.o par_canoe.o prtctl_trc.o sedmodel.o sms_canoe.o trc.o trcdta.o trd_oce.o trdtrc.o
+trcsms_canoe.o: $(FCM_PPSRCDIR)/nemo/trcsms_canoe.f90 FFLAGS__nemo__trcsms_canoe.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcsms_cfc.flags: FFLAGS__nemo.flags
@@ -3716,10 +3716,10 @@ trcsms_my_trc.o: $(FCM_PPSRCDIR)/nemo/trcsms_my_trc.f90 FFLAGS__nemo__trcsms_my_
 FFLAGS__nemo__trcsms_pisces.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcsms_pisces.done: trcsms_pisces.o
+trcsms_pisces.done: trcsms_pisces.o p2zsms.done p4zsms.done par_pisces.done
 	touch $(FCM_DONEDIR)/$@
 
-trcsms_pisces.o: $(FCM_PPSRCDIR)/nemo/trcsms_pisces.f90 FFLAGS__nemo__trcsms_pisces.flags
+trcsms_pisces.o: $(FCM_PPSRCDIR)/nemo/trcsms_pisces.f90 FFLAGS__nemo__trcsms_pisces.flags p2zsms.o p4zsms.o par_pisces.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcstp.flags: FFLAGS__nemo.flags
@@ -3752,10 +3752,10 @@ trctrp.o: $(FCM_PPSRCDIR)/nemo/trctrp.f90 FFLAGS__nemo__trctrp.flags bdy_par.o o
 FFLAGS__nemo__trcwri.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcwri.done: trcwri.o dianam.done dom_oce.done iom.done oce_trc.done trc.done trcwri_c14b.done trcwri_canoe.done trcwri_cfc.done trcwri_my_trc.done trcwri_pisces.done
+trcwri.done: trcwri.o dianam.done dom_oce.done iom.done oce_trc.done trc.done trcwri_age.done trcwri_c14b.done trcwri_canoe.done trcwri_cfc.done trcwri_my_trc.done trcwri_pisces.done
 	touch $(FCM_DONEDIR)/$@
 
-trcwri.o: $(FCM_PPSRCDIR)/nemo/trcwri.f90 FFLAGS__nemo__trcwri.flags dianam.o dom_oce.o iom.o oce_trc.o trc.o trcwri_c14b.o trcwri_canoe.o trcwri_cfc.o trcwri_my_trc.o trcwri_pisces.o
+trcwri.o: $(FCM_PPSRCDIR)/nemo/trcwri.f90 FFLAGS__nemo__trcwri.flags dianam.o dom_oce.o iom.o oce_trc.o trc.o trcwri_age.o trcwri_c14b.o trcwri_canoe.o trcwri_cfc.o trcwri_my_trc.o trcwri_pisces.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcwri_age.flags: FFLAGS__nemo.flags
@@ -3779,10 +3779,10 @@ trcwri_c14b.o: $(FCM_PPSRCDIR)/nemo/trcwri_c14b.f90 FFLAGS__nemo__trcwri_c14b.fl
 FFLAGS__nemo__trcwri_canoe.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcwri_canoe.done: trcwri_canoe.o iom.done sms_canoe.done trc.done
+trcwri_canoe.done: trcwri_canoe.o
 	touch $(FCM_DONEDIR)/$@
 
-trcwri_canoe.o: $(FCM_PPSRCDIR)/nemo/trcwri_canoe.f90 FFLAGS__nemo__trcwri_canoe.flags iom.o sms_canoe.o trc.o
+trcwri_canoe.o: $(FCM_PPSRCDIR)/nemo/trcwri_canoe.f90 FFLAGS__nemo__trcwri_canoe.flags
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trcwri_cfc.flags: FFLAGS__nemo.flags
@@ -3806,10 +3806,10 @@ trcwri_my_trc.o: $(FCM_PPSRCDIR)/nemo/trcwri_my_trc.f90 FFLAGS__nemo__trcwri_my_
 FFLAGS__nemo__trcwri_pisces.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-trcwri_pisces.done: trcwri_pisces.o
+trcwri_pisces.done: trcwri_pisces.o iom.done sms_pisces.done trc.done
 	touch $(FCM_DONEDIR)/$@
 
-trcwri_pisces.o: $(FCM_PPSRCDIR)/nemo/trcwri_pisces.f90 FFLAGS__nemo__trcwri_pisces.flags
+trcwri_pisces.o: $(FCM_PPSRCDIR)/nemo/trcwri_pisces.f90 FFLAGS__nemo__trcwri_pisces.flags iom.o sms_pisces.o trc.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__trczdf.flags: FFLAGS__nemo.flags

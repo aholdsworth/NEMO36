@@ -20,6 +20,7 @@ MODULE trcwri
    USE trcwri_canoe
    USE trcwri_cfc
    USE trcwri_c14b
+   USE trcwri_age
    USE trcwri_my_trc
 
    IMPLICIT NONE
@@ -57,7 +58,6 @@ MODULE trcwri
 ! This part should be removed one day ...
 ! ... In that case all occurence of the above statement functions
 !     have to be replaced in the code by xxx_n
-
 
 
 
@@ -126,6 +126,7 @@ CONTAINS
       IF( lk_canoe  )   CALL trc_wri_canoe     ! PISCES 
       IF( lk_cfc     )   CALL trc_wri_cfc        ! surface fluxes of CFC
       IF( lk_c14b    )   CALL trc_wri_c14b       ! surface fluxes of C14
+      IF( lk_age     )   CALL trc_wri_age        ! AGE tracer
       IF( lk_my_trc  )   CALL trc_wri_my_trc     ! MY_TRC  tracers
       !
       IF( nn_timing == 1 )  CALL timing_stop('trc_wri')

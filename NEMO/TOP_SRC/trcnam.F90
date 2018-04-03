@@ -24,6 +24,7 @@ MODULE trcnam
    USE trcnam_canoe     ! CanOE namelist
    USE trcnam_cfc        ! CFC SMS namelist
    USE trcnam_c14b       ! C14 SMS namelist
+   USE trcnam_age        ! AGE SMS namelist
    USE trcnam_my_trc     ! MY_TRC SMS namelist
    USE trd_oce       
    USE trdtrc_oce
@@ -64,7 +65,7 @@ CONTAINS
       CALL trc_nam_trc
       
       !                                        !   Parameters of additional diagnostics
-      CALL trc_nam_dia
+      IF( .NOT. lk_iomput)   CALL trc_nam_dia
 
       !                                        !   namelist of transport
       CALL trc_nam_trp
@@ -172,6 +173,10 @@ CONTAINS
 
       IF( lk_my_trc  ) THEN   ;   CALL trc_nam_my_trc      ! MY_TRC  tracers
       ELSE                    ;   IF(lwp) WRITE(numout,*) '          MY_TRC not used'
+      ENDIF
+      
+      IF( lk_age     ) THEN  ;   CALL trc_nam_age         ! AGE     tracer
+      ELSE                   ;   IF(lwp) WRITE(numout,*)  '          AGE not used'
       ENDIF
       !
    END SUBROUTINE trc_nam
