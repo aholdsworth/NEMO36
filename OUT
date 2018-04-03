@@ -1,0 +1,1171 @@
+Only in /home/amh001/NAA_NEMO/NEMO/TOP_SRC/: .nfs0000000000150a4f00000008
+Common subdirectories: /home/amh001/NAA_NEMO/NEMO/TOP_SRC/.svn and /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/.svn
+Only in /home/amh001/NAA_NEMO/NEMO/TOP_SRC/: AGE
+Common subdirectories: /home/amh001/NAA_NEMO/NEMO/TOP_SRC/C14b and /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/C14b
+Common subdirectories: /home/amh001/NAA_NEMO/NEMO/TOP_SRC/CFC and /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/CFC
+Only in /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC: CMOC
+Only in /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC: CanOE
+Only in /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC: CanOE.tar.gz
+Common subdirectories: /home/amh001/NAA_NEMO/NEMO/TOP_SRC/MY_TRC and /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/MY_TRC
+Only in /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC: OUTPUT
+Common subdirectories: /home/amh001/NAA_NEMO/NEMO/TOP_SRC/PISCES and /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/PISCES
+Common subdirectories: /home/amh001/NAA_NEMO/NEMO/TOP_SRC/TRP and /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/TRP
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/oce_trc.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/oce_trc.F90
+118d117
+<    USE ldftra_oce , ONLY :  r_fact_lap     =>  r_fact_lap        !: enhanced zonal diffusivity coefficient
+150c149
+<    !! $Id: oce_trc.F90 6312 2016-02-15 11:43:52Z cetlod $
+---
+>    !! $Id: oce_trc.F90 5385 2015-06-09 13:50:42Z cetlod $
+Only in /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC: out
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/par_trc.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/par_trc.F90
+9a10
+>    !!                  !  2017-09  (A.Holdsworth)  added CMOC
+13a15,16
+>    USE par_canoe    ! PISCES  model
+>    USE par_cmoc    ! CMOC  model
+16d18
+<    USE par_age       ! AGE  tracer
+27,29c29,31
+<    INTEGER, PUBLIC,  PARAMETER ::   jptra    =  jp_pisces     + jp_cfc     + jp_c14b    + jp_age    + jp_my_trc
+<    INTEGER, PUBLIC,  PARAMETER ::   jpdia2d  =  jp_pisces_2d  + jp_cfc_2d  + jp_c14b_2d + jp_age_2d + jp_my_trc_2d
+<    INTEGER, PUBLIC,  PARAMETER ::   jpdia3d  =  jp_pisces_3d  + jp_cfc_3d  + jp_c14b_3d + jp_age_3d + jp_my_trc_3d
+---
+>    INTEGER, PUBLIC,  PARAMETER ::   jptra    =  jp_canoe + jp_cmoc + jp_pisces     + jp_cfc     + jp_c14b    + jp_my_trc
+>    INTEGER, PUBLIC,  PARAMETER ::   jpdia2d  =  jp_canoe_2d + jp_cmoc_2d +jp_pisces_2d  + jp_cfc_2d  + jp_c14b_2d + jp_my_trc_2d
+>    INTEGER, PUBLIC,  PARAMETER ::   jpdia3d  =  jp_canoe_3d + jp_cmoc_3d + jp_pisces_3d  + jp_cfc_3d  + jp_c14b_3d + jp_my_trc_3d
+31c33
+<    INTEGER, PUBLIC,  PARAMETER ::   jpdiabio =  jp_pisces_trd + jp_cfc_trd + jp_c14b_trd + jp_age_trd + jp_my_trc_trd
+---
+>    INTEGER, PUBLIC,  PARAMETER ::   jpdiabio =  jp_canoe_trd + jp_cmoc_trd +jp_pisces_trd + jp_cfc_trd + jp_c14b_trd + jp_my_trc_trd
+45c47
+<    !! $Id: par_trc.F90 7494 2016-12-14 09:02:43Z timgraham $
+---
+>    !! $Id: par_trc.F90 4529 2014-03-15 11:00:04Z cetlod $ 
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trc.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trc.F90
+16c16,21
+<    
+---
+>  !! From Elise 20170316 ---written by xiaofan Luo
+>  #if defined key_bdy
+>    USE bdy_oce, only: nb_bdy, OBC_DATA
+>  #endif  
+>  !! ----------------------written by xiaofan Luo
+> 
+92a98,104
+> !! From Elise 20170316------------------written by xiaofanLUO
+>      !#if defined  key_bdy
+>        LOGICAL              :: llobc   !: read in a file or not
+>        LOGICAL              :: llsbc   !: read in a file or not
+>        LOGICAL              :: llcbc   !: read in a file or not
+>  !#endi
+> 
+93a106,107
+>  
+> !!------------------------------------xiaofanLuo
+193c207,215
+< 
+---
+> !! From ELise ------written by xiaofan Luo
+> #if defined key_bdy
+>     CHARACTER(len=20), PUBLIC, ALLOCATABLE,  SAVE,  DIMENSION(:)   ::  cn_trc_dflt          ! Default OBC condition for all tracers
+>     CHARACTER(len=20), PUBLIC, ALLOCATABLE,  SAVE,  DIMENSION(:)   ::  cn_trc               ! Choice of boundary condition for tracers
+>     INTEGER,           PUBLIC, ALLOCATABLE,  SAVE,  DIMENSION(:)   ::  nn_trcdmp_bdy        !: =T Tracer damping
+>     ! External data structure of BDY for TOP. Available elements: cn_obc, ll_trc, trcnow, dmp
+>     TYPE(OBC_DATA),    PUBLIC, ALLOCATABLE, DIMENSION(:,:), TARGET ::  trcdta_bdy           !: bdy external data (local process)
+> #endif
+> !! ----------------written by xiaofan Luo
+215,216c237,244
+<          &      ln_trc_ini(jptra)     , ln_trc_wri(jptra)     , qsr_mean(jpi,jpj)     ,  STAT = trc_alloc  )  
+< 
+---
+>          &      ln_trc_ini(jptra)     , ln_trc_wri(jptra)     , qsr_mean(jpi,jpj)     ,       & 
+>          &      ln_trc_sbc(jptra)     , ln_trc_cbc(jptra)     , ln_trc_obc(jptra)     ,       &
+> #if defined key_bdy
+>          &      cn_trc_dflt(nb_bdy)   , cn_trc(nb_bdy)        , nn_trcdmp_bdy(nb_bdy) ,       &
+>          &      trcdta_bdy(jptra,nb_bdy)                                              ,       &
+> #endif
+>          &      STAT = trc_alloc  )
+>          ! from elise 20170316 --------xiaofanLuo (l235-l241)
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcbc.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcbc.F90
+19c19,21
+< 
+---
+> #if defined key_bdy
+>    USE bdy_oce, only: nb_bdy , idx_bdy, ln_coords_file, rn_time_dmp, rn_time_dmp_out
+> #endif
+32,34c34,36
+<    INTEGER  , SAVE, PUBLIC                             :: ntra_obc     ! MAX( 1, nb_trcxxx ) to avoid compilation error with bounds checking
+<    INTEGER  , SAVE, PUBLIC                             :: ntra_sbc     ! MAX( 1, nb_trcxxx ) to avoid compilation error with bounds checking
+<    INTEGER  , SAVE, PUBLIC                             :: ntra_cbc     ! MAX( 1, nb_trcxxx ) to avoid compilation error with bounds checking
+---
+>    !INTEGER  , SAVE, PUBLIC                             :: ntra_obc     ! MAX( 1, nb_trcxxx ) to avoid compilation error with bounds checking
+>    !INTEGER  , SAVE, PUBLIC                             :: ntra_sbc     ! MAX( 1, nb_trcxxx ) to avoid compilation error with bounds checking
+>    !INTEGER  , SAVE, PUBLIC                             :: ntra_cbc     ! MAX( 1, nb_trcxxx ) to avoid compilation error with bounds checking
+36c38
+<    TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:)  :: sf_trcobc   ! structure of data input OBC (file informations, fields read)
+---
+>    TYPE(FLD), SAVE, PUBLIC, ALLOCATABLE, DIMENSION(:), TARGET  :: sf_trcobc   ! structure of data input OBC (file informations, fields read)
+41c43,44
+< 
+---
+>    TYPE(MAP_POINTER), ALLOCATABLE, DIMENSION(:) :: nbmap_ptr   ! array of pointers to nbmap
+>    
+46c49
+<    !! $Id: trcbc.F90 8511 2017-09-07 15:53:42Z lovato $ 
+---
+>    !! $Id: trcbc.F90 5215 2015-04-15 16:11:56Z nicolasmartin $ 
+62c65
+<       INTEGER            :: jl, jn                         ! dummy loop indices
+---
+>       INTEGER            :: jl, jn, ib, ibd, ii, ij, ik    ! dummy loop indices
+64a68
+>       INTEGER            :: nblen, igrd                    ! support arrays for BDY
+67c71
+<       CHARACTER(len=100) :: cn_dir
+---
+>       CHARACTER(len=100) :: cn_dir_sbc, cn_dir_cbc, cn_dir_obc
+76c80,84
+<       NAMELIST/namtrc_bc/ cn_dir, sn_trcobc, rn_trofac, sn_trcsbc, rn_trsfac, sn_trccbc, rn_trcfac 
+---
+>       NAMELIST/namtrc_bc/ cn_dir_sbc, cn_dir_cbc, sn_trcsbc, rn_trsfac, sn_trccbc, rn_trcfac
+> #if defined key_bdy
+>       NAMELIST/namtrc_bdy/ cn_trc_dflt, cn_trc, nn_trcdmp_bdy
+>       NAMELIST/nambdy_bc/ cn_dir_obc, sn_trcobc, rn_trofac
+> #endif
+79a88,95
+>       IF( lwp ) THEN
+>          WRITE(numout,*) ' '
+>          WRITE(numout,*) 'trc_bc_init : Tracers Boundary Conditions (BC)'
+>          WRITE(numout,*) '~~~~~~~~~~~ '
+>          
+>          !WRITE(numout,*) "In trc_bc_init at A: nstop=", nstop
+>       ENDIF
+>       !
+91c107
+<       ENDIF
+---
+>      ENDIF
+109,134c125,150
+<       DO jn = 1, ntrc
+<          IF( ln_trc_obc(jn) ) THEN
+<              nb_trcobc       = nb_trcobc + 1 
+<              n_trc_indobc(jn) = nb_trcobc 
+<          ENDIF
+<          IF( ln_trc_sbc(jn) ) THEN
+<              nb_trcsbc       = nb_trcsbc + 1
+<              n_trc_indsbc(jn) = nb_trcsbc
+<          ENDIF
+<          IF( ln_trc_cbc(jn) ) THEN
+<              nb_trccbc       = nb_trccbc + 1
+<              n_trc_indcbc(jn) = nb_trccbc
+<          ENDIF
+<       ENDDO
+<       ntra_obc = MAX( 1, nb_trcobc )   ! To avoid compilation error with bounds checking
+<       IF( lwp ) WRITE(numout,*) ' '
+<       IF( lwp ) WRITE(numout,*) ' Number of passive tracers to be initialized with open boundary data :', nb_trcobc
+<       IF( lwp ) WRITE(numout,*) ' '
+<       ntra_sbc = MAX( 1, nb_trcsbc )   ! To avoid compilation error with bounds checking
+<       IF( lwp ) WRITE(numout,*) ' '
+<       IF( lwp ) WRITE(numout,*) ' Number of passive tracers to be initialized with surface boundary data :', nb_trcsbc
+<       IF( lwp ) WRITE(numout,*) ' '
+<       ntra_cbc = MAX( 1, nb_trccbc )   ! To avoid compilation error with bounds checking
+<       IF( lwp ) WRITE(numout,*) ' '
+<       IF( lwp ) WRITE(numout,*) ' Number of passive tracers to be initialized with coastal boundary data :', nb_trccbc
+<       IF( lwp ) WRITE(numout,*) ' '
+---
+>       !DO jn = 1, ntrc
+>       !   IF( ln_trc_obc(jn) ) THEN
+>       !       nb_trcobc       = nb_trcobc + 1 
+>       !       n_trc_indobc(jn) = nb_trcobc 
+>       !   ENDIF
+>       !   IF( ln_trc_sbc(jn) ) THEN
+>       !       nb_trcsbc       = nb_trcsbc + 1
+>       !       n_trc_indsbc(jn) = nb_trcsbc
+>       !   ENDIF
+>       !   IF( ln_trc_cbc(jn) ) THEN
+>       !       nb_trccbc       = nb_trccbc + 1
+>       !       n_trc_indcbc(jn) = nb_trccbc
+>       !   ENDIF
+>       !ENDDO
+>       !ntra_obc = MAX( 1, nb_trcobc )   ! To avoid compilation error with bounds checking
+>       !IF( lwp ) WRITE(numout,*) ' '
+>       !IF( lwp ) WRITE(numout,*) ' Number of passive tracers to be initialized with open boundary data :', nb_trcobc
+>       !IF( lwp ) WRITE(numout,*) ' '
+>       !ntra_sbc = MAX( 1, nb_trcsbc )   ! To avoid compilation error with bounds checking
+>       !IF( lwp ) WRITE(numout,*) ' '
+>       !IF( lwp ) WRITE(numout,*) ' Number of passive tracers to be initialized with surface boundary data :', nb_trcsbc
+>       !IF( lwp ) WRITE(numout,*) ' '
+>       !ntra_cbc = MAX( 1, nb_trccbc )   ! To avoid compilation error with bounds checking
+>       !IF( lwp ) WRITE(numout,*) ' '
+>       !IF( lwp ) WRITE(numout,*) ' Number of passive tracers to be initialized with coastal boundary data :', nb_trccbc
+>       !IF( lwp ) WRITE(numout,*) ' '
+135a152
+>       ! Read Boundary Conditions Namelists
+145c162,214
+<       ! print some information for each 
+---
+> #if defined key_bdy
+>       REWIND( numnat_ref )              ! Namelist namtrc_bc in reference namelist : Passive tracer data structure
+>       READ  ( numnat_ref, namtrc_bdy, IOSTAT = ios, ERR = 903)
+> 903   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bdy in reference namelist', lwp )
+> 
+>       REWIND( numnat_cfg )              ! Namelist namtrc_bc in configuration namelist : Passive tracer data structure
+>       READ  ( numnat_cfg, namtrc_bdy, IOSTAT = ios, ERR = 904 )
+> 904   IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_bdy in configuration namelist', lwp )
+>       IF(lwm) WRITE ( numont, namtrc_bdy )
+>       ! setup up preliminary informations for BDY structure
+>       REWIND( numnat_ref )
+>       REWIND( numnat_cfg )
+>       DO ib = 1, nb_bdy
+>          DO jn = 1, ntrc
+>             ! Set type of obc in BDY data structure (around here we may plug user override of obc type from nml)
+>            ! WRITE(numout,*) "ln_trc_obc(jn)=", ln_trc_obc(jn)
+>            ! WRITE(numout,*) "jn=", jn, " ib=", ib, "cn_trc(ib)=", cn_trc(ib)
+>            ! WRITE(numout,*) "jn=", jn, " ib=", ib, "cn_trc_dflt(ib)=", cn_trc_dflt(ib)
+>             IF ( ln_trc_obc(jn)) THEN
+>                trcdta_bdy(jn,ib)%cn_obc = TRIM( cn_trc(ib) )
+>             ELSE
+>                trcdta_bdy(jn,ib)%cn_obc = TRIM( cn_trc_dflt(ib) )
+>             ENDIF
+>             ! set damping use in BDY data structure
+>             trcdta_bdy(jn,ib)%dmp = .false.
+>             IF(nn_trcdmp_bdy(ib) .EQ. 1 .AND. ln_trc_obc(jn) ) trcdta_bdy(jn,ib)%dmp = .true.
+>             IF(nn_trcdmp_bdy(ib) .EQ. 2 ) trcdta_bdy(jn,ib)%dmp = .true.
+>             IF(trcdta_bdy(jn,ib)%cn_obc == 'frs' .AND. nn_trcdmp_bdy(ib) .NE. 0 )  &
+>                 & CALL ctl_stop( 'Use FRS OR relaxation' )
+>             IF (nn_trcdmp_bdy(ib) .LT. 0 .OR. nn_trcdmp_bdy(ib) .GT. 2)            THEN
+>                  WRITE(numout,*) "nn_trcdmp_bdy=", nn_trcdmp_bdy(ib), " ib=", ib  
+>                  CALL ctl_stop( 'Not a valid option for nn_trcdmp_bdy. Allowed: 0,1,2.' )
+>             ENDIF
+>          ENDDO
+>       ENDDO
+> 
+> #else
+>       ! Force all tracers OBC to false if bdy not used
+>       ln_trc_obc = .false.
+> #endif
+>       ! compose BC data indexes
+>       DO jn = 1, ntrc
+>          IF( ln_trc_obc(jn) ) THEN
+>              nb_trcobc       = nb_trcobc + 1  ; n_trc_indobc(jn) = nb_trcobc
+>          ENDIF
+>          IF( ln_trc_sbc(jn) ) THEN
+>              nb_trcsbc       = nb_trcsbc + 1  ; n_trc_indsbc(jn) = nb_trcsbc
+>          ENDIF
+>          IF( ln_trc_cbc(jn) ) THEN
+>              nb_trccbc       = nb_trccbc + 1  ; n_trc_indcbc(jn) = nb_trccbc
+>          ENDIF
+>       ENDDO
+>        !print some information for each 
+171,172c240,292
+<       IF( nb_trcobc > 0 ) THEN       !  allocate only if the number of tracer to initialise is greater than zero
+<          ALLOCATE( sf_trcobc(nb_trcobc), rf_trofac(nb_trcobc), STAT=ierr1 )
+---
+>             ! Print summmary of Boundary Conditions
+>       IF( lwp ) THEN
+>          WRITE(numout,*) ' '
+>          WRITE(numout,'(a,i3)') '   Total tracers to be initialized with SURFACE BCs data:', nb_trcsbc
+>          IF ( nb_trcsbc > 0 ) THEN
+>             WRITE(numout,*) '   #trc        NAME        Boundary     Mult.Fact. '
+>             DO jn = 1, ntrc
+>                IF ( ln_trc_sbc(jn) ) WRITE(numout,9001) jn, TRIM( sn_trcsbc(jn)%clvar ), 'SBC', rn_trsfac(jn)
+>             ENDDO
+>          ENDIF
+>          WRITE(numout,'(2a)') '   SURFACE BC data repository : ', TRIM(cn_dir_sbc)
+> 
+>          WRITE(numout,*) ' '
+>          WRITE(numout,'(a,i3)') '   Total tracers to be initialized with COASTAL BCs data:', nb_trccbc
+>          IF ( nb_trccbc > 0 ) THEN
+>             WRITE(numout,*) '   #trc        NAME        Boundary     Mult.Fact. '
+>             DO jn = 1, ntrc
+>                IF ( ln_trc_cbc(jn) ) WRITE(numout, 9001) jn, TRIM( sn_trccbc(jn)%clvar ), 'CBC', rn_trcfac(jn)
+>             ENDDO
+>          ENDIF
+>          WRITE(numout,'(2a)') '   COASTAL BC data repository : ', TRIM(cn_dir_cbc)
+> 
+>          WRITE(numout,*) ' '
+>          WRITE(numout,'(a,i3)') '   Total tracers to be initialized with OPEN BCs data:', nb_trcobc
+> #if defined key_bdy
+>          IF ( nb_trcobc > 0 ) THEN
+>             WRITE(numout,*) '   #trc        NAME        Boundary     Mult.Fact.   OBC Settings'
+>             DO jn = 1, ntrc
+>                IF ( ln_trc_obc(jn) )  WRITE(numout, 9001) jn, TRIM( sn_trcobc(jn)%clvar ), 'OBC', rn_trofac(jn), (trcdta_bdy(jn,ib)%cn_obc,ib=1,nb_bdy)
+>                IF ( .NOT. ln_trc_obc(jn) )  WRITE(numout, 9002) jn, 'Set data to IC and use default condition', (trcdta_bdy(jn,ib)%cn_obc,ib=1,nb_bdy)
+>             ENDDO
+>             WRITE(numout,*) ' '
+>             DO ib = 1, nb_bdy
+>                 IF (nn_trcdmp_bdy(ib) .EQ. 0) WRITE(numout,9003) '   Boundary ',ib,' -> NO damping of tracers'
+>                 IF (nn_trcdmp_bdy(ib) .EQ. 1) WRITE(numout,9003) '   Boundary ',ib,' -> damping ONLY for tracers with external data provided'
+>                 IF (nn_trcdmp_bdy(ib) .EQ. 2) WRITE(numout,9003) '   Boundary ',ib,' -> damping of ALL tracers'
+>                 IF (nn_trcdmp_bdy(ib) .GT. 0) THEN
+>                    WRITE(numout,9003) '     USE damping parameters from nambdy for boundary ', ib,' : '
+>                    WRITE(numout,'(a,f10.2,a)') '     - Inflow damping time scale  : ',rn_time_dmp(ib),' days'
+>                    WRITE(numout,'(a,f10.2,a)') '     - Outflow damping time scale : ',rn_time_dmp_out(ib),' days'
+>                 ENDIF
+>             ENDDO
+>          ENDIF
+> #endif
+>          WRITE(numout,'(2a)') '   OPEN BC data repository : ', TRIM(cn_dir_obc)
+>       ENDIF
+> 9001  FORMAT(2x,i5, 3x, a15, 3x, a5, 6x, e11.3, 4x, 10a13)
+> 9002  FORMAT(2x,i5, 3x, a41, 3x, 10a13)
+> 9003  FORMAT(a, i5, a)
+> #if defined key_bdy
+>       ! OPEN Lateral boundary conditions
+>       IF( nb_trcobc > 0 ) THEN 
+>          ALLOCATE ( sf_trcobc(nb_trcobc*nb_bdy), rf_trofac(nb_trcobc*nb_bdy), nbmap_ptr(nb_trcobc*nb_bdy), STAT=ierr1 )
+174c294
+<             CALL ctl_stop( 'trc_bc_init: unable to allocate  sf_trcobc structure' )   ;   RETURN
+---
+>             CALL ctl_stop( 'trc_bc_init: unable to allocate sf_trcobc structure' )   ;   RETURN
+176,185c296,336
+<          !
+<          DO jn = 1, ntrc
+<             IF( ln_trc_obc(jn) ) THEN      ! update passive tracers arrays with input data read from file
+<                jl = n_trc_indobc(jn)
+<                slf_i(jl)    = sn_trcobc(jn)
+<                rf_trofac(jl) = rn_trofac(jn)
+<                                             ALLOCATE( sf_trcobc(jl)%fnow(jpi,jpj,jpk)   , STAT=ierr2 )
+<                IF( sn_trcobc(jn)%ln_tint )  ALLOCATE( sf_trcobc(jl)%fdta(jpi,jpj,jpk,2) , STAT=ierr3 )
+<                IF( ierr2 + ierr3 > 0 ) THEN
+<                  CALL ctl_stop( 'trc_bc_init : unable to allocate passive tracer OBC data arrays' )   ;   RETURN
+---
+> 
+>          igrd = 1                       ! Everything is at T-points here
+> 
+>          DO ib = 1, nb_bdy
+>             READ  ( numnat_ref, nambdy_bc, IOSTAT = ios, ERR = 905)
+> 905         IF( ios /= 0 ) CALL ctl_nam ( ios , 'nambdy_bc in reference namelist', lwp )
+> 
+>             READ  ( numnat_cfg, nambdy_bc, IOSTAT = ios, ERR = 906 )
+> 906         IF( ios /= 0 ) CALL ctl_nam ( ios , 'nambdy_bc in configuration namelist', lwp )
+>             IF(lwm) WRITE ( numont, nambdy_bc )
+> 
+>             nblen = idx_bdy(ib)%nblen(igrd)
+>             !WRITE(numout,*) 'nblen=', nblen
+>             
+>             DO jn = 1, ntrc
+>                IF ( ln_trc_obc(jn)) THEN
+>                ! Initialise from external data
+>                   jl = n_trc_indobc(jn)
+>                   slf_i(jl)    = sn_trcobc(jn)
+>                   rf_trofac(jl+(ib-1)*nb_trcobc) = rn_trofac(jn)
+>                                                ALLOCATE( sf_trcobc(jl+(ib-1)*nb_trcobc)%fnow(nblen,1,jpk)   , STAT=ierr2 )
+>                   IF( sn_trcobc(jn)%ln_tint )  ALLOCATE( sf_trcobc(jl+(ib-1)*nb_trcobc)%fdta(nblen,1,jpk,2) , STAT=ierr3 )
+>                   IF( ierr2 + ierr3 > 0 ) THEN
+>                     CALL ctl_stop( 'trc_bc_init : unable to allocate passive tracer OBC data arrays' )   ;   RETURN
+>                   ENDIF
+>                   trcdta_bdy(jn,ib)%trc => sf_trcobc(jl+(ib-1)*nb_trcobc)%fnow(:,1,:)
+>                   trcdta_bdy(jn,ib)%rn_fac = rf_trofac(jl+(ib-1)*nb_trcobc)
+>                   ! create OBC mapping array
+>                   nbmap_ptr(jl+(ib-1)*nb_trcobc)%ptr => idx_bdy(ib)%nbmap(:,igrd)
+>                   nbmap_ptr(jl+(ib-1)*nb_trcobc)%ll_unstruc = ln_coords_file(igrd)
+>                ELSE
+>                ! Initialise obc arrays from initial conditions
+>                   ALLOCATE ( trcdta_bdy(jn,ib)%trc(nblen,jpk) )
+>                   DO ibd = 1, nblen
+>                      DO ik = 1, jpkm1
+>                         ii = idx_bdy(ib)%nbi(ibd,igrd)
+>                         ij = idx_bdy(ib)%nbj(ibd,igrd)
+>                         trcdta_bdy(jn,ib)%trc(ibd,ik) = trn(ii,ij,ik,jn) * tmask(ii,ij,ik)
+>                      END DO
+>                   END DO
+>                   trcdta_bdy(jn,ib)%rn_fac = 1._wp
+187,188c338,340
+<             ENDIF
+<             !   
+---
+>             ENDDO
+>             CALL fld_fill( sf_trcobc((1+(ib-1)*nb_trcobc):(nb_trcobc+(ib-1)*nb_trcobc)), slf_i, cn_dir_obc, &
+>             &             'trc_bc_init', 'Passive tracer OBC data', 'namtrc_bc' )
+190,193c342,368
+<          !                         ! fill sf_trcdta with slf_i and control print
+<          CALL fld_fill( sf_trcobc, slf_i, cn_dir, 'trc_bc_init', 'Passive tracer OBC data', 'namtrc_bc' )
+<          !
+<       ENDIF
+---
+>           
+> 
+>          ENDIF
+> #endif
+>       !IF( nb_trcobc > 0 ) THEN       !  allocate only if the number of tracer to initialise is greater than zero
+>       !   ALLOCATE( sf_trcobc(nb_trcobc), rf_trofac(nb_trcobc), STAT=ierr1 )
+>       !   IF( ierr1 > 0 ) THEN
+>       !      CALL ctl_stop( 'trc_bc_init: unable to allocate  sf_trcobc structure' )   ;   RETURN
+>       !   ENDIF
+>       !   !
+>       !   DO jn = 1, ntrc
+>       !      IF( ln_trc_obc(jn) ) THEN      ! update passive tracers arrays with input data read from file
+>       !         jl = n_trc_indobc(jn)
+>       !         slf_i(jl)    = sn_trcobc(jn)
+>       !         rf_trofac(jl) = rn_trofac(jn)
+>       !                                      ALLOCATE( sf_trcobc(jl)%fnow(jpi,jpj,jpk)   , STAT=ierr2 )
+>       !         IF( sn_trcobc(jn)%ln_tint )  ALLOCATE( sf_trcobc(jl)%fdta(jpi,jpj,jpk,2) , STAT=ierr3 )
+>       !         IF( ierr2 + ierr3 > 0 ) THEN
+>       !           CALL ctl_stop( 'trc_bc_init : unable to allocate passive tracer OBC data arrays' )   ;   RETURN
+>       !         ENDIF
+>       !      ENDIF
+>       !      !   
+>       !   ENDDO
+>       !   !                         ! fill sf_trcdta with slf_i and control print
+>       !   CALL fld_fill( sf_trcobc, slf_i, cn_dir, 'trc_bc_init', 'Passive tracer OBC data', 'namtrc_bc' )
+>       !   !
+>       !ENDIF
+216c391
+<          CALL fld_fill( sf_trcsbc, slf_i, cn_dir, 'trc_bc_init', 'Passive tracer SBC data', 'namtrc_bc' )
+---
+>          CALL fld_fill( sf_trcsbc, slf_i, cn_dir_sbc, 'trc_bc_init', 'Passive tracer SBC data', 'namtrc_bc' )
+219,220c394,395
+<       !
+<       ! COSTAL Boundary conditions
+---
+>       
+>       !COASTAL Boundary conditions
+241c416
+<          CALL fld_fill( sf_trccbc, slf_i, cn_dir, 'trc_bc_init', 'Passive tracer CBC data', 'namtrc_bc' )
+---
+>          CALL fld_fill( sf_trccbc, slf_i, cn_dir_cbc, 'trc_bc_init', 'Passive tracer CBC data', 'namtrc_bc' )
+245a421,422
+>       
+>       !WRITE(numout,*) "In trc_bc_init at B: nstop=", nstop
+251c428
+<    SUBROUTINE trc_bc_read(kt)
+---
+>    SUBROUTINE trc_bc_read(kt, jit)
+266c443,444
+< 
+---
+>       INTEGER, INTENT( in ), OPTIONAL ::   jit   ! subcycle time-step index (for timesplitting option)
+>       INTEGER            ::  ib
+275a454,466
+>       !WRITE(numout,*) "In trc_bc_read at A1: nstop=", nstop
+>       IF ( PRESENT(jit) ) THEN 
+>       
+> #if defined key_bdy
+>          ! OPEN boundary conditions (use time_offset=+1 as they are applied at the end of the step)
+>          IF( nb_trcobc > 0 ) THEN
+>            if (lwp) write(numout,'(a,i5,a,i10)') '   reading OBC data for ', nb_trcobc ,' variable(s) at step ', kt
+>            DO ib = 1, nb_bdy
+>              CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcobc((1+(ib-1)*nb_trcobc):(nb_trcobc+(ib-1)*nb_trcobc)), &
+>              &             map=nbmap_ptr((1+(ib-1)*nb_trcobc):(nb_trcobc+(ib-1)*nb_trcobc)), kit=jit, kt_offset=+1)
+>            END DO
+>          ENDIF
+> #endif
+277,282c468,472
+<       ! OPEN boundary conditions: DOES NOT WORK. Waiting for stable BDY
+<       IF( nb_trcobc > 0 ) THEN
+<         if (lwp) write(numout,'(a,i5,a,i12)') '   reading OBC data for ', nb_trcobc ,' variables at step ', kt
+<         CALL fld_read(kt,1,sf_trcobc)
+<         ! vertical interpolation on s-grid and partial step to be added
+<       ENDIF
+---
+>          ! SURFACE boundary conditions
+>          IF( nb_trcsbc > 0 ) THEN
+>            if (lwp) write(numout,'(a,i5,a,i10)') '   reading SBC data for ', nb_trcsbc ,' variable(s) at step ', kt
+>            CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcsbc, kit=jit)
+>          ENDIF
+284,288c474,491
+<       ! SURFACE boundary conditions       
+<       IF( nb_trcsbc > 0 ) THEN
+<         if (lwp) write(numout,'(a,i5,a,i12)') '   reading SBC data for ', nb_trcsbc ,' variables at step ', kt
+<         CALL fld_read(kt,1,sf_trcsbc)
+<       ENDIF
+---
+>          ! COASTAL boundary conditions
+>          IF( nb_trccbc > 0 ) THEN
+>            if (lwp) write(numout,'(a,i5,a,i10)') '   reading CBC data for ', nb_trccbc ,' variable(s) at step ', kt
+>            CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trccbc, kit=jit)
+>          ENDIF
+> 
+>       ELSE
+>       
+> #if defined key_bdy
+>          ! OPEN boundary conditions (use time_offset=+1 as they are applied at the end of the step)
+>          IF( nb_trcobc > 0 ) THEN
+>            if (lwp) write(numout,'(a,i5,a,i10)') '   reading OBC data for ', nb_trcobc ,' variable(s) at step ', kt
+>            DO ib = 1, nb_bdy
+>              CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcobc((1+(ib-1)*nb_trcobc):(nb_trcobc+(ib-1)*nb_trcobc)), &
+>              &             map=nbmap_ptr((1+(ib-1)*nb_trcobc):(nb_trcobc+(ib-1)*nb_trcobc)), kt_offset=+1)
+>            END DO
+>          ENDIF
+> #endif
+290,294c493,505
+<       ! COASTAL boundary conditions       
+<       IF( nb_trccbc > 0 ) THEN
+<         if (lwp) write(numout,'(a,i5,a,i12)') '   reading CBC data for ', nb_trccbc ,' variables at step ', kt
+<         CALL fld_read(kt,1,sf_trccbc)
+<       ENDIF   
+---
+>          ! SURFACE boundary conditions
+>          IF( nb_trcsbc > 0 ) THEN
+>            if (lwp) write(numout,'(a,i5,a,i10)') '   reading SBC data for ', nb_trcsbc ,' variable(s) at step ', kt
+>            CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trcsbc)
+>          ENDIF
+> 
+>          ! COASTAL boundary conditions
+>          IF( nb_trccbc > 0 ) THEN
+>            if (lwp) write(numout,'(a,i5,a,i10)') '   reading CBC data for ', nb_trccbc ,' variable(s) at step ', kt
+>            CALL fld_read(kt=kt, kn_fsbc=1, sd=sf_trccbc)
+>          ENDIF
+> 
+>       ENDIF 
+295a507,510
+>      !IF(lwp) THEN
+>      !    WRITE(numout,*) 'LuoXIAOFAN TEST dic BOUNDDARY in trcbc.F90:', sf_trcobc(1)%fnow(:,1,:)
+>      !ENDIF
+>       !WRITE(numout,*) "In trc_bc_read at A: nstop=", nstop
+310a526,532
+> 
+>       
+>     
+>   
+> 
+> 
+> 
+311a534
+> 
+Only in /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC: trcbdy.F90
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcdta.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcdta.F90
+42c42
+<    !! $Id: trcdta.F90 8543 2017-09-19 10:27:07Z cetlod $ 
+---
+>    !! $Id: trcdta.F90 5385 2015-06-09 13:50:42Z cetlod $ 
+79c79
+<          CALL ctl_stop( 'trc_dta_init: unable to allocate n_trc_index' )   ;   RETURN
+---
+>          CALL ctl_stop( 'trc_nam: unable to allocate n_trc_index' )   ;   RETURN
+93,94d92
+<          WRITE(numout,*) 'trc_dta_init : Passive tracers Initial Conditions '
+<          WRITE(numout,*) '~~~~~~~~~~~~~~ '
+111,116c109,110
+<                clndta = TRIM( sn_trcdta(jn)%clvar )
+<                if (jn > jptra) then
+<                   clntrc='Dummy' ! By pass weird formats in ocean.output if ntrc > jptra
+<                else
+<                   clntrc = TRIM( ctrcnm   (jn)       )
+<                endif
+---
+>                clndta = TRIM( sn_trcdta(jn)%clvar ) 
+>                clntrc = TRIM( ctrcnm   (jn)       ) 
+118,121c112,115
+<                IF( clndta /=  clntrc ) THEN
+<                   CALL ctl_warn( 'trc_dta_init: passive tracer data initialisation    ',   &
+<                   &              'Input name of data file : '//TRIM(clndta)//   &
+<                   &              ' differs from that of tracer : '//TRIM(clntrc)//' ')
+---
+>                IF( clndta /=  clntrc ) THEN 
+>                   CALL ctl_warn( 'trc_dta_init: passive tracer data initialisation :  ',   &
+>                   &              'the variable name in the data file : '//clndta//   & 
+>                   &              '  must be the same than the name of the passive tracer : '//clntrc//' ')
+123,124c117,118
+<                WRITE(numout,'(a, i4,3a,e11.3)') ' Read IC file for tracer number :', &
+<                &            jn, ', name : ', TRIM(clndta), ', Multiplicative Scaling factor : ', zfact
+---
+>                WRITE(numout,*) ' read an initial file for passive tracer number :', jn, ' name : ', clndta, & 
+>                &               ' multiplicative factor : ', zfact
+132c126
+<             CALL ctl_stop( 'trc_dta_init: unable to allocate  sf_trcdta structure' )   ;   RETURN
+---
+>             CALL ctl_stop( 'trc_dta_ini: unable to allocate  sf_trcdta structure' )   ;   RETURN
+143c137
+<                  CALL ctl_stop( 'trc_dta_init : unable to allocate passive tracer data arrays' )   ;   RETURN
+---
+>                  CALL ctl_stop( 'trc_dta : unable to allocate passive tracer data arrays' )   ;   RETURN
+149c143
+<          CALL fld_fill( sf_trcdta, slf_i, cn_dir, 'trc_dta_init', 'Passive tracer data', 'namtrc' )
+---
+>          CALL fld_fill( sf_trcdta, slf_i, cn_dir, 'trc_dta', 'Passive tracer data', 'namtrc' )
+159c153
+<    SUBROUTINE trc_dta( kt, sf_dta, ptrfac, ptrc)
+---
+>    SUBROUTINE trc_dta( kt, sf_dta, zrf_trfac )
+172,174c166,167
+<       TYPE(FLD), DIMENSION(1)     , INTENT(inout) ::   sf_dta     ! array of information on the field to read
+<       REAL(wp)                    , INTENT(in   ) ::   ptrfac  ! multiplication factor
+<       REAL(wp), DIMENSION(jpi,jpj,jpk), OPTIONAL  , INTENT(out  ) ::   ptrc
+---
+>       TYPE(FLD), DIMENSION(1)   , INTENT(inout) ::   sf_dta     ! array of information on the field to read
+>       REAL(wp)                  , INTENT(in   ) ::   zrf_trfac  ! multiplication factor
+179d171
+<       REAL(wp), POINTER, DIMENSION(:,:,:) ::  ztrcdta   ! 3D  workspace
+187,188d178
+<          CALL wrk_alloc( jpi, jpj, jpk, ztrcdta )    ! Memory allocation
+<          !
+190d179
+<          ztrcdta(:,:,:) = sf_dta(1)%fnow(:,:,:) * tmask(:,:,:)    ! Mask
+199,218c188,209
+<             DO jj = 1, jpj                         ! vertical interpolation of T & S
+<                DO ji = 1, jpi
+<                   DO jk = 1, jpk                        ! determines the intepolated T-S profiles at each (i,j) points
+<                      zl = gdept_0(ji,jj,jk)
+<                      IF(     zl < gdept_1d(1  ) ) THEN         ! above the first level of data
+<                         ztp(jk) = ztrcdta(ji,jj,1)
+<                      ELSEIF( zl > gdept_1d(jpk) ) THEN         ! below the last level of data
+<                         ztp(jk) =  ztrcdta(ji,jj,jpkm1)
+<                      ELSE                                      ! inbetween : vertical interpolation between jkk & jkk+1
+<                         DO jkk = 1, jpkm1                                  ! when  gdept(jkk) < zl < gdept(jkk+1)
+<                            IF( (zl-gdept_1d(jkk)) * (zl-gdept_1d(jkk+1)) <= 0._wp ) THEN
+<                               zi = ( zl - gdept_1d(jkk) ) / (gdept_1d(jkk+1)-gdept_1d(jkk))
+<                               ztp(jk) = ztrcdta(ji,jj,jkk) + ( ztrcdta(ji,jj,jkk+1) - &
+<                                         ztrcdta(ji,jj,jkk) ) * zi 
+<                            ENDIF
+<                         END DO
+<                      ENDIF
+<                   END DO
+<                   DO jk = 1, jpkm1
+<                     ztrcdta(ji,jj,jk) = ztp(jk) * tmask(ji,jj,jk)     ! mask required for mixed zps-s-coord
+---
+>                DO jj = 1, jpj                         ! vertical interpolation of T & S
+>                   DO ji = 1, jpi
+>                      DO jk = 1, jpk                        ! determines the intepolated T-S profiles at each (i,j) points
+>                         zl = fsdept_n(ji,jj,jk)
+>                         IF(     zl < gdept_1d(1  ) ) THEN         ! above the first level of data
+>                            ztp(jk) =  sf_dta(1)%fnow(ji,jj,1)
+>                         ELSEIF( zl > gdept_1d(jpk) ) THEN         ! below the last level of data
+>                            ztp(jk) =  sf_dta(1)%fnow(ji,jj,jpkm1)
+>                         ELSE                                      ! inbetween : vertical interpolation between jkk & jkk+1
+>                            DO jkk = 1, jpkm1                                  ! when  gdept(jkk) < zl < gdept(jkk+1)
+>                               IF( (zl-gdept_1d(jkk)) * (zl-gdept_1d(jkk+1)) <= 0._wp ) THEN
+>                                  zi = ( zl - gdept_1d(jkk) ) / (gdept_1d(jkk+1)-gdept_1d(jkk))
+>                                  ztp(jk) = sf_dta(1)%fnow(ji,jj,jkk) + ( sf_dta(1)%fnow(ji,jj,jkk+1) - &
+>                                            sf_dta(1)%fnow(ji,jj,jkk) ) * zi 
+>                               ENDIF
+>                            END DO
+>                         ENDIF
+>                      END DO
+>                      DO jk = 1, jpkm1
+>                         sf_dta(1)%fnow(ji,jj,jk) = ztp(jk) * tmask(ji,jj,jk)     ! mask required for mixed zps-s-coord
+>                      END DO
+>                      sf_dta(1)%fnow(ji,jj,jpk) = 0._wp
+220,222c211
+<                   ztrcdta(ji,jj,jpk) = 0._wp
+<                 END DO
+<             END DO
+---
+>                END DO
+225,238c214,230
+<             !
+<             IF( ln_zps ) THEN                      ! zps-coordinate (partial steps) interpolation at the last ocean level
+<                DO jj = 1, jpj
+<                   DO ji = 1, jpi
+<                      ik = mbkt(ji,jj) 
+<                      IF( ik > 1 ) THEN
+<                         zl = ( gdept_1d(ik) - gdept_0(ji,jj,ik) ) / ( gdept_1d(ik) - gdept_1d(ik-1) )
+<                         ztrcdta(ji,jj,ik) = (1.-zl) * ztrcdta(ji,jj,ik) + zl * ztrcdta(ji,jj,ik-1)
+<                      ENDIF
+<                      ik = mikt(ji,jj)
+<                      IF( ik > 1 ) THEN
+<                         zl = ( gdept_0(ji,jj,ik) - gdept_1d(ik) ) / ( gdept_1d(ik+1) - gdept_1d(ik) )
+<                         ztrcdta(ji,jj,ik) = (1.-zl) * ztrcdta(ji,jj,ik) + zl * ztrcdta(ji,jj,ik+1)
+<                      ENDIF
+---
+>             !                             
+>                sf_dta(1)%fnow(:,:,:) = sf_dta(1)%fnow(:,:,:) * tmask(:,:,:)    ! Mask
+>                !
+>                IF( ln_zps ) THEN                      ! zps-coordinate (partial steps) interpolation at the last ocean level
+>                   DO jj = 1, jpj
+>                      DO ji = 1, jpi
+>                         ik = mbkt(ji,jj) 
+>                         IF( ik > 1 ) THEN
+>                            zl = ( gdept_1d(ik) - fsdept_n(ji,jj,ik) ) / ( gdept_1d(ik) - gdept_1d(ik-1) )
+>                            sf_dta(1)%fnow(ji,jj,ik) = (1.-zl) * sf_dta(1)%fnow(ji,jj,ik) + zl * sf_dta(1)%fnow(ji,jj,ik-1)
+>                         ENDIF
+>                         ik = mikt(ji,jj)
+>                         IF( ik > 1 ) THEN
+>                            zl = ( gdept_0(ji,jj,ik) - gdept_1d(ik) ) / ( gdept_1d(ik+1) - gdept_1d(ik) )
+>                            sf_dta(1)%fnow(ji,jj,ik) = (1.-zl) * sf_dta(1)%fnow(ji,jj,ik) + zl * sf_dta(1)%fnow(ji,jj,ik+1)
+>                         ENDIF
+>                      END DO
+240,241c232
+<                END DO
+<             ENDIF
+---
+>                ENDIF
+245,252c236
+<          ! Add multiplicative factor
+<          ztrcdta(:,:,:) = ztrcdta(:,:,:) * ptrfac
+<          !
+<          ! Data structure for trc_ini (and BFMv5.1 coupling)
+<          IF( .NOT. PRESENT(ptrc) ) sf_dta(1)%fnow(:,:,:) = ztrcdta(:,:,:)
+<          !
+<          ! Data structure for trc_dmp
+<          IF( PRESENT(ptrc) )  ptrc(:,:,:) = ztrcdta(:,:,:)
+---
+>          sf_dta(1)%fnow(:,:,:) = sf_dta(1)%fnow(:,:,:) * zrf_trfac   !  multiplicative factor
+259c243
+<                CALL prihre( ztrcdta(:,:,1), jpi, jpj, 1, jpi, 20, 1, jpj, 20, 1., numout )
+---
+>                CALL prihre( sf_dta(1)%fnow(:,:,1), jpi, jpj, 1, jpi, 20, 1, jpj, 20, 1., numout )
+261c245
+<                CALL prihre( ztrcdta(:,:,jpk/2), jpi, jpj, 1, jpi, 20, 1, jpj, 20, 1., numout )
+---
+>                CALL prihre( sf_dta(1)%fnow(:,:,jpk/2), jpi, jpj, 1, jpi, 20, 1, jpj, 20, 1., numout )
+263c247
+<                CALL prihre( ztrcdta(:,:,jpkm1), jpi, jpj, 1, jpi, 20, 1, jpj, 20, 1., numout )
+---
+>                CALL prihre( sf_dta(1)%fnow(:,:,jpkm1), jpi, jpj, 1, jpi, 20, 1, jpj, 20, 1., numout )
+266,268d249
+<          !
+<          CALL wrk_dealloc( jpi, jpj, jpk, ztrcdta )
+<          !
+279c260
+<    SUBROUTINE trc_dta( kt, sf_dta, ptrfac, ptrc)        ! Empty routine
+---
+>    SUBROUTINE trc_dta( kt, sf_dta, zrf_trfac )        ! Empty routine
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcice.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcice.F90
+54d53
+<          IF( lk_my_trc  )    CALL trc_ice_ini_my_trc       ! MY_TRC  tracers
+56a56
+>          IF( lk_my_trc  )    CALL trc_ice_ini_my_trc       ! MY_TRC  tracers
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcini.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcini.F90
+23a24,25
+>    USE trcini_cmoc   ! CMOC   initialisation
+>    USE trcini_canoe   ! canoe   initialisation
+25d26
+<    USE trcini_age      ! AGE      initialisation
+28a30
+>    USE zpshde          ! partial step: hor. derivative   (zps_hde routine)
+34c36,38
+<  
+---
+>  !! From Elise 20170316-------------------------written by xiaofan Luo
+>  USE trcbc,   only : trc_bc_init ! generalized Boundary Conditions
+>  !!---------------------------------XIAOFANLuo
+44c48
+<    !! $Id: trcini.F90 8353 2017-07-19 14:41:00Z lovato $
+---
+>    !! $Id: trcini.F90 5407 2015-06-11 19:13:22Z smasson $ 
+62a67
+>       REAL(wp), POINTER, DIMENSION(:,:,:) ::  ztrcdta   ! 4D  workspace
+99,100c104,106
+<       IF( lk_my_trc  )       CALL trc_ini_my_trc       ! MY_TRC    tracers
+<       IF( lk_cfc     )       CALL trc_ini_cfc          ! CFC       tracers
+---
+>       IF( lk_canoe  )       CALL trc_ini_canoe       ! CanOE  bio-model
+>       IF( lk_cmoc  )         CALL trc_ini_cmoc       ! CMOC  bio-model
+>       IF( lk_cfc     )       CALL trc_ini_cfc          ! CFC     tracers
+102c108
+<       IF( lk_age     )       CALL trc_ini_age          ! AGE       tracer
+---
+>       IF( lk_my_trc  )       CALL trc_ini_my_trc       ! MY_TRC  tracers
+113c119,124
+< 
+---
+>    !! From Elise 20170316--------------------written xiaofanLuo
+> #if defined key_bdy
+>        ! Initialisation of tracers Boundary Conditions
+>        CALL trc_bc_init(jptra)
+> #endif
+>    !! --------------written by xiaofanLuo
+122a134,135
+>             CALL wrk_alloc( jpi, jpj, jpk, ztrcdta )    ! Memory allocation
+>             !
+126,127c139,141
+<                   CALL trc_dta( nit000, sf_trcdta(jl), rf_trfac(jl) )   ! read tracer data at nit000
+<                   trn(:,:,:,jn) = sf_trcdta(jl)%fnow(:,:,:) 
+---
+>                   CALL trc_dta( nit000, sf_trcdta(jl),rf_trfac(jl) )   ! read tracer data at nit000
+>                   ztrcdta(:,:,:) = sf_trcdta(jl)%fnow(:,:,:)
+>                   trn(:,:,:,jn) = ztrcdta(:,:,:) * tmask(:,:,:)  
+137c151
+<             !
+---
+>             CALL wrk_dealloc( jpi, jpj, jpk, ztrcdta )
+144a159,164
+>       IF( ln_zps .AND. .NOT. lk_c1d .AND. .NOT. ln_isfcav )   &              ! Partial steps: before horizontal gradient of passive
+>         &    CALL zps_hde    ( nit000, jptra, trn, gtru, gtrv  )  ! Partial steps: before horizontal gradient
+>       IF( ln_zps .AND. .NOT. lk_c1d .AND.       ln_isfcav )   &
+>         &    CALL zps_hde_isf( nit000, jptra, trn, pgtu=gtru, pgtv=gtrv, pgtui=gtrui, pgtvi=gtrvi )       ! tracers at the bottom ocean level
+> 
+> 
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcnam.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcnam.F90
+23a24,25
+>    USE trcnam_canoe     ! CanOE namelist
+>    USE trcnam_cmoc     ! CMOC namelist
+26d27
+<    USE trcnam_age        ! AGE SMS namelist
+42c43
+<    !! $Id: trcnam.F90 8353 2017-07-19 14:41:00Z lovato $
+---
+>    !! $Id: trcnam.F90 5411 2015-06-12 17:39:14Z cetlod $
+64c65
+<                              CALL trc_nam_trc
+---
+>       CALL trc_nam_trc
+67c68
+<       IF( .NOT. lk_iomput)   CALL trc_nam_dia
+---
+>       CALL trc_nam_dia
+70c71
+<                              CALL trc_nam_trp
+---
+>       CALL trc_nam_trp
+81,106d81
+<       ! Call the ice module for tracers
+<       ! -------------------------------
+<       CALL trc_nam_ice
+< 
+<       ! namelist of SMS
+<       ! ---------------
+<       IF( lk_pisces  ) THEN   ;   CALL trc_nam_pisces      ! PISCES  bio-model
+<       ELSE                    ;   IF(lwp) WRITE(numout,*) '          PISCES not used'
+<       ENDIF
+< 
+<       IF( lk_my_trc  ) THEN  ;   CALL trc_nam_my_trc       ! MY_TRC  tracers
+<       ELSE                   ;   IF(lwp) WRITE(numout,*)  '          MY_TRC not used'
+<       ENDIF
+< 
+<       IF( lk_cfc     ) THEN   ;   CALL trc_nam_cfc         ! CFC     tracers
+<       ELSE                    ;   IF(lwp) WRITE(numout,*) '          CFC not used'
+<       ENDIF
+< 
+<       IF( lk_c14b    ) THEN  ;   CALL trc_nam_c14b         ! C14 bomb     tracers
+<       ELSE                   ;   IF(lwp) WRITE(numout,*)  '          C14 not used'
+<       ENDIF
+< 
+<       IF( lk_age     ) THEN  ;   CALL trc_nam_age         ! AGE     tracer
+<       ELSE                   ;   IF(lwp) WRITE(numout,*)  '          AGE not used'
+<       ENDIF
+< 
+146a122,179
+> 
+> #if defined key_trdmxl_trc || defined key_trdtrc
+> 
+>          REWIND( numnat_ref )              ! Namelist namtrc_trd in reference namelist : Passive tracer trends
+>          READ  ( numnat_ref, namtrc_trd, IOSTAT = ios, ERR = 905)
+> 905      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in reference namelist', lwp )
+> 
+>          REWIND( numnat_cfg )              ! Namelist namtrc_trd in configuration namelist : Passive tracer trends
+>          READ  ( numnat_cfg, namtrc_trd, IOSTAT = ios, ERR = 906 )
+> 906      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in configuration namelist', lwp )
+>          IF(lwm) WRITE ( numont, namtrc_trd )
+> 
+>          IF(lwp) THEN
+>             WRITE(numout,*)
+>             WRITE(numout,*) ' trd_mxl_trc_init : read namelist namtrc_trd                    '
+>             WRITE(numout,*) ' ~~~~~~~~~~~~~~~~                                               '
+>             WRITE(numout,*) '   * frequency of trends diagnostics   nn_trd_trc             = ', nn_trd_trc
+>             WRITE(numout,*) '   * control surface type              nn_ctls_trc            = ', nn_ctls_trc
+>             WRITE(numout,*) '   * restart for ML diagnostics        ln_trdmxl_trc_restart  = ', ln_trdmxl_trc_restart
+>             WRITE(numout,*) '   * flag to diagnose trends of                                 '
+>             WRITE(numout,*) '     instantantaneous or mean ML T/S   ln_trdmxl_trc_instant  = ', ln_trdmxl_trc_instant
+>             WRITE(numout,*) '   * unit conversion factor            rn_ucf_trc             = ', rn_ucf_trc
+>             DO jn = 1, jptra
+>                IF( ln_trdtrc(jn) ) WRITE(numout,*) '    compute ML trends for tracer number :', jn
+>             END DO
+>          ENDIF
+> #endif
+> 
+> 
+>       ! Call the ice module for tracers
+>       ! -------------------------------
+>       CALL trc_nam_ice
+> 
+>       ! namelist of SMS
+>       ! ---------------      
+>       IF( lk_pisces  ) THEN   ;   CALL trc_nam_pisces      ! PISCES  bio-model
+>       ELSE                    ;   IF(lwp) WRITE(numout,*) '          PISCES not used'
+>       ENDIF
+>       
+>       IF( lk_canoe  ) THEN   ;   CALL trc_nam_canoe      ! CanOE  bio-model
+>       ELSE                    ;   IF(lwp) WRITE(numout,*) '          CanOE not used'
+>       ENDIF
+>       
+>       IF( lk_cmoc  ) THEN   ;   CALL trc_nam_cmoc      ! CMOC  bio-model
+>       ELSE                    ;   IF(lwp) WRITE(numout,*) '          CMOC not used'
+>       ENDIF
+> 
+>       IF( lk_cfc     ) THEN   ;   CALL trc_nam_cfc         ! CFC     tracers
+>       ELSE                    ;   IF(lwp) WRITE(numout,*) '          CFC not used'
+>       ENDIF
+> 
+>       IF( lk_c14b     ) THEN   ;   CALL trc_nam_c14b         ! C14 bomb     tracers
+>       ELSE                    ;   IF(lwp) WRITE(numout,*) '          C14 not used'
+>       ENDIF
+> 
+>       IF( lk_my_trc  ) THEN   ;   CALL trc_nam_my_trc      ! MY_TRC  tracers
+>       ELSE                    ;   IF(lwp) WRITE(numout,*) '          MY_TRC not used'
+>       ENDIF
+283c316,325
+<          ln_trc_wri(jn) =       sn_tracer(jn)%llsave
+---
+> !! FROM Elise 20170316---------------xiaofanLuo
+> !#if defined key_bdy
+>           ln_trc_sbc(jn) =       sn_tracer(jn)%llsbc
+>           ln_trc_cbc(jn) =       sn_tracer(jn)%llcbc
+>           ln_trc_obc(jn) =       sn_tracer(jn)%llobc
+> !#endif
+> !----------------------xiaofanLuo
+>         ln_trc_wri(jn) =       sn_tracer(jn)%llsave
+>        
+> 
+285c327,328
+<       
+---
+>       IF(lwp) WRITE(numout,*) 'trc_nam : read the passive tracer namelists-LuoTEST'
+> 
+307d349
+<       INTEGER  ::   jn        
+339c381
+<       IF( ln_diatrc ) THEN 
+---
+>       IF( ln_diatrc .AND. .NOT. lk_iomput ) THEN 
+350c392
+<       IF( ln_diabio .OR. l_trdtrc ) THEN
+---
+>       IF( ( ln_diabio .AND. .NOT. lk_iomput ) .OR. l_trdtrc ) THEN
+358,384d399
+< 
+< #if defined key_trdmxl_trc || defined key_trdtrc
+< 
+<          REWIND( numnat_ref )              ! Namelist namtrc_trd in reference namelist : Passive tracer trends
+<          READ  ( numnat_ref, namtrc_trd, IOSTAT = ios, ERR = 905)
+< 905      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in reference namelist', lwp )
+< 
+<          REWIND( numnat_cfg )              ! Namelist namtrc_trd in configuration namelist : Passive tracer trends
+<          READ  ( numnat_cfg, namtrc_trd, IOSTAT = ios, ERR = 906 )
+< 906      IF( ios /= 0 ) CALL ctl_nam ( ios , 'namtrc_trd in configuration namelist', lwp )
+<          IF(lwm) WRITE ( numont, namtrc_trd )
+< 
+<          IF(lwp) THEN
+<             WRITE(numout,*)
+<             WRITE(numout,*) ' trd_mxl_trc_init : read namelist namtrc_trd                    '
+<             WRITE(numout,*) ' ~~~~~~~~~~~~~~~~                                               '
+<             WRITE(numout,*) '   * frequency of trends diagnostics   nn_trd_trc             = ', nn_trd_trc
+<             WRITE(numout,*) '   * control surface type              nn_ctls_trc            = ', nn_ctls_trc
+<             WRITE(numout,*) '   * restart for ML diagnostics        ln_trdmxl_trc_restart  = ', ln_trdmxl_trc_restart
+<             WRITE(numout,*) '   * flag to diagnose trends of                                 '
+<             WRITE(numout,*) '     instantantaneous or mean ML T/S   ln_trdmxl_trc_instant  = ', ln_trdmxl_trc_instant
+<             WRITE(numout,*) '   * unit conversion factor            rn_ucf_trc             = ', rn_ucf_trc
+<             DO jn = 1, jptra
+<                IF( ln_trdtrc(jn) ) WRITE(numout,*) '    compute ML trends for tracer number :', jn
+<             END DO
+<          ENDIF
+< #endif
+401c416
+<    !! $Id: trcnam.F90 8353 2017-07-19 14:41:00Z lovato $
+---
+>    !! $Id: trcnam.F90 5411 2015-06-12 17:39:14Z cetlod $
+404c419
+< END MODULE trcnam
+---
+> END MODULE  trcnam
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcrst.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcrst.F90
+306c306
+<       IF(lwp) WRITE(numout,*) 
+---
+>       WRITE(numout,*) 
+327c327
+<    !! $Id: trcrst.F90 7052 2016-10-20 10:23:27Z acc $
+---
+>    !! $Id: trcrst.F90 5513 2015-06-30 09:59:46Z cetlod $
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcsms.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcsms.F90
+17a18,19
+>    USE trcsms_canoe      ! PISCES biogeo-model
+>    USE trcsms_cmoc      !CMOC biogeo-model
+20d21
+<    USE trcsms_age         ! AGE tracer 
+31c32
+<    !! $Id: trcsms.F90 8353 2017-07-19 14:41:00Z lovato $
+---
+>    !! $Id: trcsms.F90 3680 2012-11-27 14:42:24Z rblod $ 
+52c53,54
+<       IF( lk_my_trc  )   CALL trc_sms_my_trc ( kt )    ! MY_TRC  tracers
+---
+>       IF( lk_canoe  )   CALL trc_sms_canoe ( kt )    ! main program of CanOE 
+>       IF( lk_cmoc  )     CALL trc_sms_cmoc ( kt )    ! main program of CMOC 
+55c57
+<       IF( lk_age     )   CALL trc_sms_age    ( kt )    ! AGE tracer
+---
+>       IF( lk_my_trc  )   CALL trc_sms_my_trc ( kt )    ! MY_TRC  tracers
+79c81
+< END MODULE trcsms
+---
+> END MODULE  trcsms
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcstp.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcstp.F90
+26c26,29
+< 
+---
+>    !! wirtten by xiaofan Luo for update obc
+> #if defined key_bdy
+>    USE trcbc
+> #endif    
+34,35c37,38
+<    INTEGER  :: nb_rec_per_day, ktdcy
+<    REAL(wp) :: rsecfst, rseclast
+---
+>    INTEGER  :: nb_rec_per_days
+>    INTEGER  :: isecfst, iseclast
+42c45
+<    !! $Id: trcstp.F90 7654 2017-02-07 16:16:04Z cetlod $ 
+---
+>    !! $Id: trcstp.F90 5407 2015-06-11 19:13:22Z smasson $ 
+60a64
+> 
+88c92
+<          IF( .NOT.lk_offline )     CALL trc_rst_opn  ( kt )       ! Open tracer restart file 
+---
+>                                    CALL trc_rst_opn  ( kt )       ! Open tracer restart file 
+93c97,101
+<                                    CALL trc_sms      ( kt )       ! tracers: sinks and sources
+---
+>                                    CALL trc_sms      ( kt )       ! tracers: sinks and sourcesa
+>  !! written by xiaofan Luo for obc update
+> #if defined key_bdy                
+>                                    CALL trc_bc_read  ( kt )
+> #endif     
+95d102
+< 
+107d113
+< 
+113c119
+< 9300  FORMAT(i10,D23.16)
+---
+> 9300  FORMAT(i10,e18.10)
+126c132
+<       !! ** Method  : store in TOP the qsr every hour ( or every time-step if the latter 
+---
+>       !! ** Method  : store in TOP the qsr every hour ( or every time-step the latter 
+133,135d138
+<       REAL(wp) :: zkt, zrec
+<       CHARACTER(len=1)               ::   cl1                      ! 1 character
+<       CHARACTER(len=2)               ::   cl2                      ! 2 characters
+139,140c142,143
+<             rdt_sampl = rday / ncpl_qsr_freq
+<             nb_rec_per_day = ncpl_qsr_freq
+---
+>             rdt_sampl = 86400. / ncpl_qsr_freq
+>             nb_rec_per_days = ncpl_qsr_freq
+142,143c145,146
+<             rdt_sampl = MAX( 3600., rdttrc(1) )
+<             nb_rec_per_day = INT( rday / rdt_sampl )
+---
+>             rdt_sampl = MAX( 3600., rdt * nn_dttrc )
+>             nb_rec_per_days = INT( 86400 / rdt_sampl )
+148c151
+<             WRITE(numout,*) ' Sampling frequency dt = ', rdt_sampl, 's','   Number of sampling per day  nrec = ', nb_rec_per_day
+---
+>             WRITE(numout,*) ' Sampling frequency dt = ', rdt_sampl, 's','   Number of sampling per day  nrec = ', nb_rec_per_days
+152c155,159
+<          ALLOCATE( qsr_arr(jpi,jpj,nb_rec_per_day ) )
+---
+>          ALLOCATE( qsr_arr(jpi,jpj,nb_rec_per_days ) )
+>          DO jn = 1, nb_rec_per_days
+>             qsr_arr(:,:,jn) = qsr(:,:)
+>          ENDDO
+>          qsr_mean(:,:) = qsr(:,:)
+154,188c161,162
+<          !                                            !* Restart: read in restart file
+<          IF( ln_rsttr .AND. nn_rsttr /= 0 .AND. iom_varid( numrtr, 'qsr_mean' , ldstop = .FALSE. ) > 0  &
+<            &                              .AND. iom_varid( numrtr, 'qsr_arr_1', ldstop = .FALSE. ) > 0  &
+<            &                              .AND. iom_varid( numrtr, 'ktdcy'    , ldstop = .FALSE. ) > 0  &
+<            &                              .AND. iom_varid( numrtr, 'nrdcy'    , ldstop = .FALSE. ) > 0  ) THEN
+< 
+<             CALL iom_get( numrtr, 'ktdcy', zkt )  
+<             rsecfst = INT( zkt ) * rdttrc(1)
+<             IF(lwp) WRITE(numout,*) 'trc_qsr_mean:   qsr_mean read in the restart file at time-step rsecfst =', rsecfst, ' s '
+<             CALL iom_get( numrtr, jpdom_autoglo, 'qsr_mean', qsr_mean )   !  A mean of qsr
+<             CALL iom_get( numrtr, 'nrdcy', zrec )   !  Number of record per days
+<             IF( INT( zrec ) == nb_rec_per_day ) THEN
+<                DO jn = 1, nb_rec_per_day 
+<                   IF( jn <= 9 )  THEN
+<                     WRITE(cl1,'(i1)') jn
+<                     CALL iom_get( numrtr, jpdom_autoglo, 'qsr_arr_'//cl1, qsr_arr(:,:,jn) )   !  A mean of qsr
+<                   ELSE
+<                     WRITE(cl2,'(i2.2)') jn
+<                     CALL iom_get( numrtr, jpdom_autoglo, 'qsr_arr_'//cl2, qsr_arr(:,:,jn) )   !  A mean of qsr
+<                   ENDIF
+<               ENDDO
+<             ELSE
+<                DO jn = 1, nb_rec_per_day
+<                   qsr_arr(:,:,jn) = qsr_mean(:,:)
+<                ENDDO
+<             ENDIF
+<          ELSE                                         !* no restart: set from nit000 values
+<             IF(lwp) WRITE(numout,*) 'trc_qsr_mean:   qsr_mean set to nit000 values'
+<             rsecfst  = kt * rdttrc(1)
+<             !
+<             qsr_mean(:,:) = qsr(:,:)
+<             DO jn = 1, nb_rec_per_day
+<                qsr_arr(:,:,jn) = qsr_mean(:,:)
+<             ENDDO
+<          ENDIF
+---
+>          isecfst  = nsec_year + nsec1jan000   !   number of seconds between Jan. 1st 00h of nit000 year and the middle of time step
+>          iseclast = isecfst
+192,200c166,172
+<       rseclast = kt * rdttrc(1)
+<       !
+<       llnew   = ( rseclast - rsecfst ) .ge.  rdt_sampl    !   new shortwave to store
+<       IF( llnew ) THEN
+<           ktdcy = kt
+<           IF( lwp .AND. kt < nittrc000 + 100 ) WRITE(numout,*) ' New shortwave to sample for TOP at time kt = ', ktdcy, &
+<              &                      ' time = ', rseclast/3600.,'hours '
+<           rsecfst = rseclast
+<           DO jn = 1, nb_rec_per_day - 1
+---
+>       iseclast = nsec_year + nsec1jan000
+>       llnew   = ( iseclast - isecfst )  > INT( rdt_sampl )   !   new shortwave to store
+>       IF( kt /= nittrc000 .AND. llnew ) THEN
+>           IF( lwp ) WRITE(numout,*) ' New shortwave to sample for TOP at time kt = ', kt, &
+>              &                      ' time = ', (iseclast+rdt*nn_dttrc/2.)/3600.,'hours '
+>           isecfst = iseclast
+>           DO jn = 1, nb_rec_per_days - 1
+203,224c175,176
+<           qsr_arr (:,:,nb_rec_per_day) = qsr(:,:)
+<           qsr_mean(:,:                ) = SUM( qsr_arr(:,:,:), 3 ) / nb_rec_per_day
+<       ENDIF
+<       !
+<       IF( lrst_trc ) THEN    !* Write the mean of qsr in restart file 
+<          IF(lwp) WRITE(numout,*)
+<          IF(lwp) WRITE(numout,*) 'trc_mean_qsr : write qsr_mean in restart file  kt =', kt
+<          IF(lwp) WRITE(numout,*) '~~~~~~~'
+<          zkt  = REAL( ktdcy, wp )
+<          zrec = REAL( nb_rec_per_day, wp )
+<          CALL iom_rstput( kt, nitrst, numrtw, 'ktdcy', zkt  )
+<          CALL iom_rstput( kt, nitrst, numrtw, 'nrdcy', zrec )
+<           DO jn = 1, nb_rec_per_day 
+<              IF( jn <= 9 )  THEN
+<                WRITE(cl1,'(i1)') jn
+<                CALL iom_rstput( kt, nitrst, numrtw, 'qsr_arr_'//cl1, qsr_arr(:,:,jn) )
+<              ELSE
+<                WRITE(cl2,'(i2.2)') jn
+<                CALL iom_rstput( kt, nitrst, numrtw, 'qsr_arr_'//cl2, qsr_arr(:,:,jn) )
+<              ENDIF
+<          ENDDO
+<          CALL iom_rstput( kt, nitrst, numrtw, 'qsr_mean', qsr_mean(:,:) )
+---
+>           qsr_arr (:,:,nb_rec_per_days) = qsr(:,:)
+>           qsr_mean(:,:                ) = SUM( qsr_arr(:,:,:), 3 ) / nb_rec_per_days
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcsub.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcsub.F90
+17a18,23
+> #if defined key_zdftke
+>    USE zdftke          ! twice TKE (en)
+> #endif
+> #if defined key_zdfgls
+>    USE zdfgls, ONLY: en
+> #endif
+44c50
+<    !! $Id: trcsub.F90 7088 2016-10-25 14:35:26Z lovato $ 
+---
+>    !! $Id: trcsub.F90 5215 2015-04-15 16:11:56Z nicolasmartin $ 
+diff /home/amh001/NAA_NEMO/NEMO/TOP_SRC/trcwri.F90 /home/amh001/NEMO36/NEMOGCM/NEMO/TOP_SRC/trcwri.F90
+19a20,21
+>    USE trcwri_canoe
+>    USE trcwri_cmoc
+22d23
+<    USE trcwri_age
+60c61,62
+<       IF( lk_my_trc  )   CALL trc_wri_my_trc     ! MY_TRC  tracers
+---
+>       IF( lk_canoe  )   CALL trc_wri_canoe     ! PISCES 
+>       IF( lk_cmoc  )   CALL trc_wri_cmoc     ! CMOC 
+63c65
+<       IF( lk_age     )   CALL trc_wri_age        ! AGE tracer
+---
+>       IF( lk_my_trc  )   CALL trc_wri_my_trc     ! MY_TRC  tracers
+82c84
+<    !! $Id: trcwri.F90 8353 2017-07-19 14:41:00Z lovato $
+---
+>    !! $Id: trcwri.F90 3750 2013-01-14 16:25:10Z cetlod $ 
