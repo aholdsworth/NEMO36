@@ -22,7 +22,6 @@ MODULE trcnam
    USE trcnam_trp        ! Transport namelist
    USE trcnam_pisces     ! PISCES namelist
    USE trcnam_canoe     ! CanOE namelist
-   USE trcnam_cmoc     ! CMOC namelist
    USE trcnam_cfc        ! CFC SMS namelist
    USE trcnam_c14b       ! C14 SMS namelist
    USE trcnam_my_trc     ! MY_TRC SMS namelist
@@ -162,9 +161,6 @@ CONTAINS
       ELSE                    ;   IF(lwp) WRITE(numout,*) '          CanOE not used'
       ENDIF
       
-      IF( lk_cmoc  ) THEN   ;   CALL trc_nam_cmoc      ! CMOC  bio-model
-      ELSE                    ;   IF(lwp) WRITE(numout,*) '          CMOC not used'
-      ENDIF
 
       IF( lk_cfc     ) THEN   ;   CALL trc_nam_cfc         ! CFC     tracers
       ELSE                    ;   IF(lwp) WRITE(numout,*) '          CFC not used'

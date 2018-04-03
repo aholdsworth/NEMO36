@@ -14,6 +14,12 @@ MODULE par_cfc
    USE par_pisces , ONLY : jp_pisces_3d    !: number of 3D diag in PISCES
    USE par_pisces , ONLY : jp_pisces_trd   !: number of biological diag in PISCES
    
+   USE par_canoe , ONLY : jp_canoe       !: number of tracers in PISCES
+   USE par_canoe , ONLY : jp_canoe_2d    !: number of 2D diag in PISCES
+   USE par_canoe , ONLY : jp_canoe_3d    !: number of 3D diag in PISCES
+   USE par_canoe , ONLY : jp_canoe_trd   !: number of biological diag in PISCES
+   
+
    USE par_my_trc , ONLY : jp_my_trc       !: number of tracers in MY_TRC
    USE par_my_trc , ONLY : jp_my_trc_2d    !: number of 2D diag in MY_TRC
    USE par_my_trc , ONLY : jp_my_trc_3d    !: number of 3D diag in MY_TRC
