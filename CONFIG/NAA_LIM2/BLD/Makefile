@@ -49,7 +49,7 @@ export FC_INCLUDE = -I
 export FC_MODSEARCH = 
 export FC_OUTPUT = -o
 export FFLAGS = -O2 -fp-model source  -traceback -r8  -convert big_endian -assume byterecl -I/home/amh001/XIOS2/include -I/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/include -I/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/include
-export FPPKEYS = key_lim2 key_vectopt_loop key_dynspg_ts key_ldfslp key_traldf_c3d key_dynldf_c3d key_zdftke key_vvl key_zdfddm key_xios2 key_iomput key_mpp_mpi key_netcdf4 key_traldf_smag key_dynldf_smag key_bdy
+export FPPKEYS = key_lim2 key_vectopt_loop key_dynspg_ts key_ldfslp key_traldf_c3d key_dynldf_c3d key_zdftke key_vvl key_netcdf4 key_xios2 key_iomput key_mpp_mpi key_bdy key_traldf_smag key_dynldf_smag
 export LD = mpif90
 export LDFLAGS = -O2 -L/home/amh001/XIOS2/lib -lxios -L/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/lib -L/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz -lstdc++
 export LD_LIBLINK = -l
@@ -2942,10 +2942,10 @@ zdfbfr.o: $(FCM_PPSRCDIR)/nemo/zdfbfr.f90 FFLAGS__nemo__zdfbfr.flags dom_oce.o i
 FFLAGS__nemo__zdfddm.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-zdfddm.done: zdfddm.o dom_oce.done eosbn2.done in_out_manager.done lbclnk.done lib_mpp.done oce.done prtctl.done timing.done wrk_nemo.done zdf_oce.done
+zdfddm.done: zdfddm.o
 	touch $(FCM_DONEDIR)/$@
 
-zdfddm.o: $(FCM_PPSRCDIR)/nemo/zdfddm.f90 FFLAGS__nemo__zdfddm.flags dom_oce.o eosbn2.o in_out_manager.o lbclnk.o lib_mpp.o oce.o prtctl.o timing.o wrk_nemo.o zdf_oce.o
+zdfddm.o: $(FCM_PPSRCDIR)/nemo/zdfddm.f90 FFLAGS__nemo__zdfddm.flags
 	fcm_internal compile:F nemo $< $@
 
 zdfddm_substitute.h90: /home/amh001/NAA_NEMO/CONFIG/NAA_LIM2/WORK/zdfddm_substitute.h90

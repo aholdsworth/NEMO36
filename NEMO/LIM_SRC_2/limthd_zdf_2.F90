@@ -257,6 +257,7 @@ CONTAINS
           zind   = MAX( zzero , SIGN (zone , hicdif - h_ice_1d(ji) ) )
           !--Computation of the fraction of the net shortwave radiation which
           !--penetrates inside the ice cover ( See Forcat)
+          !Hakase modification for light penetration
           zi0(ji)  = MAX( 0.15, zihsn * ( fr1_i0_1d(ji) + zihic * fr2_i0_1d(ji)) )
           !zi0(ji)  = zihsn * ( fr1_i0_1d(ji) + zihic * fr2_i0_1d(ji) )
    !       zexp     = MIN( zone , EXP( -1.5 * ( h_ice_1d(ji) - zhsu ) ) )

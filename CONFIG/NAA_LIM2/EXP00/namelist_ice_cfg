@@ -1,5 +1,12 @@
 !!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-!! NEMO/LIM-2 : Ice configuration namelist. Overwrites SHARED/namelist_ice_lim2_ref
+!! NEMO/LIM-2 : 1 - dynamics/advection/thermo          (namicerun)
+!! namelists    2 - ice intialisation                  (namiceini)
+!!              3 - ice dynamic                        (namicedyn)
+!!              4 - ice advection                      (namicetrp)
+!!              5 - thermodynamic                      (namicethd)
+!!              6 - ice damping                        (namice_dmp)
+!!              7 - ice diagnostics                    (namicedia)
+!!              8 - ice outputs                        (namiceout)
 !>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 !-----------------------------------------------------------------------
@@ -22,3 +29,15 @@
 &namicethd     !   ice thermodynamic
 !-----------------------------------------------------------------------
 /
+!-----------------------------------------------------------------------
+&namice_dmp    !   damping of sea ice alone open boundaries
+!              !   (hard coded damping area: check if it fit your config)
+!-----------------------------------------------------------------------
+/
+!-----------------------------------------------------------------------
+&namicedia     !   ice diagnostics
+!-----------------------------------------------------------------------
+/
+!'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+&namiceout     !   parameters for outputs
+/      

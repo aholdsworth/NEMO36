@@ -315,7 +315,7 @@ DEP::nemo__vectopt_loop_substitute.h90
 DEP::nemo__wrk_nemo.F90                wrk_nemo::par_oce::USE
 DEP::nemo__zdf_oce.F90                 zdf_oce::in_out_manager::USE::lib_mpp::USE::par_oce::USE
 DEP::nemo__zdfbfr.F90                  zdfbfr::dom_oce::USE::in_out_manager::USE::iom::USE::lbclnk::USE::lib_mpp::USE::oce::USE::phycst::USE::prtctl::USE::timing::USE::wrk_nemo::USE::zdf_oce::USE
-DEP::nemo__zdfddm.F90                  zdfddm::dom_oce::USE::eosbn2::USE::in_out_manager::USE::lbclnk::USE::lib_mpp::USE::oce::USE::prtctl::USE::timing::USE::wrk_nemo::USE::zdf_oce::USE
+DEP::nemo__zdfddm.F90                  zdfddm
 DEP::nemo__zdfddm_substitute.h90       
 DEP::nemo__zdfevd.F90                  zdfevd::dom_oce::USE::in_out_manager::USE::iom::USE::lbclnk::USE::oce::USE::timing::USE::trd_oce::USE::trdtra::USE::zdf_oce::USE::zdfkpp::USE
 DEP::nemo__zdfgls.F90                  zdfgls
