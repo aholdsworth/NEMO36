@@ -21,13 +21,15 @@ MODULE trcini_cfc
 
    PUBLIC   trc_ini_cfc   ! called by trcini.F90 module
 
+   CHARACTER (len=34) ::   clname = 'cfc1112.atm'   ! ???
+
    INTEGER  ::   inum                   ! unit number
    REAL(wp) ::   ylats = -10.           ! 10 degrees south
    REAL(wp) ::   ylatn =  10.           ! 10 degrees north
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcini_cfc.F90 8353 2017-07-19 14:41:00Z lovato $ 
+   !! $Id: trcini_cfc.F90 3294 2012-01-28 16:44:18Z rblod $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -43,16 +45,16 @@ CONTAINS
       INTEGER  ::  ji, jj, jn, jl, jm, js, io, ierr
       INTEGER  ::  iskip = 6   ! number of 1st descriptor lines
       REAL(wp) ::  zyy, zyd
-      CHARACTER(len = 20)  ::  cltra
       !!----------------------------------------------------------------------
 
       IF(lwp) WRITE(numout,*)
       IF(lwp) WRITE(numout,*) ' trc_ini_cfc: initialisation of CFC chemical model'
       IF(lwp) WRITE(numout,*) ' ~~~~~~~~~~~'
-      !
-      IF(lwp) WRITE(numout,*) 'Read annual atmospheric concentrations from formatted file : ' // TRIM(clnamecfc)
+
+
+      IF(lwp) WRITE(numout,*) 'read of formatted file cfc1112atm'
       
-      CALL ctl_opn( inum, clnamecfc, 'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )
+      CALL ctl_opn( inum, clname, 'OLD', 'FORMATTED', 'SEQUENTIAL', -1, numout, .FALSE. )
       REWIND(inum)
       
       ! compute the number of year in the file
@@ -63,10 +65,10 @@ CONTAINS
         jn = jn + 1
       END DO
  100  jpyear = jn - 1 - iskip
-      IF ( lwp) WRITE(numout,*) '   --->  ', jpyear ,' years read'
+      IF ( lwp) WRITE(numout,*) '    ', jpyear ,' years read'
       !                                ! Allocate CFC arrays
 
-      ALLOCATE( p_cfc(jpyear,jphem,3), STAT=ierr )
+      ALLOCATE( p_cfc(jpyear,jphem,2), STAT=ierr )
       IF( ierr > 0 ) THEN
          CALL ctl_stop( 'trc_ini_cfc: unable to allocate p_cfc array' )   ;   RETURN
       ENDIF
@@ -84,7 +86,7 @@ CONTAINS
       IF( .NOT. ln_rsttr ) THEN    
          IF(lwp) THEN
             WRITE(numout,*)
-            WRITE(numout,*) 'Initialisation of qint ; No restart : qint equal zero '
+            WRITE(numout,*) 'Initialization de qint ; No restart : qint equal zero '
          ENDIF
          qint_cfc(:,:,:) = 0._wp
          DO jl = 1, jp_cfc
@@ -102,16 +104,25 @@ CONTAINS
       ! Read file till the end
       jn = 31
       DO 
-        READ(inum,*, IOSTAT=io) zyy, p_cfc(jn,1:2,1), p_cfc(jn,1:2,2), p_cfc(jn,1:2,3)
+        READ(inum,*, IOSTAT=io) zyy, p_cfc(jn,1,1), p_cfc(jn,1,2), p_cfc(jn,2,1), p_cfc(jn,2,2)
         IF( io < 0 ) exit
         jn = jn + 1
       END DO
 
+      p_cfc(32,1:2,1) = 5.e-4      ! modify the values of the first years
+      p_cfc(33,1:2,1) = 8.e-4
+      p_cfc(34,1:2,1) = 1.e-6
+      p_cfc(35,1:2,1) = 2.e-3
+      p_cfc(36,1:2,1) = 4.e-3
+      p_cfc(37,1:2,1) = 6.e-3
+      p_cfc(38,1:2,1) = 8.e-3
+      p_cfc(39,1:2,1) = 1.e-2
+      
       IF(lwp) THEN        ! Control print
          WRITE(numout,*)
-         WRITE(numout,*) ' Year   c11NH     c11SH     c12NH     c12SH     SF6NH     SF6SH'
+         WRITE(numout,*) ' Year   p11HN    p11HS    p12HN    p12HS '
          DO jn = 30, jpyear
-            WRITE(numout, '( 1I4, 6F10.4)') jn, p_cfc(jn,1:2,1), p_cfc(jn,1:2,2), p_cfc(jn,1:2,3)
+            WRITE(numout, '( 1I4, 4F9.2)') jn, p_cfc(jn,1,1), p_cfc(jn,2,1), p_cfc(jn,1,2), p_cfc(jn,2,2)
          END DO
       ENDIF
 

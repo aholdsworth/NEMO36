@@ -19,7 +19,7 @@ DEP_PP::nemo__bdy_par.F90
 DEP_PP::nemo__bdydta.F90                  ::domzgr_substitute.h90::H
 DEP_PP::nemo__bdydyn.F90                  ::domzgr_substitute.h90::H
 DEP_PP::nemo__bdydyn2d.F90                
-DEP_PP::nemo__bdydyn3d.F90                ::domzgr_substitute.h90::H
+DEP_PP::nemo__bdydyn3d.F90                
 DEP_PP::nemo__bdyice_lim.F90              
 DEP_PP::nemo__bdyini.F90                  
 DEP_PP::nemo__bdylib.F90                  

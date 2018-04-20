@@ -315,10 +315,10 @@ bdy_par.o: $(FCM_PPSRCDIR)/nemo/bdy_par.f90 FFLAGS__nemo__bdy_par.flags
 FFLAGS__nemo__bdydta.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-bdydta.done: bdydta.o bdy_oce.done bdytides.done dom_oce.done dynspg_oce.done fldread.done ice.done in_out_manager.done iom.done limvar.done oce.done phycst.done sbc_oce.done sbcapr.done timing.done
+bdydta.done: bdydta.o bdy_oce.done bdytides.done dom_oce.done dynspg_oce.done fldread.done ice.done in_out_manager.done iom.done limvar.done oce.done phycst.done sbcapr.done timing.done
 	touch $(FCM_DONEDIR)/$@
 
-bdydta.o: $(FCM_PPSRCDIR)/nemo/bdydta.f90 FFLAGS__nemo__bdydta.flags bdy_oce.o bdytides.o dom_oce.o dynspg_oce.o fldread.o ice.o in_out_manager.o iom.o limvar.o oce.o phycst.o sbc_oce.o sbcapr.o timing.o
+bdydta.o: $(FCM_PPSRCDIR)/nemo/bdydta.f90 FFLAGS__nemo__bdydta.flags bdy_oce.o bdytides.o dom_oce.o dynspg_oce.o fldread.o ice.o in_out_manager.o iom.o limvar.o oce.o phycst.o sbcapr.o timing.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__bdydyn.flags: FFLAGS__nemo.flags
@@ -342,10 +342,10 @@ bdydyn2d.o: $(FCM_PPSRCDIR)/nemo/bdydyn2d.f90 FFLAGS__nemo__bdydyn2d.flags bdy_o
 FFLAGS__nemo__bdydyn3d.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-bdydyn3d.done: bdydyn3d.o bdy_oce.done bdylib.done dom_oce.done in_out_manager.done lbclnk.done oce.done phycst.done timing.done
+bdydyn3d.done: bdydyn3d.o bdy_oce.done bdylib.done dom_oce.done in_out_manager.done lbclnk.done ldfdyn_oce.done oce.done phycst.done timing.done
 	touch $(FCM_DONEDIR)/$@
 
-bdydyn3d.o: $(FCM_PPSRCDIR)/nemo/bdydyn3d.f90 FFLAGS__nemo__bdydyn3d.flags bdy_oce.o bdylib.o dom_oce.o in_out_manager.o lbclnk.o oce.o phycst.o timing.o
+bdydyn3d.o: $(FCM_PPSRCDIR)/nemo/bdydyn3d.f90 FFLAGS__nemo__bdydyn3d.flags bdy_oce.o bdylib.o dom_oce.o in_out_manager.o lbclnk.o ldfdyn_oce.o oce.o phycst.o timing.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__bdyice_lim.flags: FFLAGS__nemo.flags
@@ -387,10 +387,10 @@ bdytides.o: $(FCM_PPSRCDIR)/nemo/bdytides.f90 FFLAGS__nemo__bdytides.flags bdy_o
 FFLAGS__nemo__bdytra.flags: FFLAGS__nemo.flags
 	touch $(FCM_FLAGSDIR)/$@
 
-bdytra.done: bdytra.o bdy_oce.done bdydta.done bdylib.done dom_oce.done in_out_manager.done lbclnk.done oce.done timing.done
+bdytra.done: bdytra.o bdy_oce.done bdydta.done bdylib.done dom_oce.done in_out_manager.done lbclnk.done ldftra_oce.done oce.done timing.done
 	touch $(FCM_DONEDIR)/$@
 
-bdytra.o: $(FCM_PPSRCDIR)/nemo/bdytra.f90 FFLAGS__nemo__bdytra.flags bdy_oce.o bdydta.o bdylib.o dom_oce.o in_out_manager.o lbclnk.o oce.o timing.o
+bdytra.o: $(FCM_PPSRCDIR)/nemo/bdytra.f90 FFLAGS__nemo__bdytra.flags bdy_oce.o bdydta.o bdylib.o dom_oce.o in_out_manager.o lbclnk.o ldftra_oce.o oce.o timing.o
 	fcm_internal compile:F nemo $< $@
 
 FFLAGS__nemo__bdyvol.flags: FFLAGS__nemo.flags

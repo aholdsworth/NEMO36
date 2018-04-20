@@ -42,7 +42,7 @@ MODULE trcadv
 #  include "vectopt_loop_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcadv.F90 7522 2017-01-02 10:06:49Z cetlod $ 
+   !! $Id: trcadv.F90 5385 2015-06-09 13:50:42Z cetlod $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -87,37 +87,28 @@ CONTAINS
       ELSEIF( kt <= nittrc000 + nn_dttrc ) THEN          ! at nittrc000 or nittrc000+1
          r2dt(:) = 2. * rdttrc(:)       ! = 2 rdttrc (leapfrog)
       ENDIF
-      !  
-      IF( lk_offline ) THEN
-         zun(:,:,:) = un(:,:,:)     ! effective transport already in un/vn/wn
-         zvn(:,:,:) = vn(:,:,:)
-         zwn(:,:,:) = wn(:,:,:)
-      ELSE
-         !                                                         ! effective transport
-         DO jk = 1, jpkm1
-            !                                                ! eulerian transport only
-            zun(:,:,jk) = e2u  (:,:) * fse3u(:,:,jk) * un(:,:,jk)
-            zvn(:,:,jk) = e1v  (:,:) * fse3v(:,:,jk) * vn(:,:,jk)
-            zwn(:,:,jk) = e1e2t(:,:)                 * wn(:,:,jk)
-            !
-         END DO
+      !                                                   ! effective transport
+      DO jk = 1, jpkm1
+         !                                                ! eulerian transport only
+         zun(:,:,jk) = e2u  (:,:) * fse3u(:,:,jk) * un(:,:,jk)
+         zvn(:,:,jk) = e1v  (:,:) * fse3v(:,:,jk) * vn(:,:,jk)
+         zwn(:,:,jk) = e1e2t(:,:)                 * wn(:,:,jk)
          !
-         IF( ln_vvl_ztilde .OR. ln_vvl_layer ) THEN
-            zun(:,:,:) = zun(:,:,:) + un_td(:,:,:)
-            zvn(:,:,:) = zvn(:,:,:) + vn_td(:,:,:)
-         ENDIF
-         !
-         zun(:,:,jpk) = 0._wp                                                     ! no transport trough the bottom
-         zvn(:,:,jpk) = 0._wp                                                     ! no transport trough the bottom
-         zwn(:,:,jpk) = 0._wp                                                     ! no transport trough the bottom
-         !
-
-         IF( lk_traldf_eiv .AND. .NOT. ln_traldf_grif )   &  ! add the eiv transport (if necessary)
-            &              CALL tra_adv_eiv( kt, nittrc000, zun, zvn, zwn, 'TRC' )
-         !
-         IF( ln_mle    )   CALL tra_adv_mle( kt, nittrc000, zun, zvn, zwn, 'TRC' )    ! add the mle transport (if necessary)
-         !
+      END DO
+      !
+      IF( ln_vvl_ztilde .OR. ln_vvl_layer ) THEN
+         zun(:,:,:) = zun(:,:,:) + un_td(:,:,:)
+         zvn(:,:,:) = zvn(:,:,:) + vn_td(:,:,:)
       ENDIF
+      !
+      zun(:,:,jpk) = 0._wp                                                     ! no transport trough the bottom
+      zvn(:,:,jpk) = 0._wp                                                     ! no transport trough the bottom
+      zwn(:,:,jpk) = 0._wp                                                     ! no transport trough the bottom
+
+      IF( lk_traldf_eiv .AND. .NOT. ln_traldf_grif )   &  ! add the eiv transport (if necessary)
+         &              CALL tra_adv_eiv( kt, nittrc000, zun, zvn, zwn, 'TRC' )
+      !
+      IF( ln_mle    )   CALL tra_adv_mle( kt, nittrc000, zun, zvn, zwn, 'TRC' )    ! add the mle transport (if necessary)
       !
       SELECT CASE ( nadv )                            !==  compute advection trend and add it to general trend  ==!
       CASE ( 1 )   ;    CALL tra_adv_cen2  ( kt, nittrc000, 'TRC',       zun, zvn, zwn, trb, trn, tra, jptra )   !  2nd order centered

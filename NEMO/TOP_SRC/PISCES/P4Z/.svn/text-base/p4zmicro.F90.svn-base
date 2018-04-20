@@ -104,7 +104,7 @@ CONTAINS
                !  Zooplankton mortality. A square function has been selected with
                !  no real reason except that it seems to be more stable and may mimic predation.
                !  ---------------------------------------------------------------
-               ztortz = mzrat * 1.e6 * zfact * trb(ji,jj,jk,jpzoo) * (1. - nitrfac(ji,jj,jk))
+               ztortz = mzrat * 1.e6 * zfact * trb(ji,jj,jk,jpzoo)
 
                zcompadi  = MIN( MAX( ( trb(ji,jj,jk,jpdia) - xthreshdia ), 0.e0 ), xsizedia )
                zcompaph  = MAX( ( trb(ji,jj,jk,jpphy) - xthreshphy ), 0.e0 )
@@ -116,7 +116,7 @@ CONTAINS
                zfoodlim  = MAX( 0. , zfood - min(xthresh,0.5*zfood) )
                zdenom    = zfoodlim / ( xkgraz + zfoodlim )
                zdenom2   = zdenom / ( zfood + rtrn )
-               zgraze    = grazrat * zstep * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jpzoo) * (1. - nitrfac(ji,jj,jk)) 
+               zgraze    = grazrat * zstep * tgfunc2(ji,jj,jk) * trb(ji,jj,jk,jpzoo) 
 
                zgrazp    = zgraze  * xpref2p * zcompaph  * zdenom2 
                zgrazm    = zgraze  * xpref2c * zcompapoc * zdenom2 
@@ -272,4 +272,4 @@ CONTAINS
 #endif 
 
    !!======================================================================
-END MODULE p4zmicro
+END MODULE  p4zmicro

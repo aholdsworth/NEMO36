@@ -86,20 +86,20 @@ MODULE sms_pisces
    !!*  SMS for the organic matter
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xfracal    !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   nitrfac    !: ??
-   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   nitrfac2   !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xlimbac    !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xlimbacl   !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   xdiss      !: ??
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   prodcal    !: Calcite production
 
    !!* Variable for chemistry of the CO2 cycle
+   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   akb3       !: ???
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   ak13       !: ???
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   ak23       !: ???
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   aksp       !: ???
+   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   akw3       !: ???
+   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   borat      !: ???
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   hi         !: ???
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   excess     !: ???
-   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   aphscale   !: 
-
 
    !!* Temperature dependancy of SMS terms
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:,:) ::   tgfunc    !: Temp. dependancy of various biological rates
@@ -147,14 +147,13 @@ CONTAINS
       !*  SMS for the organic matter
       ALLOCATE( xfracal (jpi,jpj,jpk), nitrfac(jpi,jpj,jpk),       &
          &      xlimbac (jpi,jpj,jpk), xdiss  (jpi,jpj,jpk),       & 
-         &      xlimbacl(jpi,jpj,jpk), prodcal(jpi,jpj,jpk),       &
-         &      nitrfac2(jpi,jpj,jpk),                           STAT=ierr(3) )
+         &      xlimbacl(jpi,jpj,jpk), prodcal(jpi,jpj,jpk),     STAT=ierr(3) )
 
       !* Variable for chemistry of the CO2 cycle
-      ALLOCATE( ak13  (jpi,jpj,jpk) ,                              &
+      ALLOCATE( akb3(jpi,jpj,jpk)    , ak13  (jpi,jpj,jpk) ,       &
          &      ak23(jpi,jpj,jpk)    , aksp  (jpi,jpj,jpk) ,       &
-         &      hi  (jpi,jpj,jpk)    , excess(jpi,jpj,jpk) ,       &
-         &      aphscale(jpi,jpj,jpk),                           STAT=ierr(4) )
+         &      akw3(jpi,jpj,jpk)    , borat (jpi,jpj,jpk) ,       &
+         &      hi  (jpi,jpj,jpk)    , excess(jpi,jpj,jpk) ,     STAT=ierr(4) )
          !
       !* Temperature dependancy of SMS terms
       ALLOCATE( tgfunc(jpi,jpj,jpk)  , tgfunc2(jpi,jpj,jpk) ,    STAT=ierr(5) )

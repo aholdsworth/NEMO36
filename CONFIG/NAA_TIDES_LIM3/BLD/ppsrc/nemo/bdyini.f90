@@ -212,6 +212,14 @@ CONTAINS
              IF(lwp) WRITE(numout,*) '      Specified value'
              dta_bdy(ib_bdy)%ll_u3d = .true.
              dta_bdy(ib_bdy)%ll_v3d = .true.
+          CASE('neumann')
+             IF(lwp) WRITE(numout,*) '      Neumann conditions'
+             dta_bdy(ib_bdy)%ll_u3d = .false.
+             dta_bdy(ib_bdy)%ll_u3d = .false.
+          CASE('zerograd')
+             IF(lwp) WRITE(numout,*) '      Zero gradient for baroclinic velocities'
+             dta_bdy(ib_bdy)%ll_u3d = .false.
+             dta_bdy(ib_bdy)%ll_v3d = .false.
           CASE('zero')
              IF(lwp) WRITE(numout,*) '      Zero baroclinic velocities (runoff case)'
              dta_bdy(ib_bdy)%ll_u3d = .false.

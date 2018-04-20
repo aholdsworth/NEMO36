@@ -1,0 +1,1 @@
+/home/amh001/NAA_NEMO/CONFIG/NAA_CanOE_LIM2/BLD/fcm_env.sh

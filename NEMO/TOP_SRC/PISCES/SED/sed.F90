@@ -1,4 +1,4 @@
-MODULE sed
+MDULE sed
    !!======================================================================
    !!                        ***  sed  ***
    !! Sediment :   set sediment global variables
@@ -44,14 +44,22 @@ MODULE sed
 #endif
    USE p4zsink , ONLY :  sinkcal    =>   sinkcal         !: sinking flux for calcite
    USE p4zsink , ONLY :  sinksil    =>   sinksil         !: sinking flux for opal ( dsi )
-
-   USE sms_pisces, ONLY : akb3      =>   akb3            !: Chemical constants  
-   USE sms_pisces, ONLY : ak13      =>   ak13            !: Chemical constants  
-   USE sms_pisces, ONLY : ak23      =>   ak23            !: Chemical constants  
-   USE sms_pisces, ONLY : akw3      =>   akw3            !: Chemical constants  
-   USE sms_pisces, ONLY : aksp      =>   aksp            !: Chemical constants  
-   USE sms_pisces, ONLY : borat     =>   borat           !: Chemical constants ( borat ) 
-
+   IF( lk_pisces ) THEN 
+       USE sms_pisces, ONLY : akb3      =>   akb3            !: Chemical constants  
+       USE sms_pisces, ONLY : ak13      =>   ak13            !: Chemical constants  
+       USE sms_pisces, ONLY : ak23      =>   ak23            !: Chemical constants  
+       USE sms_pisces, ONLY : akw3      =>   akw3            !: Chemical constants  
+       USE sms_pisces, ONLY : aksp      =>   aksp            !: Chemical constants  
+       USE sms_pisces, ONLY : borat     =>   borat           !: Chemical constants ( borat ) 
+   ENDIF
+   IF( lk_canoe ) THEN 
+       USE sms_canoe, ONLY : akb3      =>   akb3            !: Chemical constants  
+       USE sms_canoe, ONLY : ak13      =>   ak13            !: Chemical constants  
+       USE sms_canoe, ONLY : ak23      =>   ak23            !: Chemical constants  
+       USE sms_canoe, ONLY : akw3      =>   akw3            !: Chemical constants  
+       USE sms_canoe, ONLY : aksp      =>   aksp            !: Chemical constants  
+       USE sms_canoe, ONLY : borat     =>   borat           !: Chemical constants ( borat ) 
+   ENDIF
 #endif   
 
 

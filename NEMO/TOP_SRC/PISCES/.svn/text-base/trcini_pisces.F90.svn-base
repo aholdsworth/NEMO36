@@ -114,10 +114,9 @@ CONTAINS
       rno3    =  16._wp / 122._wp
       po4r    =   1._wp / 122._wp
       o2nit   =  32._wp / 122._wp
-      o2ut    = 133._wp / 122._wp
-      rdenit  =  ( ( o2ut + o2nit ) * 0.80 - rno3 - rno3 * 0.60 ) / rno3
+      rdenit  = 105._wp /  16._wp
       rdenita =   3._wp /  5._wp
-
+      o2ut    = 133._wp / 122._wp
 
       ! Initialization of tracer concentration in case of  no restart 
       !--------------------------------------------------------------

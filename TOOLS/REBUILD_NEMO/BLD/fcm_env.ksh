@@ -1,1 +1,1 @@
-/home/amber/NEMOGCM/TOOLS/REBUILD_NEMO/BLD/fcm_env.sh
+/home/amh001/NAA_NEMO/TOOLS/REBUILD_NEMO/BLD/fcm_env.sh

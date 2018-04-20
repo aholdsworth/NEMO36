@@ -22,7 +22,7 @@ MODULE trcnam_my_trc
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcnam_my_trc.F90 8353 2017-07-19 14:41:00Z lovato $ 
+   !! $Id: trcnam_my_trc.F90 3680 2012-11-27 14:42:24Z rblod $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -35,21 +35,12 @@ CONTAINS
       !! ** Purpose :   read MY_TRC namelist
       !!
       !!----------------------------------------------------------------------
-      INTEGER :: jn
       !
       IF(lwp) WRITE(numout,*)
       IF(lwp) WRITE(numout,*) ' trc_nam_my_trc : read MY_TRC namelists'
       IF(lwp) WRITE(numout,*) ' ~~~~~~~~~~~~~~~'
-      ! 
-      do jn = jp_myt0 , jp_myt1
-         ctrcnm    (jn) = 'NONAME'
-         ctrcln    (jn) = 'NO Long Name'
-         ctrcun    (jn) = 'NOUNIT'
-         ln_trc_ini(jn) = .false.
-         ln_trc_wri(jn) = .true.
-      enddo
       !
-      END SUBROUTINE trc_nam_my_trc
+   END SUBROUTINE trc_nam_my_trc
    
 #else
    !!----------------------------------------------------------------------

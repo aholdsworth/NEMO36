@@ -10,11 +10,6 @@ MODULE par_c14b
    USE par_pisces , ONLY : jp_pisces_3d    !: number of 3D diag in PISCES
    USE par_pisces , ONLY : jp_pisces_trd   !: number of biological diag in PISCES
 
-   USE par_my_trc , ONLY : jp_my_trc       !: number of tracers in MY_TRC
-   USE par_my_trc , ONLY : jp_my_trc_2d    !: number of 2D diag in MY_TRC
-   USE par_my_trc , ONLY : jp_my_trc_3d    !: number of 3D diag in MY_TRC
-   USE par_my_trc , ONLY : jp_my_trc_trd   !: number of biological diag in MY_TRC
-
    USE par_cfc    , ONLY : jp_cfc          !: number of tracers in CFC
    USE par_cfc    , ONLY : jp_cfc_2d       !: number of 2D diag in CFC
    USE par_cfc    , ONLY : jp_cfc_3d       !: number of 3D diag in CFC
@@ -23,10 +18,10 @@ MODULE par_c14b
 
    IMPLICIT NONE
 
-   INTEGER, PARAMETER ::   jp_lb      =  jp_pisces     + jp_my_trc     + jp_cfc     !: cum. number of pass. tracers
-   INTEGER, PARAMETER ::   jp_lb_2d   =  jp_pisces_2d  + jp_my_trc_2d  + jp_cfc_2d  !:
-   INTEGER, PARAMETER ::   jp_lb_3d   =  jp_pisces_3d  + jp_my_trc_3d  + jp_cfc_3d  !:
-   INTEGER, PARAMETER ::   jp_lb_trd  =  jp_pisces_trd + jp_my_trc_trd + jp_cfc_trd !:
+   INTEGER, PARAMETER ::   jp_lb      =  jp_pisces     + jp_cfc     !: cum. number of pass. tracers
+   INTEGER, PARAMETER ::   jp_lb_2d   =  jp_pisces_2d  + jp_cfc_2d  !:
+   INTEGER, PARAMETER ::   jp_lb_3d   =  jp_pisces_3d  + jp_cfc_3d  !:
+   INTEGER, PARAMETER ::   jp_lb_trd  =  jp_pisces_trd + jp_cfc_trd !:
    
 #if defined key_c14b
    !!---------------------------------------------------------------------
@@ -61,7 +56,7 @@ MODULE par_c14b
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: par_c14b.F90 8353 2017-07-19 14:41:00Z lovato $ 
+   !! $Id: par_c14b.F90 3680 2012-11-27 14:42:24Z rblod $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!======================================================================
 END MODULE par_c14b

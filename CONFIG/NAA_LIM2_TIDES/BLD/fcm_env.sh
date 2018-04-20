@@ -1,0 +1,3 @@
+#!/bin/sh
+PATH=/home/amh001/NAA_NEMO/CONFIG/NAA_LIM2_TIDES/BLD/bin:$PATH
+export PATH

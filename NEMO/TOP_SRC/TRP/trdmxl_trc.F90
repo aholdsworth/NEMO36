@@ -132,7 +132,7 @@ CONTAINS
          ! ... Set nmld(ji,jj) = index of first T point below control surf. or outside mixed-layer
          SELECT CASE ( nn_ctls_trc )                                ! choice of the control surface
             CASE ( -2  )   ;   STOP 'trdmxl_trc : not ready '     !     -> isopycnal surface (see ???)
-#if defined key_pisces || defined key_pisces_reduced
+#if defined key_pisces || defined key_pisces_reduced  || defined key_canoe
             CASE ( -1  )   ;   nmld_trc(:,:) = neln(:,:)          !     -> euphotic layer with light criterion
 #endif
             CASE (  0  )   ;   nmld_trc(:,:) = nmln(:,:)          !     -> ML with density criterion (see zdfmxl)

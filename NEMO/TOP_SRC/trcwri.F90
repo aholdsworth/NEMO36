@@ -17,9 +17,10 @@ MODULE trcwri
    USE iom         ! I/O manager
    USE dianam      ! Output file name
    USE trcwri_pisces
+   USE trcwri_canoe
+   USE trcwri_cmoc
    USE trcwri_cfc
    USE trcwri_c14b
-   USE trcwri_age
    USE trcwri_my_trc
 
    IMPLICIT NONE
@@ -57,10 +58,11 @@ CONTAINS
       ! write the tracer concentrations in the file
       ! ---------------------------------------
       IF( lk_pisces  )   CALL trc_wri_pisces     ! PISCES 
-      IF( lk_my_trc  )   CALL trc_wri_my_trc     ! MY_TRC  tracers
+      IF( lk_canoe  )   CALL trc_wri_canoe     ! PISCES 
+      IF( lk_cmoc  )   CALL trc_wri_cmoc     ! CMOC 
       IF( lk_cfc     )   CALL trc_wri_cfc        ! surface fluxes of CFC
       IF( lk_c14b    )   CALL trc_wri_c14b       ! surface fluxes of C14
-      IF( lk_age     )   CALL trc_wri_age        ! AGE tracer
+      IF( lk_my_trc  )   CALL trc_wri_my_trc     ! MY_TRC  tracers
       !
       IF( nn_timing == 1 )  CALL timing_stop('trc_wri')
       !
@@ -79,7 +81,7 @@ CONTAINS
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcwri.F90 8353 2017-07-19 14:41:00Z lovato $
+   !! $Id: trcwri.F90 3750 2013-01-14 16:25:10Z cetlod $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!======================================================================
 END MODULE trcwri

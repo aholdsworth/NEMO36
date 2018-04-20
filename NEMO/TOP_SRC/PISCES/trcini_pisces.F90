@@ -30,7 +30,7 @@ MODULE trcini_pisces
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcini_pisces.F90 6324 2016-02-18 08:39:38Z cetlod $ 
+   !! $Id: trcini_pisces.F90 5385 2015-06-09 13:50:42Z cetlod $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -114,10 +114,9 @@ CONTAINS
       rno3    =  16._wp / 122._wp
       po4r    =   1._wp / 122._wp
       o2nit   =  32._wp / 122._wp
-      o2ut    = 133._wp / 122._wp
-      rdenit  =  ( ( o2ut + o2nit ) * 0.80 - rno3 - rno3 * 0.60 ) / rno3
+      rdenit  = 105._wp /  16._wp
       rdenita =   3._wp /  5._wp
-
+      o2ut    = 133._wp / 122._wp
 
       ! Initialization of tracer concentration in case of  no restart 
       !--------------------------------------------------------------

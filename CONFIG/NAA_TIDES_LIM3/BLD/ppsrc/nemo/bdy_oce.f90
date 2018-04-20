@@ -48,6 +48,7 @@ MODULE bdy_oce
       LOGICAL                         ::  ll_v3d
       LOGICAL                         ::  ll_tem
       LOGICAL                         ::  ll_sal
+      LOGICAL                         ::  ll_fvl
       REAL(wp), POINTER, DIMENSION(:)     ::  ssh
       REAL(wp), POINTER, DIMENSION(:)     ::  u2d
       REAL(wp), POINTER, DIMENSION(:)     ::  v2d
@@ -72,9 +73,12 @@ MODULE bdy_oce
    LOGICAL, DIMENSION(jp_bdy) ::   ln_coords_file           !: =T read bdy coordinates from file; 
    !                                                        !: =F read bdy coordinates from namelist
    LOGICAL                    ::   ln_mask_file             !: =T read bdymask from file
-   LOGICAL                    ::   ln_vol                   !: =T volume correction             
+   LOGICAL                    ::   ln_vol                   !: =T volume correction            
+   LOGICAL, DIMENSION(jp_bdy) ::   ln_sponge,ln_sponge_dyn  !: =T use sponge layer  
+
    !
    INTEGER                    ::   nb_bdy                   !: number of open boundary sets
+   INTEGER , PUBLIC                    ::   nb_jpk_bdy               ! Number of levels in the bdy data (set < 0 if consistent with planned run)
    INTEGER, DIMENSION(jp_bdy) ::   nn_rimwidth              !: boundary rim width for Flow Relaxation Scheme
    INTEGER                    ::   nn_volctl                !: = 0 the total volume will have the variability of the surface Flux E-P 
    !                                                        !  = 1 the volume will be constant during all the integration.
@@ -100,7 +104,10 @@ MODULE bdy_oce
    REAL(wp),    DIMENSION(jp_bdy) ::   rn_ice_tem             !: choice of the temperature of incoming sea ice
    REAL(wp),    DIMENSION(jp_bdy) ::   rn_ice_sal             !: choice of the salinity    of incoming sea ice
    REAL(wp),    DIMENSION(jp_bdy) ::   rn_ice_age             !: choice of the age         of incoming sea ice
-   !
+   REAL(wp),    DIMENSION(jp_bdy) ::   rn_sponge              !: multiplier of diffusion for sponge layer
+   REAL(wp),    DIMENSION(jp_bdy) ::   rn_sponge_dyn          !: multiplier of viscosity for sponge layer   
+   REAL(wp),    DIMENSION(jp_bdy) ::   rn_sponge_dynb         !: multiplier of bilaplacian viscosity for sponge layer
+!
    
    !!----------------------------------------------------------------------
    !! Global variables
@@ -108,7 +115,7 @@ MODULE bdy_oce
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:), TARGET ::   bdytmask   !: Mask defining computational domain at T-points
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:), TARGET ::   bdyumask   !: Mask defining computational domain at U-points
    REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:), TARGET ::   bdyvmask   !: Mask defining computational domain at V-points
-
+   REAL(wp), ALLOCATABLE, SAVE, DIMENSION(:,:)         ::   sponge_factor !: Multiplier for diffusion for sponge layer
    REAL(wp)                                    ::   bdysurftot !: Lateral surface of unstructured open boundary
 
    !!----------------------------------------------------------------------
@@ -118,14 +125,18 @@ MODULE bdy_oce
    INTEGER,  DIMENSION(jp_bdy)                     ::   nn_dta            !: =0 => *all* data is set to initial conditions
                                                                           !: =1 => some data to be read in from data files
    REAL(wp), ALLOCATABLE, DIMENSION(:,:,:), TARGET ::   dta_global        !: workspace for reading in global data arrays (unstr.  bdy)
+   REAL(wp), ALLOCATABLE, DIMENSION(:,:,:), TARGET ::   dta_global_z      !: workspace for reading in global depth arrays (unstr.  bdy)
+   REAL(wp), ALLOCATABLE, DIMENSION(:,:,:), TARGET ::   dta_global_dz      !: workspace for reading in global depth arrays (unstr.  bdy)
    REAL(wp), ALLOCATABLE, DIMENSION(:,:,:), TARGET ::   dta_global2       !: workspace for reading in global data arrays (struct. bdy)
+   REAL(wp), ALLOCATABLE, DIMENSION(:,:,:), TARGET ::   dta_global2_z     !: workspace for reading in global depth arrays (struct. bdy)
+   REAL(wp), ALLOCATABLE, DIMENSION(:,:,:), TARGET ::   dta_global2_dz     !: workspace for reading in global depth arrays (struct. bdy)
 !$AGRIF_DO_NOT_TREAT
    TYPE(OBC_INDEX), DIMENSION(jp_bdy), TARGET      ::   idx_bdy           !: bdy indices (local process)
    TYPE(OBC_DATA) , DIMENSION(jp_bdy), TARGET      ::   dta_bdy           !: bdy external data (local process)
 !$AGRIF_END_DO_NOT_TREAT
    !!----------------------------------------------------------------------
    !! NEMO/OPA 4.0 , NEMO Consortium (2011)
-   !! $Id: bdy_oce.F90 4699 2014-07-02 11:39:48Z clem $ 
+   !! $Id: bdy_oce.F90 5620 2015-07-21 08:55:28Z jamesharle $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -138,12 +149,13 @@ CONTAINS
       !!----------------------------------------------------------------------
       !
       ALLOCATE( bdytmask(jpi,jpj) , bdyumask(jpi,jpj), bdyvmask(jpi,jpj),     &  
-         &      STAT=bdy_oce_alloc )
+         &    sponge_factor(jpi,jpj),STAT=bdy_oce_alloc )
       !
       ! Initialize masks 
       bdytmask(:,:) = 1._wp
       bdyumask(:,:) = 1._wp
       bdyvmask(:,:) = 1._wp
+      sponge_factor(:,:) = 1._wp
       ! 
       IF( lk_mpp             )   CALL mpp_sum ( bdy_oce_alloc )
       IF( bdy_oce_alloc /= 0 )   CALL ctl_warn('bdy_oce_alloc: failed to allocate arrays.')

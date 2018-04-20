@@ -1,9 +1,9 @@
 # Automatic Makefile
 
-FCM_BLD_CFG = /home/amber/NEMOGCM/TOOLS/COMPILE/bld_tools.cfg
+FCM_BLD_CFG = /home/amh001/NAA_NEMO/TOOLS/COMPILE/bld_tools.cfg
 export FCM_VERBOSE ?= 1
 
-export FCM_ROOTDIR := /home/amber/NEMOGCM/TOOLS/REBUILD_NEMO/BLD
+export FCM_ROOTDIR := /home/amh001/NAA_NEMO/TOOLS/REBUILD_NEMO/BLD
 export FCM_CACHEDIR := $(FCM_ROOTDIR)/.cache/.bld
 export FCM_CFGDIR := $(FCM_ROOTDIR)/cfg
 export FCM_SRCDIR := $(FCM_ROOTDIR)/src
@@ -30,10 +30,10 @@ export FCM_INCPATH := $(FCM_INCDIR)
 export FCM_PPSRCPATH := $(FCM_PPSRCDIR)
 export FCM_OBJPATH := $(FCM_OBJDIR)
 
-export PERL5LIB := /home/amber/NEMOGCM/EXTERNAL/fcm/bin/../lib:$(PERL5LIB)
+export PERL5LIB := /fs/vnas_Hdfo/odis/amh001/NAA_NEMO/EXTERNAL/fcm/bin/../lib
 
 export AR = ar
-export ARFLAGS = rcs
+export ARFLAGS = -r
 export CC = cc
 export CC_COMPILE = -c
 export CC_DEFINE = -D
@@ -48,10 +48,10 @@ export FC_DEFINE = -D
 export FC_INCLUDE = -I
 export FC_MODSEARCH = 
 export FC_OUTPUT = -o
-export FFLAGS = -c -fpp -r8 -O3 -assume byterecl -heap-arrays -diag-disable 10010 -xSSE4.1 -axSSE4.2 -I/home/amber/XIOS/inc
+export FFLAGS = -O2 -fp-model source  -traceback -r8  -convert big_endian -assume byterecl -I/home/amh001/XIOS2/include -I/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/include -I/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/include
 export FPPKEYS = 
 export LD = mpif90
-export LDFLAGS = -lstdc++ -shared-intel -diag-disable 10010 -L/home/amber/XIOS/lib -lxios -lnetcdf -lnetcdff -lpnetcdf -lhdf5 -lhdf5_hl
+export LDFLAGS = -O2 -L/home/amh001/XIOS2/lib -lxios -L/home/amh001/software2016/HDF5/HDF5-1.8.17-MPI-Intel2016/lib -L/home/amh001/software2016/NETCDF4/netcdf4-MPI-HDF5-Intel2016/lib -lnetcdff -lnetcdf -lhdf5_hl -lhdf5 -lz -lstdc++
 export LD_LIBLINK = -l
 export LD_LIBSEARCH = -L
 export LD_OUTPUT = -o
@@ -129,7 +129,7 @@ LD__nemo__rebuild_nemo.flags: LD__nemo.flags
 rebuild_nemo.exe: rebuild_nemo.o LD__nemo__rebuild_nemo.flags LDFLAGS__nemo__rebuild_nemo.flags
 	fcm_internal load:F nemo $< $@
 
-rebuild_nemo.o: /home/amber/NEMOGCM/TOOLS/REBUILD_NEMO/src/rebuild_nemo.f90 FFLAGS__nemo__rebuild_nemo.flags
+rebuild_nemo.o: /home/amh001/NAA_NEMO/TOOLS/REBUILD_NEMO/src/rebuild_nemo.f90 FFLAGS__nemo__rebuild_nemo.flags
 	fcm_internal compile:F nemo $< $@
 
 # EOF

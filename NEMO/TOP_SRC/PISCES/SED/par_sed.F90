@@ -20,7 +20,13 @@ MODULE par_sed
       jp_sal   =>   jp_sal     !: indice of salintity
 
 #if ! defined key_sed_off
-   USE par_pisces
+   IF( lk_pisces ) THEN 
+       USE par_pisces
+   ENDIF
+   IF( lk_canoe ) THEN 
+       USE par_canoe
+   ENDIF
+
 #endif
 
 #if defined key_kriest

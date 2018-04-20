@@ -62,7 +62,7 @@ MODULE p4zflx
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: p4zflx.F90 7607 2017-01-25 15:37:31Z cetlod $ 
+   !! $Id: p4zflx.F90 5385 2015-06-09 13:50:42Z cetlod $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -83,18 +83,17 @@ CONTAINS
       INTEGER, INTENT(in) ::   kt, knt   !
       !
       INTEGER  ::   ji, jj, jm, iind, iindm1
-      REAL(wp) ::   ztc, ztc2, ztc3, ztc4, zws, zkgwan
+      REAL(wp) ::   ztc, ztc2, ztc3, zws, zkgwan
       REAL(wp) ::   zfld, zflu, zfld16, zflu16, zfact
-      REAL(wp) ::   zvapsw, zsal, zfco2, zxc2, xCO2approx, ztkel, zfugcoeff
-      REAL(wp) ::   zph, zdic, zsch_o2, zsch_co2
+      REAL(wp) ::   zph, zah2, zbot, zdic, zalk, zsch_o2, zalka, zsch_co2
       REAL(wp) ::   zyr_dec, zdco2dt
       CHARACTER (len=25) :: charout
-      REAL(wp), POINTER, DIMENSION(:,:) :: zkgco2, zkgo2, zh2co3, zoflx, zw2d, zpco2atm 
+      REAL(wp), POINTER, DIMENSION(:,:) :: zkgco2, zkgo2, zh2co3, zoflx, zw2d 
       !!---------------------------------------------------------------------
       !
       IF( nn_timing == 1 )  CALL timing_start('p4z_flx')
       !
-      CALL wrk_alloc( jpi, jpj, zkgco2, zkgo2, zh2co3, zoflx, zpco2atm )
+      CALL wrk_alloc( jpi, jpj, zkgco2, zkgo2, zh2co3, zoflx )
       !
 
       ! SURFACE CHEMISTRY (PCO2 AND [H+] IN
@@ -121,16 +120,32 @@ CONTAINS
       satmco2(:,:) = atm_co2(:,:)
 #endif
 
-      DO jj = 1, jpj
-         DO ji = 1, jpi
-            ! DUMMY VARIABLES FOR DIC, H+, AND BORATE
-            zfact = rhop(ji,jj,1) / 1000. + rtrn
-            zdic  = trb(ji,jj,1,jpdic)
-            zph   = MAX( hi(ji,jj,1), 1.e-10 ) / zfact
-            ! CALCULATE [H2CO3]
-            zh2co3(ji,jj) = zdic/(1. + ak13(ji,jj,1)/zph + ak13(ji,jj,1)*ak23(ji,jj,1)/zph**2)
+      DO jm = 1, 10
+!CDIR NOVERRCHK
+         DO jj = 1, jpj
+!CDIR NOVERRCHK
+            DO ji = 1, jpi
+
+               ! DUMMY VARIABLES FOR DIC, H+, AND BORATE
+               zbot  = borat(ji,jj,1)
+               zfact = rhop(ji,jj,1) / 1000. + rtrn
+               zdic  = trb(ji,jj,1,jpdic) / zfact
+               zph   = MAX( hi(ji,jj,1), 1.e-10 ) / zfact
+               zalka = trb(ji,jj,1,jptal) / zfact
+
+               ! CALCULATE [ALK]([CO3--], [HCO3-])
+               zalk  = zalka - (  akw3(ji,jj,1) / zph - zph + zbot / ( 1.+ zph / akb3(ji,jj,1) )  )
+
+               ! CALCULATE [H+] AND [H2CO3]
+               zah2   = SQRT(  (zdic-zalk)**2 + 4.* ( zalk * ak23(ji,jj,1)   &
+                  &                                        / ak13(ji,jj,1) ) * ( 2.* zdic - zalk )  )
+               zah2   = 0.5 * ak13(ji,jj,1) / zalk * ( ( zdic - zalk ) + zah2 )
+               zh2co3(ji,jj) = ( 2.* zdic - zalk ) / ( 2.+ ak13(ji,jj,1) / zah2 ) * zfact
+               hi(ji,jj,1)   = zah2 * zfact
+            END DO
          END DO
       END DO
+
 
       ! --------------
       ! COMPUTE FLUXES
@@ -146,14 +161,13 @@ CONTAINS
             ztc  = MIN( 35., tsn(ji,jj,1,jp_tem) )
             ztc2 = ztc * ztc
             ztc3 = ztc * ztc2 
-            ztc4 = ztc2 * ztc2 
             ! Compute the schmidt Number both O2 and CO2
-            zsch_co2 = 2116.8 - 136.25 * ztc + 4.7353 * ztc2 - 0.092307 * ztc3 + 0.0007555 * ztc4
-            zsch_o2  = 1920.4 - 135.6  * ztc + 5.2122 * ztc2 - 0.109390 * ztc3 + 0.0009377 * ztc4
+            zsch_co2 = 2073.1 - 125.62 * ztc + 3.6276 * ztc2 - 0.043126 * ztc3
+            zsch_o2  = 1953.4 - 128.0  * ztc + 3.9918 * ztc2 - 0.050091 * ztc3
             !  wind speed 
             zws  = wndm(ji,jj) * wndm(ji,jj)
             ! Compute the piston velocity for O2 and CO2
-            zkgwan = 0.251 * zws
+            zkgwan = 0.3 * zws  + 2.5 * ( 0.5246 + 0.016256 * ztc + 0.00049946  * ztc2 )
             zkgwan = zkgwan * xconv * ( 1.- fr_i(ji,jj) ) * tmask(ji,jj,1)
 # if defined key_degrad
             zkgwan = zkgwan * facvol(ji,jj,1)
@@ -166,26 +180,17 @@ CONTAINS
 
       DO jj = 1, jpj
          DO ji = 1, jpi
-            ztkel  = tsn(ji,jj,1,jp_tem) + 273.15
-            zsal   = tsn(ji,jj,1,jp_sal) + ( 1.- tmask(ji,jj,1) ) * 35.
-            zvapsw = EXP(24.4543 - 67.4509*(100.0/ztkel) - 4.8489*LOG(ztkel/100) - 0.000544*zsal)
-            zpco2atm(ji,jj) = satmco2(ji,jj) * ( patm(ji,jj) - zvapsw )
-            zxc2 = (1.0 - zpco2atm(ji,jj) * 1E-6 )**2
-            zfugcoeff = EXP(patm(ji,jj) * (chemc(ji,jj,2) + 2.0 * zxc2 * chemc(ji,jj,3) )   &
-            &           / (82.05736 * ztkel))
-            zfco2 = zpco2atm(ji,jj) * zfugcoeff
-
             ! Compute CO2 flux for the sea and air
-            zfld = zfco2 * chemc(ji,jj,1) * zkgco2(ji,jj)  ! (mol/L) * (m/s)
-            zflu = zh2co3(ji,jj) * zkgco2(ji,jj)                                   ! (mol/L) (m/s) ?
+            zfld = satmco2(ji,jj) * patm(ji,jj) * tmask(ji,jj,1) * chemc(ji,jj,1) * zkgco2(ji,jj)   ! (mol/L) * (m/s)
+            zflu = zh2co3(ji,jj) * tmask(ji,jj,1) * zkgco2(ji,jj)                                   ! (mol/L) (m/s) ?
             oce_co2(ji,jj) = ( zfld - zflu ) * rfact2 * e1e2t(ji,jj) * tmask(ji,jj,1) * 1000.
             ! compute the trend
-            tra(ji,jj,1,jpdic) = tra(ji,jj,1,jpdic) + ( zfld - zflu ) * rfact2 / fse3t(ji,jj,1) * tmask(ji,jj,1)
+            tra(ji,jj,1,jpdic) = tra(ji,jj,1,jpdic) + ( zfld - zflu ) * rfact2 / fse3t(ji,jj,1)
 
             ! Compute O2 flux 
-            zfld16 = patm(ji,jj) * chemo2(ji,jj,1) * zkgo2(ji,jj)          ! (mol/L) * (m/s)
-            zflu16 = trb(ji,jj,1,jpoxy) * zkgo2(ji,jj)
-            zoflx(ji,jj) = ( zfld16 - zflu16 ) * tmask(ji,jj,1)
+            zfld16 = atcox * patm(ji,jj) * chemc(ji,jj,2) * tmask(ji,jj,1) * zkgo2(ji,jj)          ! (mol/L) * (m/s)
+            zflu16 = trb(ji,jj,1,jpoxy) * tmask(ji,jj,1) * zkgo2(ji,jj)
+            zoflx(ji,jj) = zfld16 - zflu16
             tra(ji,jj,1,jpoxy) = tra(ji,jj,1,jpoxy) + zoflx(ji,jj) * rfact2 / fse3t(ji,jj,1)
          END DO
       END DO
@@ -216,11 +221,11 @@ CONTAINS
             CALL iom_put( "Kg"   , zw2d )
          ENDIF
          IF( iom_use( "Dpco2" ) ) THEN
-           zw2d(:,:) = ( zpco2atm(:,:) - zh2co3(:,:) / ( chemc(:,:,1) + rtrn ) ) * tmask(:,:,1)
+           zw2d(:,:) = ( satmco2(:,:) * patm(:,:) - zh2co3(:,:) / ( chemc(:,:,1) + rtrn ) ) * tmask(:,:,1)
            CALL iom_put( "Dpco2" ,  zw2d )
          ENDIF
          IF( iom_use( "Dpo2" ) )  THEN
-           zw2d(:,:) = ( atcox * patm(:,:) - atcox * trn(:,:,1,jpoxy) / ( chemo2(:,:,1) + rtrn ) ) * tmask(:,:,1)
+           zw2d(:,:) = ( atcox * patm(:,:) - trb(:,:,1,jpoxy) / ( chemc(:,:,2) + rtrn ) ) * tmask(:,:,1)
            CALL iom_put( "Dpo2"  , zw2d )
          ENDIF
          IF( iom_use( "tcflx" ) )  CALL iom_put( "tcflx"    , t_oce_co2_flx * rfact2r )   ! molC/s
@@ -232,16 +237,11 @@ CONTAINS
             trc2d(:,:,jp_pcs0_2d    ) = oce_co2(:,:) / e1e2t(:,:) * rfact2r 
             trc2d(:,:,jp_pcs0_2d + 1) = zoflx(:,:) * 1000 * tmask(:,:,1) 
             trc2d(:,:,jp_pcs0_2d + 2) = zkgco2(:,:) * tmask(:,:,1) 
-            trc2d(:,:,jp_pcs0_2d + 3) = ( zpco2atm(:,:) - zh2co3(:,:) / ( chemc(:,:,1) + rtrn ) ) * tmask(:,:,1)
+            trc2d(:,:,jp_pcs0_2d + 3) = ( satmco2(:,:) * patm(:,:) - zh2co3(:,:) / ( chemc(:,:,1) + rtrn ) ) * tmask(:,:,1) 
          ENDIF
       ENDIF
       !
-#if defined key_cpl_carbon_cycle
-      ! change units for carbon cycle coupling
-      oce_co2(:,:) = oce_co2(:,:) / e1e2t(:,:) * rfact2r ! in molC/m2/s
-#endif
-      !
-      CALL wrk_dealloc( jpi, jpj, zkgco2, zkgo2, zh2co3, zoflx, zpco2atm )
+      CALL wrk_dealloc( jpi, jpj, zkgco2, zkgo2, zh2co3, zoflx )
       !
       IF( nn_timing == 1 )  CALL timing_stop('p4z_flx')
       !
@@ -399,4 +399,4 @@ CONTAINS
 #endif 
 
    !!======================================================================
-END MODULE p4zflx
+END MODULE  p4zflx

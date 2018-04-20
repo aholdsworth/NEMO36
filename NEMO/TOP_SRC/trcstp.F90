@@ -23,7 +23,10 @@ MODULE trcstp
    USE iom
    USE in_out_manager
    USE trcsub
-
+   !! wirtten by xiaofan Luo for update obc
+#if defined key_bdy
+   USE trcbc
+#endif    
    IMPLICIT NONE
    PRIVATE
 
@@ -31,15 +34,15 @@ MODULE trcstp
 
    REAL(wp), DIMENSION(:,:,:), SAVE, ALLOCATABLE ::   qsr_arr ! save qsr during TOP time-step
    REAL(wp) :: rdt_sampl
-   INTEGER  :: nb_rec_per_day, ktdcy
-   REAL(wp) :: rsecfst, rseclast
+   INTEGER  :: nb_rec_per_days
+   INTEGER  :: isecfst, iseclast
    LOGICAL  :: llnew
 
    !! * Substitutions
 #  include "domzgr_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trcstp.F90 7654 2017-02-07 16:16:04Z cetlod $ 
+   !! $Id: trcstp.F90 5407 2015-06-11 19:13:22Z smasson $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -58,6 +61,7 @@ CONTAINS
       INTEGER               ::  jk, jn  ! dummy loop indices
       REAL(wp)              ::  ztrai
       CHARACTER (len=25)    ::  charout 
+
       !!-------------------------------------------------------------------
       !
       IF( nn_timing == 1 )   CALL timing_start('trc_stp')
@@ -85,14 +89,17 @@ CONTAINS
          !
          tra(:,:,:,:) = 0.e0
          !
-         IF( .NOT.lk_offline )     CALL trc_rst_opn  ( kt )       ! Open tracer restart file 
+                                   CALL trc_rst_opn  ( kt )       ! Open tracer restart file 
          IF( lrst_trc )            CALL trc_rst_cal  ( kt, 'WRITE' )   ! calendar
          IF( lk_iomput ) THEN  ;   CALL trc_wri      ( kt )       ! output of passive tracers with iom I/O manager
          ELSE                  ;   CALL trc_dia      ( kt )       ! output of passive tracers with old I/O manager
          ENDIF
-                                   CALL trc_sms      ( kt )       ! tracers: sinks and sources
+                                   CALL trc_sms      ( kt )       ! tracers: sinks and sourcesa
+ !! written by xiaofan Luo for obc update
+#if defined key_bdy                
+                                   CALL trc_bc_read  ( kt )
+#endif     
                                    CALL trc_trp      ( kt )       ! transport of passive tracers
-
          IF( kt == nittrc000 ) THEN
             CALL iom_close( numrtr )       ! close input tracer restart file
             IF(lwm) CALL FLUSH( numont )   ! flush namelist output
@@ -104,13 +111,12 @@ CONTAINS
          !
       ENDIF
       !
-
       ztrai = 0._wp                                                   !  content of all tracers
       DO jn = 1, jptra
          ztrai = ztrai + glob_sum( trn(:,:,:,jn) * cvol(:,:,:)   )
       END DO
       IF( lwp ) WRITE(numstr,9300) kt,  ztrai / areatot
-9300  FORMAT(i10,D23.16)
+9300  FORMAT(i10,e18.10)
       !
       IF( nn_timing == 1 )   CALL timing_stop('trc_stp')
       !
@@ -123,105 +129,51 @@ CONTAINS
       !! ** Purpose :  Compute daily mean qsr for biogeochemical model in case
       !!               of diurnal cycle
       !!
-      !! ** Method  : store in TOP the qsr every hour ( or every time-step if the latter 
+      !! ** Method  : store in TOP the qsr every hour ( or every time-step the latter 
       !!              is greater than 1 hour ) and then, compute the  mean with 
       !!              a moving average over 24 hours. 
       !!              In coupled mode, the sampling is done at every coupling frequency 
       !!----------------------------------------------------------------------
       INTEGER, INTENT(in) ::   kt
       INTEGER  :: jn
-      REAL(wp) :: zkt, zrec
-      CHARACTER(len=1)               ::   cl1                      ! 1 character
-      CHARACTER(len=2)               ::   cl2                      ! 2 characters
 
       IF( kt == nittrc000 ) THEN
          IF( ln_cpl )  THEN  
-            rdt_sampl = rday / ncpl_qsr_freq
-            nb_rec_per_day = ncpl_qsr_freq
+            rdt_sampl = 86400. / ncpl_qsr_freq
+            nb_rec_per_days = ncpl_qsr_freq
          ELSE  
-            rdt_sampl = MAX( 3600., rdttrc(1) )
-            nb_rec_per_day = INT( rday / rdt_sampl )
+            rdt_sampl = MAX( 3600., rdt * nn_dttrc )
+            nb_rec_per_days = INT( 86400 / rdt_sampl )
          ENDIF
          !
          IF( lwp ) THEN
             WRITE(numout,*) 
-            WRITE(numout,*) ' Sampling frequency dt = ', rdt_sampl, 's','   Number of sampling per day  nrec = ', nb_rec_per_day
+            WRITE(numout,*) ' Sampling frequency dt = ', rdt_sampl, 's','   Number of sampling per day  nrec = ', nb_rec_per_days
             WRITE(numout,*) 
          ENDIF
          !
-         ALLOCATE( qsr_arr(jpi,jpj,nb_rec_per_day ) )
+         ALLOCATE( qsr_arr(jpi,jpj,nb_rec_per_days ) )
+         DO jn = 1, nb_rec_per_days
+            qsr_arr(:,:,jn) = qsr(:,:)
+         ENDDO
+         qsr_mean(:,:) = qsr(:,:)
          !
-         !                                            !* Restart: read in restart file
-         IF( ln_rsttr .AND. nn_rsttr /= 0 .AND. iom_varid( numrtr, 'qsr_mean' , ldstop = .FALSE. ) > 0  &
-           &                              .AND. iom_varid( numrtr, 'qsr_arr_1', ldstop = .FALSE. ) > 0  &
-           &                              .AND. iom_varid( numrtr, 'ktdcy'    , ldstop = .FALSE. ) > 0  &
-           &                              .AND. iom_varid( numrtr, 'nrdcy'    , ldstop = .FALSE. ) > 0  ) THEN
-
-            CALL iom_get( numrtr, 'ktdcy', zkt )  
-            rsecfst = INT( zkt ) * rdttrc(1)
-            IF(lwp) WRITE(numout,*) 'trc_qsr_mean:   qsr_mean read in the restart file at time-step rsecfst =', rsecfst, ' s '
-            CALL iom_get( numrtr, jpdom_autoglo, 'qsr_mean', qsr_mean )   !  A mean of qsr
-            CALL iom_get( numrtr, 'nrdcy', zrec )   !  Number of record per days
-            IF( INT( zrec ) == nb_rec_per_day ) THEN
-               DO jn = 1, nb_rec_per_day 
-                  IF( jn <= 9 )  THEN
-                    WRITE(cl1,'(i1)') jn
-                    CALL iom_get( numrtr, jpdom_autoglo, 'qsr_arr_'//cl1, qsr_arr(:,:,jn) )   !  A mean of qsr
-                  ELSE
-                    WRITE(cl2,'(i2.2)') jn
-                    CALL iom_get( numrtr, jpdom_autoglo, 'qsr_arr_'//cl2, qsr_arr(:,:,jn) )   !  A mean of qsr
-                  ENDIF
-              ENDDO
-            ELSE
-               DO jn = 1, nb_rec_per_day
-                  qsr_arr(:,:,jn) = qsr_mean(:,:)
-               ENDDO
-            ENDIF
-         ELSE                                         !* no restart: set from nit000 values
-            IF(lwp) WRITE(numout,*) 'trc_qsr_mean:   qsr_mean set to nit000 values'
-            rsecfst  = kt * rdttrc(1)
-            !
-            qsr_mean(:,:) = qsr(:,:)
-            DO jn = 1, nb_rec_per_day
-               qsr_arr(:,:,jn) = qsr_mean(:,:)
-            ENDDO
-         ENDIF
+         isecfst  = nsec_year + nsec1jan000   !   number of seconds between Jan. 1st 00h of nit000 year and the middle of time step
+         iseclast = isecfst
          !
       ENDIF
       !
-      rseclast = kt * rdttrc(1)
-      !
-      llnew   = ( rseclast - rsecfst ) .ge.  rdt_sampl    !   new shortwave to store
-      IF( llnew ) THEN
-          ktdcy = kt
-          IF( lwp .AND. kt < nittrc000 + 100 ) WRITE(numout,*) ' New shortwave to sample for TOP at time kt = ', ktdcy, &
-             &                      ' time = ', rseclast/3600.,'hours '
-          rsecfst = rseclast
-          DO jn = 1, nb_rec_per_day - 1
+      iseclast = nsec_year + nsec1jan000
+      llnew   = ( iseclast - isecfst )  > INT( rdt_sampl )   !   new shortwave to store
+      IF( kt /= nittrc000 .AND. llnew ) THEN
+          IF( lwp ) WRITE(numout,*) ' New shortwave to sample for TOP at time kt = ', kt, &
+             &                      ' time = ', (iseclast+rdt*nn_dttrc/2.)/3600.,'hours '
+          isecfst = iseclast
+          DO jn = 1, nb_rec_per_days - 1
              qsr_arr(:,:,jn) = qsr_arr(:,:,jn+1)
           ENDDO
-          qsr_arr (:,:,nb_rec_per_day) = qsr(:,:)
-          qsr_mean(:,:                ) = SUM( qsr_arr(:,:,:), 3 ) / nb_rec_per_day
-      ENDIF
-      !
-      IF( lrst_trc ) THEN    !* Write the mean of qsr in restart file 
-         IF(lwp) WRITE(numout,*)
-         IF(lwp) WRITE(numout,*) 'trc_mean_qsr : write qsr_mean in restart file  kt =', kt
-         IF(lwp) WRITE(numout,*) '~~~~~~~'
-         zkt  = REAL( ktdcy, wp )
-         zrec = REAL( nb_rec_per_day, wp )
-         CALL iom_rstput( kt, nitrst, numrtw, 'ktdcy', zkt  )
-         CALL iom_rstput( kt, nitrst, numrtw, 'nrdcy', zrec )
-          DO jn = 1, nb_rec_per_day 
-             IF( jn <= 9 )  THEN
-               WRITE(cl1,'(i1)') jn
-               CALL iom_rstput( kt, nitrst, numrtw, 'qsr_arr_'//cl1, qsr_arr(:,:,jn) )
-             ELSE
-               WRITE(cl2,'(i2.2)') jn
-               CALL iom_rstput( kt, nitrst, numrtw, 'qsr_arr_'//cl2, qsr_arr(:,:,jn) )
-             ENDIF
-         ENDDO
-         CALL iom_rstput( kt, nitrst, numrtw, 'qsr_mean', qsr_mean(:,:) )
+          qsr_arr (:,:,nb_rec_per_days) = qsr(:,:)
+          qsr_mean(:,:                ) = SUM( qsr_arr(:,:,:), 3 ) / nb_rec_per_days
       ENDIF
       !
    END SUBROUTINE trc_mean_qsr

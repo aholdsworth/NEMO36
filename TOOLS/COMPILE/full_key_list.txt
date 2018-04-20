@@ -1,12 +1,13 @@
-key_age
 key_agrif
 key_asminc
 key_bdy
 key_c14b
 key_c1d
+key_canoe
 key_cfc
 key_cice
 key_cice4
+key_cmoc
 key_cpl_carbon_cycle
 key_cyclone
 key_degrad

@@ -1,37 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 82
-/nemo/svn/!svn/ver/8697/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES
-END
-par_pisces.F90
-K 25
-svn:wc:ra_dav:version-url
-V 97
-/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/par_pisces.F90
-END
-sms_pisces.F90
-K 25
-svn:wc:ra_dav:version-url
-V 97
-/nemo/svn/!svn/ver/8532/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/sms_pisces.F90
-END
-trcnam_pisces.F90
-K 25
-svn:wc:ra_dav:version-url
-V 100
-/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/trcnam_pisces.F90
-END
-trcini_pisces.F90
-K 25
-svn:wc:ra_dav:version-url
-V 100
-/nemo/svn/!svn/ver/6324/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/trcini_pisces.F90
-END
-trcice_pisces.F90
-K 25
-svn:wc:ra_dav:version-url
-V 100
-/nemo/svn/!svn/ver/5724/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/trcice_pisces.F90
+/nemo/svn/!svn/ver/5610/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES
 END
 trcwri_pisces.F90
 K 25
@@ -44,4 +14,34 @@ K 25
 svn:wc:ra_dav:version-url
 V 100
 /nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/trcsms_pisces.F90
+END
+par_pisces.F90
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/par_pisces.F90
+END
+sms_pisces.F90
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/sms_pisces.F90
+END
+trcnam_pisces.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/trcnam_pisces.F90
+END
+trcini_pisces.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5550/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/trcini_pisces.F90
+END
+trcice_pisces.F90
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/nemo/svn/!svn/ver/5610/branches/2015/nemo_v3_6_STABLE/NEMOGCM/NEMO/TOP_SRC/PISCES/trcice_pisces.F90
 END

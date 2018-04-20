@@ -26,7 +26,12 @@ MODULE trctrp
    USE trcrad          ! positivity                          (trc_rad routine)
    USE trcsbc          ! surface boundary condition          (trc_sbc routine)
    USE zpshde          ! partial step: hor. derivative       (zps_hde routine)
-
+ !! written by xiaofan Luo
+#if defined key_bdy
+    USE trcbdy          ! BDY open boundaries
+    USE bdy_par, only: lk_bdy
+#endif
+  !!  =========xiaofanLuo
 #if defined key_agrif
    USE agrif_top_sponge ! tracers sponges
    USE agrif_top_update ! tracers updates
@@ -41,7 +46,7 @@ MODULE trctrp
 #  include "top_substitute.h90"
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: trctrp.F90 6959 2016-09-26 22:12:42Z cetlod $ 
+   !! $Id: trctrp.F90 5120 2015-03-03 16:11:55Z acc $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 
@@ -66,12 +71,14 @@ CONTAINS
                                 CALL trc_sbc( kstp )            ! surface boundary condition
          IF( lk_trabbl )        CALL trc_bbl( kstp )            ! advective (and/or diffusive) bottom boundary layer scheme
          IF( ln_trcdmp )        CALL trc_dmp( kstp )            ! internal damping trends
+      
+        IF( ln_trcdmp_clo )    CALL trc_dmp_clo( kstp )        ! internal damping trends on closed seas only
+  !! written by xiaofanLuo
+ #if defined key_bdy
+                               CALL trc_bdy_dmp( kstp)         !BDY damping trends 
+ #endif  
+  !1 xiaofanLuo
                                 CALL trc_adv( kstp )            ! horizontal & vertical advection 
-         IF( ln_zps ) THEN
-           IF( ln_isfcav ) THEN ; CALL zps_hde_isf( kstp, jptra, trb, pgtu=gtru, pgtv=gtrv, pgtui=gtrui, pgtvi=gtrvi )  ! both top & bottom
-           ELSE                 ; CALL zps_hde    ( kstp, jptra, trb, gtru, gtrv )                                      !  only bottom
-           ENDIF
-         ENDIF
                                 CALL trc_ldf( kstp )            ! lateral mixing
          IF( .NOT. lk_offline .AND. lk_zdfkpp )    &
             &                   CALL trc_kpp( kstp )            ! KPP non-local tracer fluxes
@@ -79,15 +86,19 @@ CONTAINS
          IF(.NOT. Agrif_Root()) CALL Agrif_Sponge_trc           ! tracers sponge
 #endif
                                 CALL trc_zdf( kstp )            ! vertical mixing and after tracer fields
-         !
                                 CALL trc_nxt( kstp )            ! tracer fields at next time step     
          IF( ln_trcrad )        CALL trc_rad( kstp )            ! Correct artificial negative concentrations
-         IF( ln_trcdmp_clo )    CALL trc_dmp_clo( kstp )        ! internal damping trends on closed seas only
 
 #if defined key_agrif
       IF( .NOT. Agrif_Root())   CALL Agrif_Update_Trc( kstp )   ! Update tracer at AGRIF zoom boundaries : children only
 #endif
 
+         IF( ln_zps  .AND. .NOT. ln_isfcav)        &
+            &            CALL zps_hde    ( kstp, jptra, trn, gtru, gtrv )   ! Partial steps: now horizontal gradient of passive
+         IF( ln_zps .AND.        ln_isfcav)        &
+            &            CALL zps_hde_isf( kstp, jptra, trn, pgtu=gtru, pgtv=gtrv, pgtui=gtrui, pgtvi=gtrvi )  ! Partial steps: now horizontal gradient of passive
+                                                                ! tracers at the bottom ocean level
+         !
       ELSE                                               ! 1D vertical configuration
                                 CALL trc_sbc( kstp )            ! surface boundary condition
          IF( .NOT. lk_offline .AND. lk_zdfkpp )    &
@@ -99,8 +110,6 @@ CONTAINS
       END IF
       !
       IF( nn_timing == 1 )   CALL timing_stop('trc_trp')
-      !
-9400  FORMAT(a25,i4,D23.16)
       !
    END SUBROUTINE trc_trp
 

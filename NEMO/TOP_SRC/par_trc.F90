@@ -7,13 +7,15 @@ MODULE par_trc
    !!              -   !  2000-04  (O. Aumont, M.A. Foujols)  HAMOCC3 and P3ZD
    !!             1.0  !  2004-03  (C. Ethe) Free form and module
    !!             2.0  !  2007-12  (C. Ethe, G. Madec)  revised architecture
+   !!                  !  2017-09  (A.Holdsworth)  added CMOC
    !!----------------------------------------------------------------------
    USE par_kind          ! kind parameters
    !
    USE par_pisces    ! PISCES  model
+   USE par_canoe    ! PISCES  model
+   USE par_cmoc    ! CMOC  model
    USE par_c14b      ! C14 bomb tracer
    USE par_cfc       ! CFC 11 and 12 tracers
-   USE par_age       ! AGE  tracer
    USE par_my_trc    ! user defined passive tracers
 
    IMPLICIT NONE
@@ -24,11 +26,11 @@ MODULE par_trc
 
    ! Passive tracers : Total size
    ! ---------------               ! total number of passive tracers, of 2d and 3d output and trend arrays
-   INTEGER, PUBLIC,  PARAMETER ::   jptra    =  jp_pisces     + jp_cfc     + jp_c14b    + jp_age    + jp_my_trc
-   INTEGER, PUBLIC,  PARAMETER ::   jpdia2d  =  jp_pisces_2d  + jp_cfc_2d  + jp_c14b_2d + jp_age_2d + jp_my_trc_2d
-   INTEGER, PUBLIC,  PARAMETER ::   jpdia3d  =  jp_pisces_3d  + jp_cfc_3d  + jp_c14b_3d + jp_age_3d + jp_my_trc_3d
+   INTEGER, PUBLIC,  PARAMETER ::   jptra    =  jp_canoe + jp_cmoc + jp_pisces     + jp_cfc     + jp_c14b    + jp_my_trc
+   INTEGER, PUBLIC,  PARAMETER ::   jpdia2d  =  jp_canoe_2d + jp_cmoc_2d +jp_pisces_2d  + jp_cfc_2d  + jp_c14b_2d + jp_my_trc_2d
+   INTEGER, PUBLIC,  PARAMETER ::   jpdia3d  =  jp_canoe_3d + jp_cmoc_3d + jp_pisces_3d  + jp_cfc_3d  + jp_c14b_3d + jp_my_trc_3d
    !                     ! total number of sms diagnostic arrays
-   INTEGER, PUBLIC,  PARAMETER ::   jpdiabio =  jp_pisces_trd + jp_cfc_trd + jp_c14b_trd + jp_age_trd + jp_my_trc_trd
+   INTEGER, PUBLIC,  PARAMETER ::   jpdiabio =  jp_canoe_trd + jp_cmoc_trd +jp_pisces_trd + jp_cfc_trd + jp_c14b_trd + jp_my_trc_trd
    
    !  1D configuration ("key_c1d")
    ! -----------------
@@ -42,7 +44,7 @@ MODULE par_trc
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: par_trc.F90 7494 2016-12-14 09:02:43Z timgraham $
+   !! $Id: par_trc.F90 4529 2014-03-15 11:00:04Z cetlod $ 
    !! Software governed by the CeCILL licence (NEMOGCM/NEMO_CeCILL.txt)
    !!======================================================================
 END MODULE par_trc

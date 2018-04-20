@@ -31,7 +31,7 @@ MODULE p2zsms
 
    !!----------------------------------------------------------------------
    !! NEMO/TOP 3.3 , NEMO Consortium (2010)
-   !! $Id: p2zsms.F90 6204 2016-01-04 13:47:06Z cetlod $ 
+   !! $Id: p2zsms.F90 5215 2015-04-15 16:11:56Z nicolasmartin $ 
    !! Software governed by the CeCILL licence     (NEMOGCM/NEMO_CeCILL.txt)
    !!----------------------------------------------------------------------
 CONTAINS
@@ -83,4 +83,4 @@ CONTAINS
 #endif 
 
    !!======================================================================
-END MODULE p2zsms
+END MODULE  p2zsms

@@ -71,6 +71,14 @@ MODULE bdy_oce
       REAL, POINTER, DIMENSION(:,:)   ::  ht_i  !: Now ice  thickness climatology
       REAL, POINTER, DIMENSION(:,:)   ::  ht_s  !: now snow thickness
 #endif
+  !! FROM Elise 20170316 ---written by Luo
+#if defined key_top
+     CHARACTER(LEN=20)                   :: cn_obc  !: type of boundary condition to apply
+     REAL(wp)                            :: rn_fac  !: multiplicative scaling factor
+     REAL(wp), POINTER, DIMENSION(:,:)   :: trc     !: now field of the tracer
+     LOGICAL                             :: dmp     !: obc damping term
+#endif
+  !! -------------------------- by Luo
    END TYPE OBC_DATA
 
    !!----------------------------------------------------------------------
@@ -117,6 +125,8 @@ MODULE bdy_oce
    REAL(wp),    DIMENSION(jp_bdy) ::   rn_sponge_dyn          !: multiplier of viscosity for sponge layer   
    REAL(wp),    DIMENSION(jp_bdy) ::   rn_sponge_dynb         !: multiplier of bilaplacian viscosity for sponge layer
 !
+   !! FROM Elise 20170316---written by Luo
+   REAL(wp),    DIMENSION(jp_bdy) ::   rn_max_sponge          !: Maximum viscosity for sponge (m2/s)  
    
    !!----------------------------------------------------------------------
    !! Global variables
